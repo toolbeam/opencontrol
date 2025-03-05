@@ -1,6 +1,6 @@
 # OpenControl
 
-OpenControl is a context protocol gateway that can create tools any LLM can use.
+OpenControl is a unified gateway that you can use to create tools for any LLM.
 
 - **Unified gateway**: Generates a single HTTP endpoint that you register with your LLM client and it exposes all the tools your team or project needs.
 - **Self-hosted**: Runs on your infrastructure in AWS Lambda, Cloudflare Workers, or containers; with access to internal resources and functions from your codebase.

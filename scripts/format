@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+bun x sherif -f
+bun x prettier --write "**/*.{js,jsx,ts,tsx,json,md,yaml,yml}"
+
+# Check for changes
+if ! git diff --quiet HEAD; then
+    git add -A
+    git commit -m "auto: format code"
+    git push origin HEAD
+    echo "pushed changes"
+else
+    echo "no changes"
+fi

@@ -11,11 +11,16 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./*": "./dist/*"
+    "./*": "./dist/*.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.6.1",
     "@tsconfig/bun": "1.0.7",
-    "hono": "4.7.4"
+    "hono": "4.7.4",
+    "zod": "3.24.2",
+    "zod-to-json-schema": "3.24.3"
+  },
+  "devDependencies": {
+    "@standard-schema/spec": "1.0.0"
   }
 }

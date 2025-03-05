@@ -2,7 +2,6 @@
 
 set -e
 
-bun x sherif -f
 bun x prettier --write "**/*.{js,jsx,ts,tsx,json,md,yaml,yml}"
 
 # Check for changes

@@ -1,5 +1,11 @@
 # opencontrol
 
+## 0.0.4
+
+### Patch Changes
+
+- 52065ca: add tools
+
 ## 0.0.3
 
 ### Patch Changes

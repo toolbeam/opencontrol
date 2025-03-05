@@ -11,4 +11,4 @@ OpenControl is a gateway that lets an LLM access any function from your codebase
 
 OpenControl is created by the maintainers of [SST](https://sst.dev).
 
-**Join our community** [Discord](https://sst.dev/discord) | [YouTube](https://www.youtube.com/c/sst-dev) | [X.com](https://x.com/SST_dev)
+# **Join our community** [Discord](https://sst.dev/discord) | [YouTube](https://www.youtube.com/c/sst-dev) | [X.com](https://x.com/SST_dev)

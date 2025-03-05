@@ -1,15 +1,14 @@
-# mcp
+# OpenControl
 
-To install dependencies:
+OpenControl is a context protocol gateway that can create tools any LLM can use.
 
-```bash
-bun install
-```
+- **Unified gateway**: Generates a single HTTP endpoint that you register with your LLM client and it exposes all the tools your team or project needs.
+- **Self-hosted**: Runs on your infrastructure in AWS Lambda, Cloudflare Workers, or containers; with access to internal resources and functions from your codebase.
+- **Universal**: Works with any LLM that supports a context protocol, like Anthropic's MCP or OpenAI's Tools.
+- **Secure**: Supports authentication through any OAuth provider.
 
-To run:
+---
 
-```bash
-bun run index.ts
-```
+OpenControl is created by the maintainers of [SST](https://sst.dev).
 
-This project was created using `bun init` in bun v1.2.4. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+**Join our community** [Discord](https://sst.dev/discord) | [YouTube](https://www.youtube.com/c/sst-dev) | [X.com](https://x.com/SST_dev)

@@ -1,5 +1,11 @@
 # opencontrol
 
+## 0.0.3
+
+### Patch Changes
+
+- 530f55c: test
+
 ## 0.0.2
 
 ### Patch Changes

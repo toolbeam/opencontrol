@@ -1,0 +1,6 @@
+{
+  "name": "@opencontrol/example-bun",
+  "dependencies": {
+    "opencontrol": "workspace:*"
+  }
+}

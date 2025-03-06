@@ -11,11 +11,17 @@
         "typescript": "5.8.2",
       },
     },
+    "examples/bun": {
+      "name": "@opencontrol/example-bun",
+      "dependencies": {
+        "opencontrol": "workspace:*",
+      },
+    },
     "packages/opencontrol": {
       "name": "opencontrol",
-      "version": "0.0.2",
+      "version": "0.0.5",
       "bin": {
-        "opencontrol": "./bin/index.js",
+        "opencontrol": "./bin/index.mjs",
       },
       "dependencies": {
         "@modelcontextprotocol/sdk": "1.6.1",
@@ -77,6 +83,8 @@
     "@nodelib/fs.stat": ["@nodelib/fs.stat@2.0.5", "", {}, "sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A=="],
 
     "@nodelib/fs.walk": ["@nodelib/fs.walk@1.2.8", "", { "dependencies": { "@nodelib/fs.scandir": "2.1.5", "fastq": "^1.6.0" } }, "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg=="],
+
+    "@opencontrol/example-bun": ["@opencontrol/example-bun@workspace:examples/bun"],
 
     "@standard-schema/spec": ["@standard-schema/spec@1.0.0", "", {}, "sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA=="],
 

@@ -1,5 +1,12 @@
 # opencontrol
 
+## 0.0.6
+
+### Patch Changes
+
+- 2dfc4c9: make key part of url
+- 1fecd69: add logs
+
 ## 0.0.5
 
 ### Patch Changes

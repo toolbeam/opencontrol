@@ -1,5 +1,11 @@
 # opencontrol
 
+## 0.0.5
+
+### Patch Changes
+
+- f154141: fix package.json
+
 ## 0.0.4
 
 ### Patch Changes

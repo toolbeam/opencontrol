@@ -4,7 +4,7 @@
   "version": "0.0.4",
   "type": "module",
   "bin": {
-    "opencontrol": "./bin/index.js"
+    "opencontrol": "./bin/index.mjs"
   },
   "scripts": {
     "build": "bun tsc"

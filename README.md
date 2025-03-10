@@ -1,4 +1,19 @@
-# OpenControl
+<p align="center">
+  <a href="/">
+    <picture>
+      <source srcset="https://raw.githubusercontent.com/toolbeam/identity/main/opencontrol/logo-dark.svg" media="(prefers-color-scheme: dark)">
+      <source srcset="https://raw.githubusercontent.com/toolbeam/identity/main/opencontrol/logo-light.svg" media="(prefers-color-scheme: light)">
+      <img src="https://raw.githubusercontent.com/toolbeam/identity/main/opencontrol/logo-light.svg" alt="OpenControl logo">
+    </picture>
+  </a>
+</p>
+<p align="center">
+  <a href="https://sst.dev/discord"><img alt="Discord" src="https://img.shields.io/discord/983865673656705025?style=flat-square&label=Discord" /></a>
+  <a href="https://www.npmjs.com/package/@openauthjs/openauth"><img alt="npm" src="https://img.shields.io/npm/v/%40openauthjs%2Fcore?style=flat-square" /></a>
+  <a href="https://github.com/toolbeam/opencontrol/actions/workflows/release.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/toolbeam/opencontrol/release.yml?style=flat-square&branch=master" /></a>
+</p>
+
+---
 
 OpenControl is a gateway that lets an LLM access any function from your codebase or any resource from your infrastructure.
 

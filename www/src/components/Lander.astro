@@ -1,0 +1,176 @@
+---
+import { Image } from 'astro:assets';
+import config from "virtual:starlight/user-config";
+import type { Props } from '@astrojs/starlight/props';
+
+const { data } = Astro.locals.starlightRoute.entry;
+const { title = data.title, tagline, image, actions = [] } = data.hero || {};
+
+const imageAttrs = {
+    loading: 'eager' as const,
+    decoding: 'async' as const,
+    width: 400,
+    alt: image?.alt || '',
+};
+
+let darkImage: ImageMetadata | undefined;
+let lightImage: ImageMetadata | undefined;
+let rawHtml: string | undefined;
+if (image) {
+    if ('file' in image) {
+        darkImage = image.file;
+    } else if ('dark' in image) {
+        darkImage = image.dark;
+        lightImage = image.light;
+    } else {
+        rawHtml = image.html;
+    }
+}
+---
+<div class="hero">
+    <section class="top">
+      <div class="logo">
+        <Image
+          src={darkImage}
+          {...imageAttrs}
+          class:list={{ 'light:sl-hidden': Boolean(lightImage) }}
+        />
+        <Image src={lightImage} {...imageAttrs} class="dark:sl-hidden" />
+      </div>
+      <h1>Self-hosted AI context protocol gateway.</h1>
+    </section>
+
+    <!-- <section class="cta"> -->
+    <!--   <div class="col1"> -->
+    <!--     <a href="https://www.youtube.com/watch?v=SSjNUuQ06tk" target="_blank">Learn more</a> -->
+    <!--   </div> -->
+    <!--   <div class="col2"> -->
+    <!--   <a href="/docs/">View the docs</a> -->
+    <!--   </div> -->
+    <!--   <div class="col3"> -->
+    <!--     <a href={config.social.github.url}>Star on GitHub</a> -->
+    <!--   </div> -->
+    <!-- </section> -->
+
+    <section class="content">
+      <ul>
+      <li><b>Self-hosted</b>: Runs in your infrastructure with access to internal resources and functions from your codebase; deploys to AWS Lambda, Cloudflare Workers, or containers.</li>
+      <li><b>Unified gateway</b>: Generates a single HTTP endpoint that you register with your LLM client and it exposes all the tools your team or project needs.</li>
+      <li><b>Universal</b>: Works with any LLM that supports a context protocol, like Anthropic's MCP or OpenAI's Tools.</li>
+      <li><b>Secure</b>: Supports authentication through any OAuth provider.</li>
+      </ul>
+    </section>
+
+    <section class="footer">
+      <div class="col1">
+        <span>Version: Beta</span>
+      </div>
+      <div class="col2">
+        <span>Author: <a href="https://sst.dev">SST</a></span>
+      </div>
+    </section>
+</div>
+
+<style>
+.hero {
+  --padding: 3rem;
+  --vertical-padding: 2rem;
+  --heading-font-size: var(--sl-text-3xl);
+
+  margin: 1rem;
+  border: 2px solid var(--sl-color-white);
+}
+@media (max-width: 30rem) {
+  .hero {
+    --padding: 1rem;
+    --vertical-padding: 1rem;
+    --heading-font-size: var(--sl-text-2xl);
+
+    margin: 0.5rem;
+  }
+}
+
+section.top {
+  padding: var(--padding);
+
+  h1 {
+    margin-top: calc(var(--vertical-padding) / 8);
+    font-size: var(--heading-font-size);
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  img {
+    height: auto;
+    width: clamp(200px, 70vw, 400px);
+  }
+}
+
+section.cta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 2px solid var(--sl-color-white);
+
+  & > div {
+    flex: 1;
+    line-height: 1.4;
+    text-align: center;
+    text-transform: uppercase;
+    padding: calc(var(--padding) / 2) 0.5rem;
+  }
+
+  @media (max-width: 30rem) {
+    & > div {
+      padding-bottom: calc(var(--padding) / 2 + 4px);
+    }
+  }
+
+  & > div + div {
+    border-left: 2px solid var(--sl-color-white);
+  }
+}
+
+section.content {
+  border-top: 2px solid var(--sl-color-white);
+  padding: var(--padding);
+
+  ul {
+    padding-left: 1rem;
+
+    li + li {
+      margin-top: calc(var(--vertical-padding) / 2);
+    }
+
+    li b {
+      text-transform: uppercase;
+    }
+  }
+}
+
+section.approach {
+  border-top: 2px solid var(--sl-color-white);
+  padding: var(--padding);
+
+  p + p {
+    margin-top: var(--vertical-padding);
+  }
+}
+
+section.footer {
+  border-top: 2px solid var(--sl-color-white);
+  display: flex;
+  flex-direction: row;
+
+  & > div {
+    flex: 1;
+    text-align: center;
+    text-transform: uppercase;
+    padding: calc(var(--padding) / 2) 0.5rem;
+  }
+
+  & > div + div {
+    border-left: 2px solid var(--sl-color-white);
+  }
+}
+</style>

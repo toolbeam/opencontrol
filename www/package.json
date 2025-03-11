@@ -1,0 +1,24 @@
+{
+  "name": "www",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "bun generate.ts && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^6.0.1",
+    "@astrojs/starlight": "^0.32.0",
+    "@fontsource/ibm-plex-mono": "^5.1.0",
+    "astro": "^5.1.5",
+    "rehype-autolink-headings": "^7.1.0",
+    "sharp": "^0.33.4",
+    "toolbeam-docs-theme": "^0.0.4"
+  },
+  "devDependencies": {
+    "typedoc": "^0.27.5"
+  }
+}

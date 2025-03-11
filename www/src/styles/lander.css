@@ -1,0 +1,15 @@
+:root[data-has-hero] {
+  header.header {
+    display: none;
+  }
+  .main-frame {
+    padding-top: 0;
+
+    .main-pane > main {
+      padding: 0;
+    }
+  }
+  main > .content-panel .sl-markdown-content {
+    margin-top: 0;
+  }
+}

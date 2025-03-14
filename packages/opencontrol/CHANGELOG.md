@@ -1,5 +1,11 @@
 # opencontrol
 
+## 0.0.9
+
+### Patch Changes
+
+- bd09cf9: sync
+
 ## 0.0.7
 
 ### Patch Changes

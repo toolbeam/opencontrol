@@ -32,6 +32,5 @@
   "license": "MIT",
   "prettier": {
     "semi": false
-  },
-  "dependencies": {}
+  }
 }

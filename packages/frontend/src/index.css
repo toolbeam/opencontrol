@@ -1,4 +1,5 @@
 body {
+  color: white;
   font-family: TX-02, monospace;
 
   margin: 0;
@@ -18,18 +19,29 @@ body {
 }
 
 [data-component="root"] {
-  display: flex;
   position: fixed;
   inset: 0;
+  overflow-y: auto;
 }
 
 [data-component="messages"] {
-  flex-grow: 1;
+  padding-top: 20px;
   width: 780px;
+  overflow: hidden;
+  font-size: 18px;
+  margin: 0 auto;
+
+  [data-slot="message"] {
+    white-space: pre-wrap;
+  }
+
+  [data-slot="spacer"] {
+    height: 400px;
+  }
 }
 
 [data-component="footer"] {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;

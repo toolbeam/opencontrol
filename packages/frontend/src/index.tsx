@@ -1,6 +1,7 @@
 /* @refresh reload */
-import { render } from 'solid-js/web';
+import { For, render } from 'solid-js/web';
 import SYSTEM_PROMPT from "./system.txt?raw"
+import { createStore } from "solid-js/store"
 
 import "./reset.css"
 import './index.css';
@@ -19,7 +20,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 render(() => <App />, root!);
 
 const anthropic = createAnthropic({
-  apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
+  apiKey: "{ANTHROPIC_API_KEY}",
   headers: {
     "anthropic-dangerous-direct-browser-access": "true"
   },
@@ -39,7 +40,8 @@ const providerMetadata = {
   },
 }
 
-const toolDefs = await fetch("http://localhost:3000/hello/mcp", {
+const OPENCONTROL_ENDPOINT = "mcp"
+const toolDefs = await fetch(OPENCONTROL_ENDPOINT, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -54,28 +56,41 @@ const toolDefs = await fetch("http://localhost:3000/hello/mcp", {
   .then((response) => response.result.tools)
 
 function App() {
-
-  async function send(message: string) {
-    const prompt: LanguageModelV1Prompt = [
+  const [store, setStore] = createStore<{
+    prompt: LanguageModelV1Prompt
+  }>({
+    prompt: [
       {
         role: "system",
-        providerMetadata,
-        content: SYSTEM_PROMPT
+        content: SYSTEM_PROMPT,
+        providerMetadata: {
+          anthropic: {
+            cacheControl: {
+              type: "ephemeral",
+            },
+          },
+        },
       },
+    ],
+  })
+
+  async function send(message: string) {
+    setStore("prompt",
+      store.prompt.length,
       {
         role: "user",
         content: [
           {
             type: "text",
             text: message,
-            providerMetadata,
+            providerMetadata: store.prompt.length === 1 ? providerMetadata : {},
           }
         ],
       }
-    ]
+    )
     while (true) {
       const result = await provider.doGenerate({
-        prompt,
+        prompt: store.prompt,
         mode: {
           type: "regular",
           tools: toolDefs.map((tool: any) => ({
@@ -83,28 +98,7 @@ function App() {
             name: tool.name,
             description: tool.description,
             parameters: {
-              type: "object",
-              properties: {},
-              additionalProperties: false,
-              ...tool.input_schema,
-            },
-            function: async (args: any) => {
-              const response = await fetch("http://localhost:3000/hello/mcp", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  jsonrpc: "2.0",
-                  method: "tools/call",
-                  params: {
-                    name: tool.name,
-                    arguments: args,
-                  },
-                  id: "1",
-                }),
-              }).then((response) => response.json())
-              return response.result.content[0]
+              ...tool.inputSchema,
             },
           })),
         },
@@ -112,13 +106,23 @@ function App() {
         temperature: 1,
       })
       console.log(result)
+
+      if (result.text) {
+        setStore("prompt", store.prompt.length, {
+          role: "assistant",
+          content: [{
+            type: "text",
+            text: result.text,
+          }]
+        })
+      }
+
       if (result.finishReason === "stop")
         break
-
       if (result.finishReason === "tool-calls") {
         for (const item of result.toolCalls!) {
           console.log("calling tool", item.toolName, item.args)
-          prompt.push({
+          setStore("prompt", store.prompt.length, {
             role: "assistant",
             content: result.toolCalls!.map(item => ({
               type: "tool-call",
@@ -127,22 +131,22 @@ function App() {
               toolCallId: item.toolCallId,
             }))
           })
-          const response = await fetch("http://localhost:3000/hello/mcp", {
+          const response = await fetch(OPENCONTROL_ENDPOINT, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               jsonrpc: "2.0",
+              id: "2",
               method: "tools/call",
               params: {
                 name: item.toolName,
                 arguments: JSON.parse(item.args),
               },
-              id: "1",
             }),
           }).then((response) => response.json())
-          prompt.push({
+          setStore("prompt", store.prompt.length, {
             role: "tool",
             content: [{
               type: "tool-result",
@@ -160,6 +164,21 @@ function App() {
   return (
     <div data-component="root">
       <div data-component="messages">
+        <For each={store.prompt}>
+          {(item) => (
+            <>
+              {item.role === "user" && item.content[0].type === "text" && <div data-slot="message">USER: {item.content[0].text}</div>}
+              {item.role === "assistant" && item.content[0].type === "tool-call" &&
+                <>
+                  <div data-slot="message">TOOL: {item.content[0].toolName}</div>
+                  <div data-slot="message">{"    "}↳ {JSON.stringify(item.content[0].args)}</div>
+                </>
+              }
+              {item.role === "assistant" && item.content[0].type === "text" && <div data-slot="message">CTRL: {item.content[0].text}</div>}
+            </>
+          )}
+        </For>
+        <div data-slot="spacer"></div>
       </div>
       <div data-component="footer">
         <div data-slot="chat">

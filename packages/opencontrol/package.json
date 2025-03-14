@@ -7,11 +7,17 @@
     "opencontrol": "./bin/index.mjs"
   },
   "scripts": {
-    "build": "bun tsc"
+    "build": "./script/build.ts"
   },
   "exports": {
-    ".": "./dist/index.js",
-    "./*": "./dist/*.js"
+    ".": {
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./*": {
+      "import": "./dist/esm/*.js",
+      "types": "./dist/types/*.d.ts"
+    }
   },
   "dependencies": {
     "@ai-sdk/anthropic": "1.1.17",
@@ -24,6 +30,7 @@
     "zod-to-json-schema": "3.24.3"
   },
   "devDependencies": {
+    "opencontrol-frontend": "workspace:*",
     "@standard-schema/spec": "1.0.0"
   }
 }

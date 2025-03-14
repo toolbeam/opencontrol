@@ -1,5 +1,12 @@
 # opencontrol
 
+## 0.0.12
+
+### Patch Changes
+
+- e7ee829: vibe coded this shit
+- d903526: improve client with retries
+
 ## 0.0.11
 
 ### Patch Changes

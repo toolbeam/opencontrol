@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.9",
   "dependencies": {
-    "opencontrol": "workspace:*"
+    "aws-sdk": "2.1692.0",
+    "opencontrol": "workspace:*",
+    "zod": "3.24.2"
   }
 }

@@ -8,6 +8,7 @@ import './index.css';
 import { LanguageModelV1Prompt } from "ai"
 import { createAnthropic } from "@ai-sdk/anthropic"
 import { createOpenAI } from "@ai-sdk/openai"
+import { createEffect } from 'solid-js';
 
 const root = document.getElementById('root');
 
@@ -20,7 +21,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 render(() => <App />, root!);
 
 const anthropic = createAnthropic({
-  apiKey: "{ANTHROPIC_API_KEY}",
+  apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY || "{ANTHROPIC_API_KEY}",
   headers: {
     "anthropic-dangerous-direct-browser-access": "true"
   },
@@ -40,7 +41,7 @@ const providerMetadata = {
   },
 }
 
-const OPENCONTROL_ENDPOINT = "mcp"
+const OPENCONTROL_ENDPOINT = import.meta.env.VITE_OPENCONTROL_ENDPOINT || "mcp"
 const toolDefs = await fetch(OPENCONTROL_ENDPOINT, {
   method: "POST",
   headers: {
@@ -56,6 +57,8 @@ const toolDefs = await fetch(OPENCONTROL_ENDPOINT, {
   .then((response) => response.result.tools)
 
 function App() {
+  let root: HTMLDivElement | undefined
+
   const [store, setStore] = createStore<{
     prompt: LanguageModelV1Prompt
   }>({
@@ -71,8 +74,26 @@ function App() {
           },
         },
       },
+      {
+        role: "system",
+        content: `The current date is ${new Date().toDateString()}`,
+        providerMetadata: {
+          anthropic: {
+            cacheControl: {
+              type: "ephemeral",
+            },
+          },
+        },
+      }
     ],
   })
+
+  createEffect(() => {
+    const messages = store.prompt
+    console.log("scrolling to bottom")
+    root?.scrollTo(0, root?.scrollHeight)
+    return messages.length
+  }, 0)
 
   async function send(message: string) {
     setStore("prompt",
@@ -89,80 +110,85 @@ function App() {
       }
     )
     while (true) {
-      const result = await provider.doGenerate({
-        prompt: store.prompt,
-        mode: {
-          type: "regular",
-          tools: toolDefs.map((tool: any) => ({
-            type: "function",
-            name: tool.name,
-            description: tool.description,
-            parameters: {
-              ...tool.inputSchema,
-            },
-          })),
-        },
-        inputFormat: "messages",
-        temperature: 1,
-      })
-      console.log(result)
-
-      if (result.text) {
-        setStore("prompt", store.prompt.length, {
-          role: "assistant",
-          content: [{
-            type: "text",
-            text: result.text,
-          }]
+      try {
+        const result = await provider.doGenerate({
+          prompt: store.prompt,
+          mode: {
+            type: "regular",
+            tools: toolDefs.map((tool: any) => ({
+              type: "function",
+              name: tool.name,
+              description: tool.description,
+              parameters: {
+                ...tool.inputSchema,
+              },
+            })),
+          },
+          inputFormat: "messages",
+          temperature: 1,
         })
-      }
 
-      if (result.finishReason === "stop")
-        break
-      if (result.finishReason === "tool-calls") {
-        for (const item of result.toolCalls!) {
-          console.log("calling tool", item.toolName, item.args)
+        if (result.text) {
           setStore("prompt", store.prompt.length, {
             role: "assistant",
-            content: result.toolCalls!.map(item => ({
-              type: "tool-call",
-              toolName: item.toolName,
-              args: JSON.parse(item.args),
-              toolCallId: item.toolCallId,
-            }))
-          })
-          const response = await fetch(OPENCONTROL_ENDPOINT, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              jsonrpc: "2.0",
-              id: "2",
-              method: "tools/call",
-              params: {
-                name: item.toolName,
-                arguments: JSON.parse(item.args),
-              },
-            }),
-          }).then((response) => response.json())
-          setStore("prompt", store.prompt.length, {
-            role: "tool",
             content: [{
-              type: "tool-result",
-              toolName: item.toolName,
-              toolCallId: item.toolCallId,
-              result: response,
-            }],
+              type: "text",
+              text: result.text,
+            }]
           })
         }
+
+        if (result.finishReason === "stop")
+          break
+        if (result.finishReason === "tool-calls") {
+          for (const item of result.toolCalls!) {
+            console.log("calling tool", item.toolName, item.args)
+            setStore("prompt", store.prompt.length, {
+              role: "assistant",
+              content: result.toolCalls!.map(item => ({
+                type: "tool-call",
+                toolName: item.toolName,
+                args: JSON.parse(item.args),
+                toolCallId: item.toolCallId,
+              }))
+            })
+            const response = await fetch(OPENCONTROL_ENDPOINT, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                jsonrpc: "2.0",
+                id: "2",
+                method: "tools/call",
+                params: {
+                  name: item.toolName,
+                  arguments: JSON.parse(item.args),
+                },
+              }),
+            }).then((response) => response.json())
+            setStore("prompt", store.prompt.length, {
+              role: "tool",
+              content: [{
+                type: "tool-result",
+                toolName: item.toolName,
+                toolCallId: item.toolCallId,
+                result: response.result.content,
+              }],
+            })
+          }
+        }
+      } catch {
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        continue
       }
     }
   }
 
 
+
   return (
-    <div data-component="root">
+    <div data-component="root" ref={root}>
       <div data-component="messages">
         <For each={store.prompt}>
           {(item) => (

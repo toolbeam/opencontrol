@@ -10,7 +10,7 @@ const url = "https://opencontrol.ai"
 // https://astro.build/config
 export default defineConfig({
   site: url,
-  trailingSlash: 'always',
+  trailingSlash: "always",
   devToolbar: {
     enabled: false,
   },
@@ -76,13 +76,8 @@ export default defineConfig({
       components: {
         Hero: "./src/components/Hero.astro",
       },
-      customCss: [
-        "./src/custom.css",
-        "./src/styles/lander.css",
-      ],
-      sidebar: [
-        { label: "Intro", slug: "docs" },
-      ],
+      customCss: ["./src/custom.css", "./src/styles/lander.css"],
+      sidebar: [{ label: "Intro", slug: "docs" }],
     }),
   ],
   markdown: {

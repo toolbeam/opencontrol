@@ -5,11 +5,10 @@ import { createEffect, For, onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
 import SYSTEM_PROMPT from "./system.txt?raw"
 
-
 const anthropic = createAnthropic({
   apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY || "{ANTHROPIC_API_KEY}",
   headers: {
-    "anthropic-dangerous-direct-browser-access": "true"
+    "anthropic-dangerous-direct-browser-access": "true",
   },
 })("claude-3-7-sonnet-20250219")
 
@@ -46,7 +45,7 @@ export function App() {
   let root: HTMLDivElement | undefined
 
   const [store, setStore] = createStore<{
-    prompt: LanguageModelV1Prompt,
+    prompt: LanguageModelV1Prompt
     isProcessing: boolean
   }>({
     prompt: [
@@ -71,9 +70,9 @@ export function App() {
             },
           },
         },
-      }
+      },
     ],
-    isProcessing: false
+    isProcessing: false,
   })
 
   createEffect(() => {
@@ -86,36 +85,33 @@ export function App() {
   createEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && store.isProcessing) {
-        setStore("isProcessing", false);
-        console.log("Processing cancelled by user");
+        setStore("isProcessing", false)
+        console.log("Processing cancelled by user")
       }
-    };
-    window.addEventListener("keydown", handleKeyDown);
+    }
+    window.addEventListener("keydown", handleKeyDown)
     onCleanup(() => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown)
     })
   })
 
   async function send(message: string) {
-    setStore("isProcessing", true);
-    setStore("prompt",
-      store.prompt.length,
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: message,
-            providerMetadata: store.prompt.length === 1 ? providerMetadata : {},
-          }
-        ],
-      }
-    )
+    setStore("isProcessing", true)
+    setStore("prompt", store.prompt.length, {
+      role: "user",
+      content: [
+        {
+          type: "text",
+          text: message,
+          providerMetadata: store.prompt.length === 1 ? providerMetadata : {},
+        },
+      ],
+    })
 
     while (true) {
       if (!store.isProcessing) {
-        console.log("Processing cancelled by user");
-        break;
+        console.log("Processing cancelled by user")
+        break
       }
 
       try {
@@ -141,16 +137,18 @@ export function App() {
         if (result.text) {
           setStore("prompt", store.prompt.length, {
             role: "assistant",
-            content: [{
-              type: "text",
-              text: result.text,
-            }]
+            content: [
+              {
+                type: "text",
+                text: result.text,
+              },
+            ],
           })
         }
 
         if (result.finishReason === "stop") {
-          setStore("isProcessing", false);
-          break;
+          setStore("isProcessing", false)
+          break
         }
 
         if (result.finishReason === "tool-calls") {
@@ -158,12 +156,12 @@ export function App() {
             console.log("calling tool", item.toolName, item.args)
             setStore("prompt", store.prompt.length, {
               role: "assistant",
-              content: result.toolCalls!.map(item => ({
+              content: result.toolCalls!.map((item) => ({
                 type: "tool-call",
                 toolName: item.toolName,
                 args: JSON.parse(item.args),
                 toolCallId: item.toolCallId,
-              }))
+              })),
             })
 
             const response = await fetch(OPENCONTROL_ENDPOINT, {
@@ -184,25 +182,25 @@ export function App() {
 
             setStore("prompt", store.prompt.length, {
               role: "tool",
-              content: [{
-                type: "tool-result",
-                toolName: item.toolName,
-                toolCallId: item.toolCallId,
-                result: response.result.content,
-              }],
+              content: [
+                {
+                  type: "tool-result",
+                  toolName: item.toolName,
+                  toolCallId: item.toolCallId,
+                  result: response.result.content,
+                },
+              ],
             })
           }
         }
       } catch (error) {
-        console.error("Error in message processing:", error);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        continue;
+        console.error("Error in message processing:", error)
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        continue
       }
     }
-    setStore("isProcessing", false);
+    setStore("isProcessing", false)
   }
-
-
 
   return (
     <div data-component="root" ref={root}>
@@ -210,53 +208,58 @@ export function App() {
         <For each={store.prompt}>
           {(item) => (
             <>
-              {item.role === "user" && item.content[0].type === "text" &&
+              {item.role === "user" && item.content[0].type === "text" && (
                 <div data-slot="message" data-user={true}>
                   {item.content[0].text}
                 </div>
-              }
+              )}
 
-              {item.role === "assistant" && item.content[0].type === "tool-call" &&
+              {item.role === "assistant" &&
+                item.content[0].type === "tool-call" &&
                 (() => {
                   const [showArgs, setShowArgs] = createStore({
-                    visible: false
-                  });
+                    visible: false,
+                  })
 
                   const toggleArgs = () => {
-                    setShowArgs("visible", prev => !prev);
-                  };
+                    setShowArgs("visible", (prev) => !prev)
+                  }
 
                   return (
                     <div data-slot="message" data-tool={true}>
                       <div data-slot="tool-header" onClick={toggleArgs}>
                         <span data-slot="tool-icon">🔧</span>
-                        <span data-slot="tool-name">{item.content[0].toolName}</span>
-                        <span data-slot="tool-expand">{showArgs.visible ? "−" : "+"}</span>
+                        <span data-slot="tool-name">
+                          {item.content[0].toolName}
+                        </span>
+                        <span data-slot="tool-expand">
+                          {showArgs.visible ? "−" : "+"}
+                        </span>
                       </div>
                       {showArgs.visible && (
                         <div data-slot="tool-args">
-                          <pre>{JSON.stringify(item.content[0].args, null, 2)}</pre>
+                          <pre>
+                            {JSON.stringify(item.content[0].args, null, 2)}
+                          </pre>
                         </div>
                       )}
                     </div>
-                  );
-                })()
-              }
+                  )
+                })()}
 
               {/* Show assistant text messages */}
-              {item.role === "assistant" && item.content[0].type === "text" &&
+              {item.role === "assistant" && item.content[0].type === "text" && (
                 <div data-slot="message" data-assistant={true}>
                   {item.content[0].text}
                 </div>
-              }
+              )}
 
               {/* Show system messages, but not the first ones (initial prompts) */}
-              {item.role === "system" &&
-                store.prompt.indexOf(item) > 1 &&
+              {item.role === "system" && store.prompt.indexOf(item) > 1 && (
                 <div data-slot="message" data-system={true}>
                   {item.content}
                 </div>
-              }
+              )}
             </>
           )}
         </For>
@@ -284,9 +287,13 @@ export function App() {
                 e.preventDefault()
               }
             }}
-            data-component="input" placeholder={store.isProcessing ? "Processing..." : "Type your message here"} />
+            data-component="input"
+            placeholder={
+              store.isProcessing ? "Processing..." : "Type your message here"
+            }
+          />
         </div>
       </div>
     </div>
-  );
+  )
 }

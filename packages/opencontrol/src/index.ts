@@ -3,7 +3,7 @@ import { Tool } from "./tool.js"
 import { createMcp } from "./mcp.js"
 import { basicAuth } from "hono/basic-auth"
 import { cors } from "hono/cors"
-import HTML from "opencontrol-frontend/dist/index.html" assert { type: "text" }
+import HTML from "opencontrol-frontend/dist/index.html" with { type: "text" }
 
 export interface OpenControlOptions {
   key?: string

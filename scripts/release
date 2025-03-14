@@ -2,5 +2,6 @@
 
 set -e
 
-bun run --filter="opencontrol" build 
+(cd packages/frontend && bun run build)
+(cd packages/opencontrol && bun run build)
 bun changeset publish

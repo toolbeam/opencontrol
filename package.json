@@ -3,18 +3,35 @@
   "private": true,
   "type": "module",
   "packageManager": "bun",
+  "description": "Control infrastructure from code",
+  "scripts": {
+    "build": "bun run --cwd packages/opencontrol build",
+    "dev": "bun run --cwd packages/opencontrol dev",
+    "format": "./scripts/format",
+    "release": "./scripts/release"
+  },
   "workspaces": [
     "packages/*",
     "examples/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "2.28.1",
-    "@tsconfig/node22": "22.0.0",
-    "@types/node": "22.13.9",
-    "prettier": "3.5.3",
-    "typescript": "5.8.2"
+    "@changesets/cli": "^2.28.1",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.13.9",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
   },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sst/opencontrol"
+  },
+  "license": "MIT",
   "prettier": {
     "semi": false
-  }
+  },
+  "dependencies": {}
 }

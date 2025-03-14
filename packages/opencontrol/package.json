@@ -14,8 +14,11 @@
     "./*": "./dist/*.js"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "1.1.17",
+    "@ai-sdk/openai": "1.2.5",
     "@modelcontextprotocol/sdk": "1.6.1",
     "@tsconfig/bun": "1.0.7",
+    "ai": "4.1.61",
     "hono": "4.7.4",
     "zod": "3.24.2",
     "zod-to-json-schema": "3.24.3"

@@ -1,5 +1,7 @@
 {
   "name": "opencontrol-example-bun",
+  "private": true,
+  "version": "0.0.9",
   "dependencies": {
     "opencontrol": "workspace:*"
   }

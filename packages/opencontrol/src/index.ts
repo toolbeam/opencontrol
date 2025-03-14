@@ -26,10 +26,12 @@ export function create(input: {
       }),
     )
     .use(
-      basicAuth({
-        username: "opencontrol",
-        password: input.key || "password",
-      }),
+      input.key
+        ? basicAuth({
+            username: "opencontrol",
+            password: input.key || "password",
+          })
+        : undefined,
     )
     .get("/", (c) => {
       if (!input.anthropicApiKey)

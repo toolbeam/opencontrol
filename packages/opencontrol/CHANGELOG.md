@@ -1,5 +1,12 @@
 # opencontrol
 
+## 0.0.10
+
+### Patch Changes
+
+- a33ce97: test
+- 7247291: built in UI
+
 ## 0.0.9
 
 ### Patch Changes

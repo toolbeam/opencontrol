@@ -29,7 +29,7 @@ const openai = createOpenAI({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
 })("gpt-4o")
 
-const provider = openai
+const provider = anthropic
 
 const providerMetadata = {
   anthropic: {
@@ -123,7 +123,7 @@ function App() {
             content: result.toolCalls!.map(item => ({
               type: "tool-call",
               toolName: item.toolName,
-              args: item.args,
+              args: JSON.parse(item.args),
               toolCallId: item.toolCallId,
             }))
           })

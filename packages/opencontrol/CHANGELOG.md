@@ -1,5 +1,12 @@
 # opencontrol
 
+## 0.0.11
+
+### Patch Changes
+
+- 28dc72d: stupid cookie
+- 9f106c6: skip basic auth
+
 ## 0.0.10
 
 ### Patch Changes

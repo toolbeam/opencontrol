@@ -15,12 +15,12 @@
 
 ---
 
-OpenControl is a gateway that lets an LLM access any function from your codebase or any resource from your infrastructure.
+OpenControl lets you control your infrastructure with AI.
 
-- **Self-hosted**: Runs in your infrastructure with access to internal resources and functions from your codebase; deploys to AWS Lambda, Cloudflare Workers, or containers.
-- **Unified gateway**: Generates a single HTTP endpoint that you register with your LLM client and it exposes all the tools your team or project needs.
-- **Universal**: Works with any LLM that supports a context protocol, like Anthropic's MCP or OpenAI's Tools.
-- **Secure**: Supports authentication through any OAuth provider.
+**Self-hosted**: Runs in your infrastructure with access to internal resources and functions from your codebase; deploys to AWS Lambda, Cloudflare Workers, or containers.
+**Unified gateway**: Generates a single HTTP endpoint that you can chat with or register with your AI client and it exposes all your tools.
+**Universal**: Works with any model that supports tool calling. Like the models from Anthropic, OpenAI, or Google.
+**Secure**: Supports authentication through any OAuth provider.
 
 ## Get started
 

@@ -6,7 +6,6 @@ import { hc } from "hono/client"
 import { type App } from "opencontrol"
 import { client } from "./client"
 
-
 const providerMetadata = {
   anthropic: {
     cacheControl: {
@@ -39,21 +38,24 @@ const getInitialPrompt = (): LanguageModelV1Prompt => [
       },
     },
   },
-];
+]
 
 export function App() {
   let root: HTMLDivElement | undefined
   let textarea: HTMLTextAreaElement | undefined
 
-  const toolDefs = client.mcp.$post({
-    json: {
-      jsonrpc: "2.0",
-      method: "tools/list",
-      id: "1",
-    }
-  })
+  const toolDefs = client.mcp
+    .$post({
+      json: {
+        jsonrpc: "2.0",
+        method: "tools/list",
+        id: "1",
+      },
+    })
     .then((response) => response.json())
-    .then((response) => "tools" in response.result ? response.result.tools : [])
+    .then((response) =>
+      "tools" in response.result ? response.result.tools : [],
+    )
 
   const [store, setStore] = createStore<{
     prompt: LanguageModelV1Prompt
@@ -86,7 +88,7 @@ export function App() {
   })
 
   function clearConversation() {
-    setStore("prompt", getInitialPrompt());
+    setStore("prompt", getInitialPrompt())
   }
 
   async function send(message: string) {
@@ -124,18 +126,17 @@ export function App() {
           },
           inputFormat: "messages",
           temperature: 1,
-        }
+        },
       })
-
 
       if (!store.isProcessing) continue
 
       if (!response.ok) {
         if (response.status === 400) {
-          setStore("prompt", val => {
+          setStore("prompt", (val) => {
             val.splice(2, 1)
             console.log(val)
-            return [...val];
+            return [...val]
           })
         }
         if (response.status === 429) {
@@ -179,17 +180,19 @@ export function App() {
             })),
           })
 
-          const response = await client.mcp.$post({
-            json: {
-              jsonrpc: "2.0",
-              id: "2",
-              method: "tools/call",
-              params: {
-                name: item.toolName,
-                arguments: JSON.parse(item.args),
+          const response = await client.mcp
+            .$post({
+              json: {
+                jsonrpc: "2.0",
+                id: "2",
+                method: "tools/call",
+                params: {
+                  name: item.toolName,
+                  arguments: JSON.parse(item.args),
+                },
               },
-            }
-          }).then(r => r.json())
+            })
+            .then((r) => r.json())
           if ("content" in response.result) {
             setStore("prompt", store.prompt.length, {
               role: "tool",
@@ -202,8 +205,7 @@ export function App() {
                 },
               ],
             })
-          }
-          else break
+          } else break
         }
       }
     }
@@ -290,10 +292,7 @@ export function App() {
       <div data-component="footer">
         {store.prompt.length > 2 && !store.isProcessing && (
           <div data-slot="clear">
-            <button
-              data-component="clear-button"
-              onClick={clearConversation}
-            >
+            <button data-component="clear-button" onClick={clearConversation}>
               Clear
             </button>
           </div>
@@ -312,7 +311,9 @@ export function App() {
             }}
             data-component="input"
             placeholder={
-              store.isProcessing ? "Processing... (Press Esc to cancel)" : "Type your message here"
+              store.isProcessing
+                ? "Processing... (Press Esc to cancel)"
+                : "Type your message here"
             }
           />
         </div>

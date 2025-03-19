@@ -22,8 +22,7 @@ render(() => {
     while (true) {
       if (!password()) {
         const result = prompt("Enter password")
-        if (!result)
-          return
+        if (!result) return
         localStorage.setItem("opencontrol:password", result)
         setPassword(result)
       }
@@ -32,7 +31,7 @@ render(() => {
           jsonrpc: "2.0",
           method: "initialize",
           id: "1",
-        }
+        },
       })
 
       if (!result.ok) {
@@ -44,7 +43,10 @@ render(() => {
       setReady(true)
       break
     }
-
   })
-  return <Show when={ready()}><App /></Show>
+  return (
+    <Show when={ready()}>
+      <App />
+    </Show>
+  )
 }, root!)

@@ -99,8 +99,8 @@ OpenControl lets you control your infrastructure with AI.
    const server = new sst.aws.OpenControl("MyServer", {
      server: {
        handler: "src/opencontrol.handler",
-       link: [anthropicKey]
-     }
+       link: [anthropicKey],
+     },
    })
    ```
 
@@ -114,8 +114,8 @@ OpenControl lets you control your infrastructure with AI.
    const server = new sst.aws.OpenControl("MyServer", {
      server: {
        handler: "src/opencontrol.handler",
-       link: [bucket]
-     }
+       link: [bucket],
+     },
    })
    ```
 
@@ -131,8 +131,8 @@ OpenControl lets you control your infrastructure with AI.
        handler: "src/opencontrol.handler",
        policies: $dev
          ? ["arn:aws:iam::aws:policy/AdministratorAccess"]
-         : ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
-     }
+         : ["arn:aws:iam::aws:policy/ReadOnlyAccess"],
+     },
    })
    ```
 
@@ -145,7 +145,7 @@ OpenControl lets you control your infrastructure with AI.
    ```ts title="sst.config.ts"
    return {
      OpenControlUrl: server.url,
-     OpenControlPassword: server.password
+     OpenControlPassword: server.password,
    }
    ```
 

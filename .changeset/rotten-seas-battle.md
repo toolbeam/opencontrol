@@ -1,0 +1,5 @@
+---
+"opencontrol": patch
+---
+
+mcp client

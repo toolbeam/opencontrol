@@ -20,9 +20,9 @@
   "dependencies": {
     "@ai-sdk/anthropic": "1.1.17",
     "@ai-sdk/openai": "1.2.5",
-    "opencontrol": "workspace:*",
     "ai": "4.1.61",
     "hono": "4.7.4",
+    "opencontrol": "workspace:*",
     "solid-js": "^1.9.5"
   }
 }

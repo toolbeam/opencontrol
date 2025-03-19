@@ -29,7 +29,7 @@ OpenControl is a gateway that lets an LLM access any function from your codebase
    ```bash
    npm install opencontrol hono @ai-sdk/anthropic
    ```
- 
+
    Here are we are going to use Anthropic's Claude.
 
 2. **Create the server**
@@ -41,12 +41,12 @@ OpenControl is a gateway that lets an LLM access any function from your codebase
    ```ts title=src/opencontrol.ts
    import { create } from "opencontrol"
    import { handle } from "hono/aws-lambda"
- 
+
    const app = create({
      // model: ...,
      // tools: [ ]
    })
- 
+
    export const handler = handle(app)
    ```
 
@@ -55,7 +55,7 @@ OpenControl is a gateway that lets an LLM access any function from your codebase
    ```diff lang=ts title=src/opencontrol.ts
    + import { Resource } from "sst"
    + import { createAnthropic } from "@ai-sdk/anthropic"
- 
+
    const app = create({
    +  model: createAnthropic({
    +    apiKey: Resource.AnthropicKey.value,
@@ -68,7 +68,7 @@ OpenControl is a gateway that lets an LLM access any function from your codebase
    ```diff lang=ts title=src/opencontrol.ts
    + import { tool } from "opencontrol/tool"
    + import { Inventory } from "@acme/core/inventory/index"
- 
+
    + const inventory = tool({
    +   name: "inventory_record",
    +   description: "Record new inventory event to track in or out amounts",
@@ -77,7 +77,7 @@ OpenControl is a gateway that lets an LLM access any function from your codebase
    +     return Inventory.record(input)
    +   }
    + })
- 
+
    const app = create({
      tools: [
    +    inventory
@@ -88,50 +88,50 @@ OpenControl is a gateway that lets an LLM access any function from your codebase
 5. **Infrastructure**
 
    We are using SST here, but you can since **OpenControl is just a Hono app, you can deploy it however you want**.
- 
+
    ```ts title="sst.config.ts" {1,6}
    const anthropicKey = new sst.Secret("AnthropicKey")
-   
+
    const server = new sst.aws.OpenControl("MyServer", {
      server: {
        handler: "src/opencontrol.handler",
-       link: [anthropicKey]
-     }
+       link: [anthropicKey],
+     },
    })
    ```
- 
+
    We are defining a secret for the Anthropic API key and linking it to our OpenControl server.
 
 6. **Link any resources**
 
    ```ts title="sst.config.ts" {6}
    const bucket = new sst.aws.Bucket("MyBucket")
- 
+
    const server = new sst.aws.OpenControl("MyServer", {
      server: {
        handler: "src/opencontrol.handler",
-       link: [bucket]
-     }
+       link: [bucket],
+     },
    })
    ```
- 
+
    If your tools need to access to your resources, you can link them as well.
 
 7. **Grant permissions**
 
    If you are using the AWS tool, you'll need to give your OpenControl server permissions to access your AWS account.
- 
+
    ```ts title="sst.config.ts" {4-6}
    const server = new sst.aws.OpenControl("MyServer", {
      server: {
        handler: "src/opencontrol.handler",
        policies: $dev
          ? ["arn:aws:iam::aws:policy/AdministratorAccess"]
-         : ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
-     }
+         : ["arn:aws:iam::aws:policy/ReadOnlyAccess"],
+     },
    })
    ```
- 
+
    Here we are giving it admin access in dev but read-only access in prod.
 
 8. **Deploy**
@@ -141,7 +141,7 @@ OpenControl is a gateway that lets an LLM access any function from your codebase
    ```ts title="sst.config.ts"
    return {
      OpenControlUrl: server.url,
-     OpenControlPassword: server.password
+     OpenControlPassword: server.password,
    }
    ```
 
@@ -186,7 +186,7 @@ Here are some examples of the tools you can use with OpenControl.
       // @ts-ignore
       const client = new AWS[input.client]()
       return await client[input.command](input.args).promise()
-    }
+    },
   })
   ```
 
@@ -219,7 +219,7 @@ Here are some examples of the tools you can use with OpenControl.
       })
       if (!response.ok) throw new Error(await response.text())
       return response.text()
-    }
+    },
   })
   ```
 
@@ -238,9 +238,9 @@ Here are some examples of the tools you can use with OpenControl.
     async run(input) {
       return db.transaction(async (tx) => tx.execute(input.query), {
         accessMode: "read only",
-        isolationLevel: "read committed"
+        isolationLevel: "read committed",
       })
-    }
+    },
   })
 
   const databaseWrite = tool({
@@ -250,9 +250,9 @@ Here are some examples of the tools you can use with OpenControl.
     args: z.object({ query: z.string() }),
     async run(input) {
       return db.transaction(async (tx) => tx.execute(input.query), {
-        isolationLevel: "read committed"
+        isolationLevel: "read committed",
       })
-    }
+    },
   })
   ```
 

@@ -18,7 +18,7 @@ export default defineConfig({
     starlight({
       plugins: [theme()],
       title: "OpenControl",
-      description: "Self-hosted AI context protocol gateway.",
+      description: "Control your infrastructure with AI.",
       head: [
         {
           tag: "link",
@@ -77,7 +77,7 @@ export default defineConfig({
         Hero: "./src/components/Hero.astro",
       },
       customCss: ["./src/custom.css", "./src/styles/lander.css"],
-      sidebar: [{ label: "Intro", slug: "docs" }],
+      // sidebar: [{ label: "Intro", slug: "docs" }],
     }),
   ],
   markdown: {

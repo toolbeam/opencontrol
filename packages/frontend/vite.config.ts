@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [solidPlugin(), viteSingleFile()],
   server: {
     host: "0.0.0.0",
+    allowedHosts: true,
   },
   build: {
     target: "esnext",

@@ -3,19 +3,33 @@ import { Tool } from "./tool.js"
 import { createMcp } from "./mcp.js"
 import { cors } from "hono/cors"
 import HTML from "opencontrol-frontend/dist/index.html" with { type: "text" }
-import { setCookie, getCookie } from "hono/cookie"
+import { zValidator } from "@hono/zod-validator"
+import {
+  AISDKError,
+  APICallError,
+  LanguageModelV1,
+  LanguageModelV1CallOptions,
+} from "ai"
+import { z } from "zod"
+import { HTTPException } from "hono/http-exception"
+import { bearerAuth } from "hono/bearer-auth"
 
 export interface OpenControlOptions {
-  key?: string
+  tools: Tool[]
+  password?: string
+  model?: LanguageModelV1
 }
 
-export function create(input: {
-  tools: Tool[]
-  key?: string
-  anthropicApiKey?: string
-}) {
-  const mcp = createMcp({ tools: input.tools })
+export type App = ReturnType<typeof create>
 
+export function create(input: OpenControlOptions) {
+  const mcp = createMcp({ tools: input.tools })
+  const token =
+    input.password ||
+    process.env.OPENCONTROL_PASSWORD ||
+    process.env.OPENCONTROL_KEY ||
+    "password"
+  console.log("opencontrol password:", token)
   return new Hono()
     .use(
       cors({
@@ -25,32 +39,41 @@ export function create(input: {
         credentials: false,
       }),
     )
-    .get("/login/:key", (c) => {
-      setCookie(c, "key", c.req.param("key"), {
-        path: "/",
-        httpOnly: true,
-        sameSite: "strict",
-        maxAge: 60 * 60 * 24 * 30,
-      })
-      return c.redirect("/")
-    })
-    .use(async (c, next) => {
-      const key = getCookie(c, "key")
-      if (key !== input.key) return c.text("login at /login/:key")
-      return next()
-    })
     .get("/", (c) => {
-      if (!input.anthropicApiKey)
-        return c.text("Please set the anthropicApiKey to use built in chat")
-      return c.html(
-        HTML.replace("{ANTHROPIC_API_KEY}", input.anthropicApiKey || ""),
-      )
+      return c.html(HTML)
     })
+    .use(
+      bearerAuth({
+        token,
+      }),
+    )
+    .get("/auth", (c) => {
+      return c.json({})
+    })
+    .post(
+      "/generate",
+      zValidator("json", z.custom<LanguageModelV1CallOptions>()),
+      async (c) => {
+        if (!input.model)
+          throw new HTTPException(400, { message: "No model configured" })
+        const body = c.req.valid("json")
+        try {
+          const result = await input.model.doGenerate(body)
+          return c.json(result)
+        } catch (error) {
+          console.error(error)
+          if (error instanceof APICallError) {
+            throw new HTTPException(error.statusCode || (500 as any), {
+              message: "error",
+            })
+          }
+          throw new HTTPException(500, { message: "error" })
+        }
+      },
+    )
     .post("/mcp", async (c) => {
       const body = await c.req.json()
-      console.log("mcp", "request", body)
       const result = await mcp.process(body)
-      console.log("mcp", "result", result)
       return c.json(result)
     })
 }

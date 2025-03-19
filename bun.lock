@@ -15,6 +15,9 @@
       "name": "opencontrol-example-bun",
       "version": "0.0.9",
       "dependencies": {
+        "@ai-sdk/anthropic": "1.1.17",
+        "@ai-sdk/google": "1.1.25",
+        "@ai-sdk/openai": "1.2.5",
         "aws-sdk": "2.1692.0",
         "opencontrol": "workspace:*",
         "zod": "3.24.2",
@@ -27,6 +30,8 @@
         "@ai-sdk/anthropic": "1.1.17",
         "@ai-sdk/openai": "1.2.5",
         "ai": "4.1.61",
+        "hono": "4.7.4",
+        "opencontrol": "workspace:*",
         "solid-js": "^1.9.5",
       },
       "devDependencies": {
@@ -38,13 +43,14 @@
     },
     "packages/opencontrol": {
       "name": "opencontrol",
-      "version": "0.0.11",
+      "version": "0.0.12",
       "bin": {
         "opencontrol": "./bin/index.mjs",
       },
       "dependencies": {
         "@ai-sdk/anthropic": "1.1.17",
         "@ai-sdk/openai": "1.2.5",
+        "@hono/zod-validator": "0.4.3",
         "@modelcontextprotocol/sdk": "1.6.1",
         "@tsconfig/bun": "1.0.7",
         "ai": "4.1.61",
@@ -60,6 +66,8 @@
   },
   "packages": {
     "@ai-sdk/anthropic": ["@ai-sdk/anthropic@1.1.17", "", { "dependencies": { "@ai-sdk/provider": "1.0.11", "@ai-sdk/provider-utils": "2.1.13" }, "peerDependencies": { "zod": "^3.0.0" } }, "sha512-t4ipxope34TFvWa4SrFsg2//aAFk3hUv2gxlM5W39IdsT7Hq2nMxJIcXE6C19YdhE/0Kep32iv38BgPaDZet6A=="],
+
+    "@ai-sdk/google": ["@ai-sdk/google@1.1.25", "", { "dependencies": { "@ai-sdk/provider": "1.0.11", "@ai-sdk/provider-utils": "2.1.13" }, "peerDependencies": { "zod": "^3.0.0" } }, "sha512-4eIssVphgVmAAsrDqWbH+YH0LXgHpXXY7ye7yuxK+fobpDifZ7LLLEwsbjtg9mfjwSUJ4dSyI/L5mlZ1eQqu0A=="],
 
     "@ai-sdk/openai": ["@ai-sdk/openai@1.2.5", "", { "dependencies": { "@ai-sdk/provider": "1.0.11", "@ai-sdk/provider-utils": "2.1.13" }, "peerDependencies": { "zod": "^3.0.0" } }, "sha512-COK7LzspgQQh5Yq070xfDdVMvp8WX592rXRaMaYNNqu1xpzahxDcM24aF9xgKYWuYH0UMoOw4UmWGwGxr6ygIg=="],
 
@@ -192,6 +200,8 @@
     "@esbuild/win32-ia32": ["@esbuild/win32-ia32@0.25.1", "", { "os": "win32", "cpu": "ia32" }, "sha512-uOxSJCIcavSiT6UnBhBzE8wy3n0hOkJsBOzy7HDAuTDE++1DJMRRVCPGisULScHL+a/ZwdXPpXD3IyFKjA7K8A=="],
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.25.1", "", { "os": "win32", "cpu": "x64" }, "sha512-Y1EQdcfwMSeQN/ujR5VayLOJ1BHaK+ssyk0AEzPjC+t1lITgsnccPqFjb6V+LsTp/9Iov4ysfjxLaGJ9RPtkVg=="],
+
+    "@hono/zod-validator": ["@hono/zod-validator@0.4.3", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.19.1" } }, "sha512-xIgMYXDyJ4Hj6ekm9T9Y27s080Nl9NXHcJkOvkXPhubOLj8hZkOL8pDnnXfvCf5xEE8Q4oMFenQUZZREUY2gqQ=="],
 
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.8", "", { "dependencies": { "@jridgewell/set-array": "^1.2.1", "@jridgewell/sourcemap-codec": "^1.4.10", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA=="],
 

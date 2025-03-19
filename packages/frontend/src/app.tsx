@@ -1,22 +1,11 @@
-import { createAnthropic } from "@ai-sdk/anthropic"
-import { createOpenAI } from "@ai-sdk/openai"
 import { LanguageModelV1Prompt } from "ai"
 import { createEffect, For, onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
 import SYSTEM_PROMPT from "./system.txt?raw"
+import { hc } from "hono/client"
+import { type App } from "opencontrol"
+import { client } from "./client"
 
-const anthropic = createAnthropic({
-  apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY || "{ANTHROPIC_API_KEY}",
-  headers: {
-    "anthropic-dangerous-direct-browser-access": "true",
-  },
-})("claude-3-7-sonnet-20250219")
-
-const openai = createOpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-})("gpt-4o")
-
-const provider = anthropic
 
 const providerMetadata = {
   anthropic: {
@@ -26,52 +15,53 @@ const providerMetadata = {
   },
 }
 
-const OPENCONTROL_ENDPOINT = import.meta.env.VITE_OPENCONTROL_ENDPOINT || "mcp"
-const toolDefs = await fetch(OPENCONTROL_ENDPOINT, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
+// Define initial system messages once
+const getInitialPrompt = (): LanguageModelV1Prompt => [
+  {
+    role: "system",
+    content: SYSTEM_PROMPT,
+    providerMetadata: {
+      anthropic: {
+        cacheControl: {
+          type: "ephemeral",
+        },
+      },
+    },
   },
-  body: JSON.stringify({
-    jsonrpc: "2.0",
-    method: "tools/list",
-    id: "1",
-  }),
-})
-  .then((response) => response.json())
-  .then((response) => response.result.tools)
+  {
+    role: "system",
+    content: `The current date is ${new Date().toDateString()}`,
+    providerMetadata: {
+      anthropic: {
+        cacheControl: {
+          type: "ephemeral",
+        },
+      },
+    },
+  },
+];
 
 export function App() {
   let root: HTMLDivElement | undefined
+  let textarea: HTMLTextAreaElement | undefined
+
+  const toolDefs = client.mcp.$post({
+    json: {
+      jsonrpc: "2.0",
+      method: "tools/list",
+      id: "1",
+    }
+  })
+    .then((response) => response.json())
+    .then((response) => "tools" in response.result ? response.result.tools : [])
 
   const [store, setStore] = createStore<{
     prompt: LanguageModelV1Prompt
     isProcessing: boolean
+    rate: boolean
   }>({
-    prompt: [
-      {
-        role: "system",
-        content: SYSTEM_PROMPT,
-        providerMetadata: {
-          anthropic: {
-            cacheControl: {
-              type: "ephemeral",
-            },
-          },
-        },
-      },
-      {
-        role: "system",
-        content: `The current date is ${new Date().toDateString()}`,
-        providerMetadata: {
-          anthropic: {
-            cacheControl: {
-              type: "ephemeral",
-            },
-          },
-        },
-      },
-    ],
+    rate: false,
+    prompt: getInitialPrompt(),
     isProcessing: false,
   })
 
@@ -86,7 +76,7 @@ export function App() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && store.isProcessing) {
         setStore("isProcessing", false)
-        console.log("Processing cancelled by user")
+        textarea?.focus()
       }
     }
     window.addEventListener("keydown", handleKeyDown)
@@ -94,6 +84,10 @@ export function App() {
       window.removeEventListener("keydown", handleKeyDown)
     })
   })
+
+  function clearConversation() {
+    setStore("prompt", getInitialPrompt());
+  }
 
   async function send(message: string) {
     setStore("isProcessing", true)
@@ -114,12 +108,12 @@ export function App() {
         break
       }
 
-      try {
-        const result = await provider.doGenerate({
+      const response = await client.generate.$post({
+        json: {
           prompt: store.prompt,
           mode: {
             type: "regular",
-            tools: toolDefs.map((tool: any) => ({
+            tools: (await toolDefs).map((tool: any) => ({
               type: "function",
               name: tool.name,
               description: tool.description,
@@ -130,56 +124,73 @@ export function App() {
           },
           inputFormat: "messages",
           temperature: 1,
-        })
+        }
+      })
 
-        if (!store.isProcessing) continue
 
-        if (result.text) {
-          setStore("prompt", store.prompt.length, {
-            role: "assistant",
-            content: [
-              {
-                type: "text",
-                text: result.text,
-              },
-            ],
+      if (!store.isProcessing) continue
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          setStore("prompt", val => {
+            val.splice(2, 1)
+            console.log(val)
+            return [...val];
           })
         }
-
-        if (result.finishReason === "stop") {
-          setStore("isProcessing", false)
-          break
+        if (response.status === 429) {
+          setStore("rate", true)
         }
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        continue
+      }
 
-        if (result.finishReason === "tool-calls") {
-          for (const item of result.toolCalls!) {
-            console.log("calling tool", item.toolName, item.args)
-            setStore("prompt", store.prompt.length, {
-              role: "assistant",
-              content: result.toolCalls!.map((item) => ({
-                type: "tool-call",
-                toolName: item.toolName,
-                args: JSON.parse(item.args),
-                toolCallId: item.toolCallId,
-              })),
-            })
+      const result = await response.json()
 
-            const response = await fetch(OPENCONTROL_ENDPOINT, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
+      if (result.text) {
+        setStore("prompt", store.prompt.length, {
+          role: "assistant",
+          content: [
+            {
+              type: "text",
+              text: result.text,
+            },
+          ],
+        })
+      }
+
+      setStore("rate", false)
+
+      if (result.finishReason === "stop") {
+        setStore("isProcessing", false)
+        break
+      }
+
+      if (result.finishReason === "tool-calls") {
+        for (const item of result.toolCalls!) {
+          console.log("calling tool", item.toolName, item.args)
+          setStore("prompt", store.prompt.length, {
+            role: "assistant",
+            content: result.toolCalls!.map((item) => ({
+              type: "tool-call",
+              toolName: item.toolName,
+              args: JSON.parse(item.args),
+              toolCallId: item.toolCallId,
+            })),
+          })
+
+          const response = await client.mcp.$post({
+            json: {
+              jsonrpc: "2.0",
+              id: "2",
+              method: "tools/call",
+              params: {
+                name: item.toolName,
+                arguments: JSON.parse(item.args),
               },
-              body: JSON.stringify({
-                jsonrpc: "2.0",
-                id: "2",
-                method: "tools/call",
-                params: {
-                  name: item.toolName,
-                  arguments: JSON.parse(item.args),
-                },
-              }),
-            }).then((response) => response.json())
-
+            }
+          }).then(r => r.json())
+          if ("content" in response.result) {
             setStore("prompt", store.prompt.length, {
               role: "tool",
               content: [
@@ -192,14 +203,12 @@ export function App() {
               ],
             })
           }
+          else break
         }
-      } catch (error) {
-        console.error("Error in message processing:", error)
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-        continue
       }
     }
     setStore("isProcessing", false)
+    textarea?.focus()
   }
 
   return (
@@ -269,16 +278,30 @@ export function App() {
             <div data-slot="thinking-spinner">
               <div data-slot="spinner-inner"></div>
             </div>
-            <div data-slot="thinking-text">Thinking</div>
+            <div data-slot="thinking-text">
+              {store.rate && "Rate limited, retrying..."}
+              {!store.rate && "Thinking"}
+            </div>
           </div>
         )}
 
         <div data-slot="spacer"></div>
       </div>
       <div data-component="footer">
+        {store.prompt.length > 2 && !store.isProcessing && (
+          <div data-slot="clear">
+            <button
+              data-component="clear-button"
+              onClick={clearConversation}
+            >
+              Clear
+            </button>
+          </div>
+        )}
         <div data-slot="chat">
           <textarea
             autofocus
+            ref={textarea}
             disabled={store.isProcessing}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !store.isProcessing) {
@@ -289,7 +312,7 @@ export function App() {
             }}
             data-component="input"
             placeholder={
-              store.isProcessing ? "Processing..." : "Type your message here"
+              store.isProcessing ? "Processing... (Press Esc to cancel)" : "Type your message here"
             }
           />
         </div>

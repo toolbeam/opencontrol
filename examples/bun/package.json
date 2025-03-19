@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.9",
   "dependencies": {
+    "@ai-sdk/anthropic": "1.1.17",
+    "@ai-sdk/google": "1.1.25",
+    "@ai-sdk/openai": "1.2.5",
     "aws-sdk": "2.1692.0",
     "opencontrol": "workspace:*",
     "zod": "3.24.2"

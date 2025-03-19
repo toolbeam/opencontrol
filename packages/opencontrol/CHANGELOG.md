@@ -1,5 +1,11 @@
 # opencontrol
 
+## 0.0.15
+
+### Patch Changes
+
+- 611549a: mcp client
+
 ## 0.0.14
 
 ### Patch Changes

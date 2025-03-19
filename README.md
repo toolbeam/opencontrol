@@ -89,6 +89,10 @@ OpenControl lets you control your infrastructure with AI.
 
    We are using SST here, but you can since **OpenControl is just a Hono app, you can deploy it however you want**.
 
+   ```bash
+   touch sst.config.ts
+   ```
+
    ```ts title="sst.config.ts" {1,6}
    const anthropicKey = new sst.Secret("AnthropicKey")
 

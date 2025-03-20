@@ -45,7 +45,11 @@ export function createMcp(input: { tools: Tool[] }) {
                 ? (zodToJsonSchema(tool.args as any, "args").definitions![
                     "args"
                   ] as any)
-                : { type: "object", properties: {} },
+                : {
+                    type: "object",
+                    properties: {},
+                    additionalProperties: false,
+                  },
               description: tool.description,
             })),
           } satisfies ListToolsResult

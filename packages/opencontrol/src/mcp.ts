@@ -42,7 +42,7 @@ export function createMcp(input: { tools: Tool[] }) {
             tools: input.tools.map((tool) => ({
               name: tool.name,
               inputSchema: zodToJsonSchema(
-                (tool.args || z.object({}) as any),
+                tool.args || (z.object({}) as any),
                 "args",
               ).definitions!["args"] as any,
               description: tool.description,

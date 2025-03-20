@@ -1,0 +1,33 @@
+---
+title: How it works
+description: How OpenControl works internally.
+template: doc
+---
+
+import Diagram from "../../../assets/diagram.svg";
+
+OpenControl is a [Hono](https://honojs.dev/) server that is meant to be deployed within your infrastructure. This means that it gets access to both your **codebase** and **infrastructure** by default.
+
+<Diagram />
+
+It exposes a couple of endpoints:
+
+- **`/`**
+
+  This serves the chat client for OpenControl.
+
+- **`/auth`**
+
+  This serves an authentication endpoint that the chat client will use.
+
+- **`/mcp`**
+
+  This endpoint returns the tools that you are exposing to the chat client. Tool is just some code that can be executed by the chat client.
+
+  Since OpenControl lives in your codebase, a tool can just execute any code in your codebase, or talk to your database, or AWS account. Or anything your code has access to.
+
+- **`/generate`**
+
+  This endpoint calls the models with the messages from the chat client and the list of tools. The models might respond with a message asking to execute a given tool.
+
+  The client does this by running the `/mcp` endpoint and returning the response back to the models. It conitnues to do run this loop till the model is done.

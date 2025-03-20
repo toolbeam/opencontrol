@@ -14,6 +14,9 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
+  experimental: {
+    svg: true,
+  },
   integrations: [
     starlight({
       plugins: [theme()],
@@ -77,7 +80,11 @@ export default defineConfig({
         Hero: "./src/components/Hero.astro",
       },
       customCss: ["./src/custom.css", "./src/styles/lander.css"],
-      // sidebar: [{ label: "Intro", slug: "docs" }],
+      sidebar: [
+        { label: "Intro", slug: "docs" },
+        "docs/tools",
+        "docs/how-it-works",
+      ],
     }),
   ],
   markdown: {

@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import config from "virtual:starlight/user-config";
 import type { Props } from '@astrojs/starlight/props';
 import screenshot from "../assets/screenshot.png";
+import Diagram from "../assets/diagram.svg";
 
 const { data } = Astro.locals.starlightRoute.entry;
 const { title = data.title, tagline, image, actions = [] } = data.hero || {};
@@ -43,13 +44,28 @@ if (image) {
 
     <section class="cta">
       <div class="col1">
-        <a href="https://youtu.be/y-VFQ2UkDSM?si=fkuhgDSCOcYK6PVg" target="_blank">Learn more</a>
+        <a href="/docs/how-it-works/">Learn more</a>
       </div>
       <div class="col2">
-      <a target="_blank" href={`${config.social.github.url}/tree/master?tab=readme-ov-file#get-started`}>Get started</a>
+        <a href="/docs/">Get started</a>
       </div>
       <div class="col3">
         <a target="_blank" href={config.social.github.url}>Star on GitHub</a>
+      </div>
+    </section>
+
+    <section class="images">
+      <div>
+        <p>Client</p>
+        <div>
+          <Image src={screenshot} alt="OpenControl screenshot" class="image" />
+        </div>
+      </div>
+      <div>
+        <p>Architecture</p>
+        <div>
+          <Diagram class="image" />
+        </div>
       </div>
     </section>
 
@@ -60,10 +76,6 @@ if (image) {
       <li><b>Universal</b>: Works with any model that supports tool calling. Like the models from Anthropic, OpenAI, or Google.</li>
       <li><b>Secure</b>: Supports authentication through any OAuth provider.</li>
       </ul>
-    </section>
-
-    <section class="content">
-      <Image src={screenshot} alt="OpenControl screenshot"class="screenshot" />
     </section>
 
     <section class="footer">
@@ -135,6 +147,54 @@ section.cta {
     border-left: 2px solid var(--sl-color-white);
   }
 }
+section.images {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  border-top: 2px solid var(--sl-color-white);
+
+  & > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--padding) / 4);
+    padding: calc(var(--padding) / 2);
+    border-width: 0;
+    border-style: solid;
+    border-color: var(--sl-color-white);
+
+    & > div {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  p {
+    letter-spacing: -0.03125rem;
+    text-transform: uppercase;
+    color: var(--sl-color-text-dimmed);
+  }
+
+  & > div + div {
+    border-width: 0 0 0 2px;
+  }
+
+  @media (max-width: 30rem) {
+    & {
+      flex-direction: column;
+    }
+    & > div + div {
+      border-width: 2px 0 0 0;
+    }
+  }
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+}
 
 section.content {
   border-top: 2px solid var(--sl-color-white);
@@ -151,11 +211,6 @@ section.content {
       text-transform: uppercase;
     }
   }
-}
-
-.screenshot {
-  width: 100%;
-  height: auto;
 }
 
 section.approach {

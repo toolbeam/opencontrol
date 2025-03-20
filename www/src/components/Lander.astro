@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import config from "virtual:starlight/user-config";
 import type { Props } from '@astrojs/starlight/props';
+import screenshot from "../assets/screenshot.png";
 
 const { data } = Astro.locals.starlightRoute.entry;
 const { title = data.title, tagline, image, actions = [] } = data.hero || {};
@@ -59,6 +60,10 @@ if (image) {
       <li><b>Universal</b>: Works with any model that supports tool calling. Like the models from Anthropic, OpenAI, or Google.</li>
       <li><b>Secure</b>: Supports authentication through any OAuth provider.</li>
       </ul>
+    </section>
+
+    <section class="content">
+      <Image src={screenshot} alt="OpenControl screenshot"class="screenshot" />
     </section>
 
     <section class="footer">
@@ -146,6 +151,11 @@ section.content {
       text-transform: uppercase;
     }
   }
+}
+
+.screenshot {
+  width: 100%;
+  height: auto;
 }
 
 section.approach {

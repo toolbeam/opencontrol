@@ -17,10 +17,12 @@
 
 OpenControl lets you control your infrastructure with AI.
 
-**Self-hosted**: Runs in your infrastructure with access to internal resources and functions from your codebase; deploys to AWS Lambda, Cloudflare Workers, or containers.
-**Unified gateway**: Generates a single HTTP endpoint that you can chat with or register with your AI client and it exposes all your tools.
-**Universal**: Works with any model that supports tool calling. Like the models from Anthropic, OpenAI, or Google.
-**Secure**: Supports authentication through any OAuth provider.
+- **Self-hosted**: Runs in your infrastructure with access to internal resources and functions from your codebase; deploys to AWS Lambda, Cloudflare Workers, or containers.
+- **Unified gateway**: Generates a single HTTP endpoint that you can chat with or register with your AI client and it exposes all your tools.
+- **Universal**: Works with any model that supports tool calling. Like the models from Anthropic, OpenAI, or Google.
+- **Secure**: Supports authentication through any OAuth provider.
+
+![OpenControl screenshot](www/src/assets/screenshot.png)
 
 ## Get started
 

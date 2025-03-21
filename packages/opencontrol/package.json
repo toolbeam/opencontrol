@@ -7,7 +7,8 @@
     "opencontrol": "./bin/index.mjs"
   },
   "scripts": {
-    "build": "./script/build.ts"
+    "build": "./script/build.ts",
+    "dev": "bun run ./script/dev.ts"
   },
   "exports": {
     ".": {

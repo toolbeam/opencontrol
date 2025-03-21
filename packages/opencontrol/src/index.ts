@@ -69,6 +69,7 @@ export function create(input: OpenControlOptions) {
           const result = await input.model.doGenerate(body)
           return c.json(result)
         } catch (error) {
+          console.error(error)
           if (error instanceof APICallError) {
             throw new HTTPException(error.statusCode || (500 as any), {
               message: "error",

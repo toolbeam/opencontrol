@@ -18,6 +18,7 @@ export interface OpenControlOptions {
   tools: Tool[]
   password?: string
   model?: LanguageModelV1
+  app?: Hono
 }
 
 export type App = ReturnType<typeof create>
@@ -30,7 +31,8 @@ export function create(input: OpenControlOptions) {
     process.env.OPENCONTROL_KEY ||
     "password"
   console.log("opencontrol password:", token)
-  return new Hono()
+  const app = input.app ?? new Hono()
+  return app
     .use(
       cors({
         origin: "*",

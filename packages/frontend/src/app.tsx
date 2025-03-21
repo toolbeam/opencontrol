@@ -1,7 +1,6 @@
 import { LanguageModelV1Prompt } from "ai"
 import { createEffect, For, onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
-import SYSTEM_PROMPT from "./system.txt?raw"
 import { hc } from "hono/client"
 import { type App } from "opencontrol"
 import { client } from "./client"
@@ -15,10 +14,10 @@ const providerMetadata = {
 }
 
 // Define initial system messages once
-const getInitialPrompt = (): LanguageModelV1Prompt => [
+const getInitialPrompt = (systemPrompt: string): LanguageModelV1Prompt => [
   {
     role: "system",
-    content: SYSTEM_PROMPT,
+    content: systemPrompt,
     providerMetadata: {
       anthropic: {
         cacheControl: {
@@ -40,7 +39,7 @@ const getInitialPrompt = (): LanguageModelV1Prompt => [
   },
 ]
 
-export function App() {
+export function App({ systemPrompt }: { systemPrompt: string }) {
   let root: HTMLDivElement | undefined
   let textarea: HTMLTextAreaElement | undefined
 
@@ -63,7 +62,7 @@ export function App() {
     rate: boolean
   }>({
     rate: false,
-    prompt: getInitialPrompt(),
+    prompt: getInitialPrompt(systemPrompt),
     isProcessing: false,
   })
 
@@ -88,7 +87,7 @@ export function App() {
   })
 
   function clearConversation() {
-    setStore("prompt", getInitialPrompt())
+    setStore("prompt", getInitialPrompt(systemPrompt))
   }
 
   async function send(message: string) {

@@ -13,12 +13,14 @@ import {
 import { z } from "zod"
 import { HTTPException } from "hono/http-exception"
 import { bearerAuth } from "hono/bearer-auth"
+import defaultSystemPrompt from "./system.txt" with { type: "text" }
 
 export interface OpenControlOptions {
   tools: Tool[]
   password?: string
   model?: LanguageModelV1
   app?: Hono
+  systemPrompt?: string
 }
 
 export type App = ReturnType<typeof create>
@@ -30,7 +32,9 @@ export function create(input: OpenControlOptions) {
     process.env.OPENCONTROL_PASSWORD ||
     process.env.OPENCONTROL_KEY ||
     "password"
+  const systemPrompt = input.systemPrompt ?? defaultSystemPrompt
   console.log("opencontrol password:", token)
+  console.log("opencontrol system prompt:", systemPrompt)
   const app = input.app ?? new Hono()
   return app
     .use(
@@ -50,7 +54,9 @@ export function create(input: OpenControlOptions) {
       }),
     )
     .get("/auth", (c) => {
-      return c.json({})
+      return c.json({
+        systemPrompt,
+      })
     })
     .post(
       "/generate",
@@ -63,7 +69,6 @@ export function create(input: OpenControlOptions) {
           const result = await input.model.doGenerate(body)
           return c.json(result)
         } catch (error) {
-          console.error(error)
           if (error instanceof APICallError) {
             throw new HTTPException(error.statusCode || (500 as any), {
               message: "error",

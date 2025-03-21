@@ -172,12 +172,14 @@ export function App() {
           console.log("calling tool", item.toolName, item.args)
           setStore("prompt", store.prompt.length, {
             role: "assistant",
-            content: result.toolCalls!.map((item) => ({
-              type: "tool-call",
-              toolName: item.toolName,
-              args: JSON.parse(item.args),
-              toolCallId: item.toolCallId,
-            })),
+            content: [
+              {
+                type: "tool-call",
+                toolName: item.toolName,
+                args: JSON.parse(item.args),
+                toolCallId: item.toolCallId,
+              },
+            ],
           })
 
           const response = await client.mcp

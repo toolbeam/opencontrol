@@ -11,6 +11,18 @@
         "typescript": "^5.8.2",
       },
     },
+    "app/web": {
+      "name": "opencontrol-hosted-web",
+      "version": "0.0.0",
+      "dependencies": {
+        "solid-js": "^1.9.5",
+      },
+      "devDependencies": {
+        "typescript": "^5.8.2",
+        "vite": "^6.0.0",
+        "vite-plugin-solid": "^2.11.6",
+      },
+    },
     "examples/bun": {
       "name": "opencontrol-example-bun",
       "version": "0.0.9",
@@ -24,7 +36,7 @@
     },
     "packages/frontend": {
       "name": "opencontrol-frontend",
-      "version": "0.0.0",
+      "version": "0.0.4",
       "dependencies": {
         "ai": "4.1.63",
         "hono": "4.7.4",
@@ -40,7 +52,7 @@
     },
     "packages/opencontrol": {
       "name": "opencontrol",
-      "version": "0.0.12",
+      "version": "0.0.16",
       "bin": {
         "opencontrol": "./bin/index.mjs",
       },
@@ -555,6 +567,8 @@
     "opencontrol-example-bun": ["opencontrol-example-bun@workspace:examples/bun"],
 
     "opencontrol-frontend": ["opencontrol-frontend@workspace:packages/frontend"],
+
+    "opencontrol-hosted-web": ["opencontrol-hosted-web@workspace:app/web"],
 
     "os-tmpdir": ["os-tmpdir@1.0.2", "", {}, "sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g=="],
 

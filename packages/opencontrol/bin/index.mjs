@@ -7,16 +7,19 @@ const server = new Server({
   version: "0.0.1",
 })
 
+const url = process.argv[2]
+const key = process.argv[3]
+
 class ProxyTransport {
   #stdio = new StdioServerTransport()
   async start() {
     this.#stdio.onmessage = (message) => {
       if ("id" in message) {
-        fetch(process.argv[2] + "/mcp", {
+        fetch(url + "/mcp", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${process.argv[3]}`,
+            authorization: `Bearer ${key}`,
           },
           body: JSON.stringify(message),
         }).then(async (response) => this.send(await response.json()))

@@ -1,0 +1,79 @@
+---
+title: Usage
+description: How to use an OpenControl server.
+template: doc
+---
+
+import { Image } from 'astro:assets';
+import screenshot from "../../../assets/screenshot.png";
+
+Once [deployed](/docs/), OpenControl can be accessed through the built-in chat client and or your MCP client of choice.
+
+---
+
+## Default client
+
+By default, OpenControl deploys a chat client at the `/` endpoint.
+
+<Image src={screenshot} alt="OpenControl chat client" />
+
+If you've deployed it with SST, the [`OpenControl`](https://sst.dev/docs/component/aws/opencontrol/) component generates a password you can use. You can print this out on deploy.
+
+```ts title="sst.config.ts"
+return {
+  OpenControlUrl: server.url,
+  OpenControlPassword: server.password
+}
+```
+
+Now if you navigate to the URL, you can log in with the password and talk to your tools.
+
+---
+
+## MCP clients
+
+You can also use OpenControl with any MCP client.
+
+---
+
+### Claude Code
+
+To connect [Claude Code](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview) to your OpenControl server:
+
+```bash
+claude mcp add MyOpenControl npx opencontrol https://<opencontrol-url> <key>
+```
+
+Replace `<opencontrol-url>` with your OpenControl server URL and `<key>` with the password. And _"MyOpenControl"_ is whatever you want to name it in Claude Code.
+
+---
+
+### Windsurf
+
+To connect your OpenControl server to [Windsurf](https://codeium.com/windsurf).
+
+1. Go to **Settings**
+2. Select **AI Assistant**
+3. Navigate to **Model Context Protocol**
+4. Click **+** to add a server
+5. Configure with:
+   - **Display Name**: _"MyOpenControl"_ or similar
+   - **URL**: Your OpenControl server URL
+   - **Authentication Method**: "Bearer Token"
+   - **Bearer Token**: Your OpenControl password
+
+---
+
+### Cursor
+
+To add your OpenControl server to [Cursor](https://www.cursor.com/):
+
+1. Open Cursor **Settings**
+2. Go to the **AI tab**
+3. Scroll to **Model Context Protocol**
+4. Click **Add MCP Server**
+5. Configure with:
+   - **Name**: _"MyOpenControl"_ or similar
+   - **Command**: `npx opencontrol`
+   - **URL**: Your OpenControl server URL
+   - **Authentication**: "OAuth Bearer" with your OpenControl password as the token

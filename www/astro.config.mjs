@@ -83,6 +83,7 @@ export default defineConfig({
       sidebar: [
         { label: "Intro", slug: "docs" },
         "docs/tools",
+        "docs/usage",
         "docs/how-it-works",
       ],
     }),

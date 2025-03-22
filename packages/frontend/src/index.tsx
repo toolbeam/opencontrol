@@ -17,6 +17,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(() => {
   const [ready, setReady] = createSignal(false)
+  const [systemPrompt, setSystemPrompt] = createSignal("")
   onMount(async () => {
     setPassword(localStorage.getItem("opencontrol:password"))
     while (true) {
@@ -40,13 +41,18 @@ render(() => {
         alert("bad password")
         continue
       }
+
+      const data = await result.json()
+      // @ts-expect-error
+      setSystemPrompt(data.systemPrompt)
+
       setReady(true)
       break
     }
   })
   return (
     <Show when={ready()}>
-      <App />
+      <App systemPrompt={systemPrompt()} />
     </Show>
   )
 }, root!)

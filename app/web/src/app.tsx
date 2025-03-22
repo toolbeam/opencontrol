@@ -3,17 +3,21 @@
 import { Router } from '@solidjs/router';
 import routes from '~solid-pages';
 import './index.css';
+import { MetaProvider } from '@solidjs/meta';
 
-export function App() {
+export function App(props: { url?: string }) {
   return (
-    <Router
-      children={routes}
-      root={props => (
-        <div>
-          hello
-          {props.children}
-        </div>
-      )}
-    />
+    <MetaProvider>
+      <Router
+        children={routes}
+        url={props.url}
+        root={props => (
+          <div>
+            hello
+            {props.children}
+          </div>
+        )}
+      />
+    </MetaProvider>
   );
 }

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@opencontrol/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@rocicorp/zero": "0.17.2025031904",
+    "drizzle-orm": "0.41.0",
+    "ulid": "3.0.0"
+  },
+  "exports": {
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "db": "sst shell drizzle-kit"
+  },
+  "devDependencies": {
+    "drizzle-kit": "0.30.5"
+  }
+}

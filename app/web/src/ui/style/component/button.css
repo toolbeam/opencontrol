@@ -1,0 +1,81 @@
+[data-component="button"] {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  height: var(--space-8);
+  border-radius: 5px;
+  outline: none;
+  font-weight: 500;
+  padding: 0 var(--space-3-5);
+
+  &:hover [data-slot="icon"] {
+    color: var(--color-foreground-2);
+  }
+
+  &:has([data-slot="icon"]:first-child) {
+    padding-left: var(--space-2);
+  }
+
+  &:has([data-slot="icon"]:last-child) {
+    padding-right: var(--space-2);
+  }
+
+  &[data-color="primary"] {
+    background: var(--color-primary);
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.2) 0px 0.75px 0px 0px inset;
+
+    &:hover {
+      background: oklch(from var(--color-primary) calc(l + 0.03) c h);
+    }
+  }
+
+  &[data-color="secondary"] {
+    background: var(--color-bravo200);
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.2) 0px 0.75px 0px 0px inset;
+
+    &:hover {
+      background: var(--color-bravo300);
+    }
+  }
+
+  &[data-color="ghost"] {
+    background: transparent;
+
+    &:hover {
+      background: oklch(1 0 0 / 0.04);
+    }
+  }
+
+  &[data-size="sm"] {
+    height: var(--space-7);
+    border-radius: 5px;
+    padding: var(--space-2-5);
+
+    [data-slot="icon"] {
+      width: var(--space-4);
+      height: var(--space-4);
+    }
+
+    &:has([data-slot="icon"]:first-child) {
+      padding-left: var(--space-1);
+    }
+
+    &:has([data-slot="icon"]:last-child) {
+      padding-right: var(--space-1);
+    }
+  }
+
+  [data-slot="icon"] {
+    width: var(--space-4);
+    height: var(--space-4);
+    color: var(--color-foreground-1);
+    transition: transform 0.2s ease;
+  }
+
+  &[data-rotate] [data-slot="icon"] {
+    transform: rotate(180deg);
+  }
+}

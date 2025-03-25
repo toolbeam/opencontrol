@@ -5,9 +5,9 @@ import { generateHydrationScript, getAssets } from "solid-js/web"
 const dist = import.meta.resolve("../dist").replace("file://", "")
 const serverEntry = await import("../dist/server/entry-server.js")
 const template = fs.readFileSync(path.join(dist, "client/index.html"), "utf-8")
+fs.writeFileSync(path.join(dist, "client/fallback.html"), template)
 
-const routes = ["/"]
-
+const routes = ["/", "/foo"]
 for (const route of routes) {
   const { app } = serverEntry.render({ url: route })
   const html = template

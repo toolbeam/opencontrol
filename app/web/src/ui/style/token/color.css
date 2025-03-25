@@ -1,0 +1,22 @@
+body {
+  --base-hue: 260;
+}
+
+[data-color-mode="dark"] {
+  --color-alpha100: oklch(17% 4% var(--base-hue));
+  --color-alpha200: color-mix(in oklch, var(--color-primary) 3%, var(--color-alpha100));
+  --color-alpha300: color-mix(in oklch, var(--color-primary) 9.5%, var(--color-alpha100));
+  --color-alpha400: color-mix(in oklch, var(--color-primary) 33%, var(--color-alpha100));
+  --color-alpha500: color-mix(in oklch, var(--color-primary) 60%, var(--color-alpha100));
+  --color-alpha600: color-mix(in oklch, var(--color-primary) 65%, var(--color-alpha100));
+
+  --color-bravo100: oklch(22.19% 4% var(--base-hue));
+  --color-bravo200: oklch(from var(--color-bravo100) calc(l + 0.06) c h);
+  --color-bravo300: oklch(from var(--color-bravo100) calc(l + 0.10) c h);
+  --color-bravo400: oklch(from var(--color-bravo100) calc(l + 0.19) c h);
+
+  --color-foreground100: white;
+
+}
+
+[data-color-mode="light"] {}

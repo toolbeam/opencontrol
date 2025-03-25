@@ -12,15 +12,15 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.8.2",
-    "vite": "^6.0.0",
+    "typescript": "5.8.2",
+    "vite": "6.2.2",
     "vite-plugin-singlefile": "2.2.0",
-    "vite-plugin-solid": "^2.11.6"
+    "vite-plugin-solid": "2.11.6"
   },
   "dependencies": {
     "ai": "4.1.63",
     "hono": "4.7.4",
     "opencontrol": "workspace:*",
-    "solid-js": "^1.9.5"
+    "solid-js": "1.9.5"
   }
 }

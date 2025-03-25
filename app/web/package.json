@@ -1,5 +1,5 @@
 {
-  "name": "opencontrol-app-web",
+  "name": "@opencontrol/web",
   "version": "0.0.0",
   "private": true,
   "description": "",
@@ -7,22 +7,25 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "bun build:client && bun build:server && bun build:static",
+    "build": "bun build:server && bun build:client",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
-    "build:static": "bun run ./scripts/render.mjs",
     "serve": "vite preview"
   },
   "license": "MIT",
   "devDependencies": {
     "typescript": "5.8.2",
     "vite": "6.2.2",
-    "vite-plugin-solid": "2.11.6",
-    "vite-plugin-pages": "0.32.5"
+    "vite-plugin-pages": "0.32.5",
+    "vite-plugin-solid": "2.11.6"
   },
   "dependencies": {
+    "@kobalte/core": "0.13.9",
+    "@openauthjs/solid": "0.0.0-20250322224806",
+    "@rocicorp/zero": "0.17.2025031904",
     "@solidjs/meta": "0.29.4",
     "@solidjs/router": "0.15.3",
-    "solid-js": "1.9.5"
+    "solid-js": "1.9.5",
+    "solid-list": "0.3.0"
   }
 }

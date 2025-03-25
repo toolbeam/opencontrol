@@ -1,0 +1,20 @@
+/* tokens */
+@import "./token/color.css";
+@import "./token/reset.css";
+@import "./token/animation.css";
+@import "./token/font.css";
+@import "./token/space.css";
+@import "./token/radius.css";
+
+/* components */
+@import "./component/button.css";
+@import "./component/dialog.css";
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1;
+  color: var(--color-foreground100);
+  background-color: var(--color-alpha100);
+  cursor: default;
+  user-select: none;
+}

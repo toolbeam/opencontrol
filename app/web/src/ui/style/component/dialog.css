@@ -1,0 +1,109 @@
+[data-component="dialog-overlay"] {
+  pointer-events: none !important;
+  position: fixed;
+  inset: 0;
+  animation-name: fadeOut;
+  animation-duration: 200ms;
+  animation-timing-function: ease;
+  opacity: 0;
+
+  &[data-expanded] {
+    animation-name: fadeIn;
+    opacity: 1;
+    pointer-events: auto !important;
+  }
+}
+
+[data-component="dialog-center"] {
+  position: fixed;
+  inset: 0;
+  padding-top: 10vh;
+  justify-content: center;
+  pointer-events: none;
+
+  [data-slot="content"] {
+    width: 710px;
+    margin: 0 auto;
+    transition: 150ms width;
+    background-color: var(--color-bravo100);
+    border-radius: var(--radius-md);
+    border-width: 1px;
+    border-color: var(--color-bravo200);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    outline: none;
+    animation-name: zoomOut;
+    animation-duration: 200ms;
+    animation-timing-function: ease;
+    box-shadow:
+      0 2px 10px rgba(0, 0, 0, 0.1),
+      0 8px 20px rgba(0, 0, 0, 0.1),
+      0 16px 40px rgba(0, 0, 0, 0.1),
+      0 32px 80px rgba(0, 0, 0, 0.15),
+      0 48px 120px rgba(0, 0, 0, 0.15);
+
+    &[data-expanded] {
+      animation-name: zoomIn;
+    }
+
+    &[data-transition] {
+      animation-duration: 1ms;
+    }
+
+    &[data-size="sm"] {
+      width: 480px;
+    }
+
+    [data-slot="header"] {
+      display: flex;
+      padding: 0 var(--space-2);
+      padding-top: var(--space-2);
+
+      [data-slot="title"] {
+        font-size: var(--font-size-xs);
+        color: var(--color-foreground-1);
+        border-radius: 4px;
+        background: var(--color-bravo200);
+        padding: 0 var(--space-3);
+        height: var(--space-7);
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    [data-slot="main"] {
+      padding: 0 var(--space-3);
+    }
+
+    [data-slot="input"] {
+      font-size: var(--font-size-sm);
+      background: transparent;
+      caret-color: var(--color-primary);
+      font-family: var(--font-mono);
+      width: 100%;
+      resize: none;
+
+      &::placeholder {
+        color: var(--color-foreground-1);
+        opacity: 0.3;
+      }
+
+      &:focus {
+        outline: 0;
+        border: 0;
+      }
+    }
+
+    [data-slot="footer"] {
+      border-top: 1px solid var(--color-bravo200);
+      padding: var(--space-2);
+      display: flex;
+      gap: var(--space-4);
+      justify-content: end;
+    }
+
+
+  }
+}

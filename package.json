@@ -16,15 +16,17 @@
     "examples/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.28.1",
-    "@tsconfig/node22": "^22.0.0",
+    "@changesets/cli": "2.28.1",
+    "@tsconfig/node22": "22.0.0",
+    "@types/aws-lambda": "8.10.147",
     "@types/node": "^22.13.9",
     "prettier": "^3.5.3",
-    "typescript": "^5.8.2"
+    "sst": "3.10.6",
+    "typescript": "5.8.2"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "bun": ">=1.0.0"
+    "bun": ">=1.0.0",
+    "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
@@ -33,5 +35,14 @@
   "license": "MIT",
   "prettier": {
     "semi": false
-  }
+  },
+  "dependencies": {
+    "@rocicorp/zero": "0.17.2025031904",
+    "zod": "3.24.2"
+  },
+  "trustedDependencies": [
+    "@rocicorp/zero-sqlite3",
+    "esbuild",
+    "protobufjs"
+  ]
 }

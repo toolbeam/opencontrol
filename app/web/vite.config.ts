@@ -1,5 +1,6 @@
 import { defineConfig } from "vite"
 import solidPlugin from "vite-plugin-solid"
+import solidSvg from "vite-plugin-solid-svg"
 import pages from "vite-plugin-pages"
 import fs from "fs"
 import path from "path"
@@ -11,6 +12,7 @@ export default defineConfig({
       exclude: ["**/~*", "**/components/*"],
     }),
     solidPlugin({ ssr: true }),
+    solidSvg(),
     {
       name: "vite-plugin-solid-ssr-render",
       apply: (config, env) => {

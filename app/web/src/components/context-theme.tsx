@@ -22,7 +22,7 @@ export const { provider: ThemeProvider, use: useTheme } =
       },
     );
     createEffect(() => {
-      document.body.setAttribute("data-color-mode", store.mode);
+      document.documentElement.setAttribute("data-color-mode", store.mode);
     });
 
     return {

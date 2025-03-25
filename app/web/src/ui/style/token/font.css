@@ -14,8 +14,7 @@ body {
   --font-size-8xl: 6rem;
   --font-size-9xl: 8rem;
 
-  --font-mono: JetBrains Mono, monospace;
-  --font-sans: Inter, sans-serif;
-  ;
+  --font-mono: IBM Plex Mono, monospace;
+  --font-sans: Rubik, sans-serif;
 
 }

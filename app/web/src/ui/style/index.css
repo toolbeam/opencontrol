@@ -13,8 +13,8 @@
 body {
   font-family: var(--font-sans);
   line-height: 1;
-  color: var(--color-foreground100);
-  background-color: var(--color-alpha100);
+  color: var(--color-text);
+  background-color: var(--color-bg);
   cursor: default;
   user-select: none;
 }

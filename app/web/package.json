@@ -17,7 +17,8 @@
     "typescript": "5.8.2",
     "vite": "6.2.2",
     "vite-plugin-pages": "0.32.5",
-    "vite-plugin-solid": "2.11.6"
+    "vite-plugin-solid": "2.11.6",
+    "vite-plugin-solid-svg": "0.8.1"
   },
   "dependencies": {
     "@kobalte/core": "0.13.9",

@@ -8,7 +8,8 @@
     "build": "bun run --cwd packages/opencontrol build",
     "dev": "bun run --cwd packages/opencontrol dev",
     "format": "./scripts/format",
-    "release": "./scripts/release"
+    "release": "./scripts/release",
+    "sso": "aws sso login --sso-session=sst --no-browser --use-device-code"
   },
   "workspaces": [
     "packages/*",

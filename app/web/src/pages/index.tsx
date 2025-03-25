@@ -2,7 +2,7 @@ import { createEffect, Match, Switch } from "solid-js";
 import { useAccount } from "../components/context-account";
 import { Navigate } from "@solidjs/router";
 import { useOpenAuth } from "@openauthjs/solid"
-import Logo from "../assets/logomark.svg"
+import { IconLogomark } from "../ui/icons"
 
 export default function Index() {
   const auth = useOpenAuth()
@@ -13,7 +13,7 @@ export default function Index() {
         <Navigate href={`/${account.current!.workspaces[0].id}`} />
       </Match>
       <Match when={!account.current}>
-        <Logo />
+        <IconLogomark width="28" height="32" />
         <div>Landing page</div>
         <div onClick={() => auth.authorize()}>Login</div>
       </Match>

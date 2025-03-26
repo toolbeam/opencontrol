@@ -1,3 +1,4 @@
+import style from "./index.module.css"
 import { useQuery } from "@rocicorp/zero/solid"
 import { useZero } from "../components/context-zero"
 import { useDialog } from "../../ui/context-dialog"
@@ -6,11 +7,11 @@ import { DialogSelect } from "../../ui/dialog-select"
 
 export default function Index() {
   const zero = useZero()
-  const [users] = useQuery(() => zero.query.user.orderBy("time_seen", "desc"))
+  const [users] = useQuery(() => zero.query.user.related("workspace").orderBy("time_seen", "desc"))
   const dialog = useDialog()
 
   return (
-    <div>
+    <div class={style.root}>
       <h1>Users</h1>
       <ul>
         {users().map(x => (

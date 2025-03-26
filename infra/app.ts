@@ -12,6 +12,7 @@ const opencontrol = new sst.aws.OpenControl("OpenControl", {
   server: {
     handler: "app/function/src/opencontrol.handler",
     link: [...AllSecrets, postgres],
+    policies: ["arn:aws:iam::aws:policy/ReadOnlyAccess"],
   },
 })
 router.route("opencontrol-" + domain, opencontrol.url)
@@ -36,5 +37,4 @@ const site = new sst.aws.StaticSite("Web", {
   },
   path: "app/web",
 })
-
 router.routeSite(domain, site)

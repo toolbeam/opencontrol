@@ -4,7 +4,7 @@ import { useAccount } from "../../components/context-account";
 import { createEffect, createMemo } from "solid-js";
 
 export const { use: useWorkspace, provider: WorkspaceProvider } =
-  createInitializedContext("ZeroContext", () => {
+  createInitializedContext("WorkspaceProvider", () => {
     const params = useParams();
     const account = useAccount()
     const workspace = createMemo(() => account.current?.workspaces.find(x => (x.id === params.workspace || x.slug === params.workspace)))

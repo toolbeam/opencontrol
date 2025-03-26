@@ -1,4 +1,4 @@
-import { createEffect, Match, Switch } from "solid-js";
+import { Match, Switch } from "solid-js";
 import { useAccount } from "../components/context-account";
 import { Navigate } from "@solidjs/router";
 import { useOpenAuth } from "@openauthjs/solid"

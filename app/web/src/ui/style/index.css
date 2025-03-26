@@ -11,10 +11,15 @@
 @import "./component/dialog.css";
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   line-height: 1;
   color: var(--color-text);
   background-color: var(--color-bg);
   cursor: default;
   user-select: none;
+  text-underline-offset: 0.1875rem;
+}
+
+a {
+  text-decoration: underline;
 }

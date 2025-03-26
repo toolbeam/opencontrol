@@ -24,9 +24,9 @@ export function App(props: { url?: string }) {
                 children={routes}
                 url={props.url}
                 root={props => {
-                  return <div data-color-mode="dark">
+                  return <>
                     {props.children}
-                  </div>
+                  </>
                 }}
               />
             </MetaProvider>

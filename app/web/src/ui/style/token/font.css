@@ -1,4 +1,4 @@
-body {
+:root {
   --font-size-2xs: 0.6875rem;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.8125rem;
@@ -16,4 +16,5 @@ body {
   --font-mono: IBM Plex Mono, monospace;
   --font-sans: Rubik, sans-serif;
 
+  --font-line-height: 1.75;
 }

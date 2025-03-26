@@ -34,6 +34,7 @@
   --color-accent-high: hsl(13, 100%, 78%);
 
   --color-text: var(--color-gray-1);
+	--color-text-dimmed: var(--color-gray-3);
   --color-text-accent: var(--color-accent-high);
   --color-text-invert: var(--color-accent-low);
   --color-bg: var(--color-black);
@@ -79,6 +80,7 @@
   --color-accent-low: hsl(13, 100%, 89%);
 
   --color-text-accent: var(--color-accent);
+	--color-text-dimmed: var(--color-gray-4);
   --color-text-invert: var(--color-black);
   --color-bg-nav: var(--color-gray-7);
   --color-bg-sidebar: var(--color-bg);

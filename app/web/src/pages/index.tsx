@@ -28,10 +28,10 @@ export default function Index() {
               <a href="/docs/how-it-works/">Learn more</a>
             </div>
             <div data-component-col="2">
-              <a href="#" onClick={(e) => { e.preventDefault(); auth.authorize(); }}>Get started</a>
+              <span onClick={() => auth.authorize()}>Get started</span>
             </div>
             <div data-component-col="3">
-              <a target="_blank" href="https://github.com/sst/opencontrol">Star on GitHub</a>
+              <a target="_blank" href="https://github.com/toolbeam/opencontrol">Star on GitHub</a>
             </div>
           </section>
 

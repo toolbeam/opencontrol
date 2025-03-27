@@ -4,7 +4,7 @@
   --heading-font-size: 2rem;
 
   margin: 1rem;
-  border: 2px solid var(--color-white);
+  border: 2px solid var(--color-border);
 
   @media (max-width: 30rem) {
     & {
@@ -46,7 +46,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-top: 2px solid var(--color-white);
+  border-top: 2px solid var(--color-border);
 
   & > [data-component-col] {
     flex: 1;
@@ -63,7 +63,7 @@
   }
 
   & > [data-component-col] + [data-component-col] {
-    border-left: 2px solid var(--color-white);
+    border-left: 2px solid var(--color-border);
   }
 }
 
@@ -72,7 +72,7 @@
   flex-direction: row;
   align-items: stretch;
   justify-content: space-between;
-  border-top: 2px solid var(--color-white);
+  border-top: 2px solid var(--color-border);
 
   & > div {
     flex: 1;
@@ -82,7 +82,7 @@
     padding: calc(var(--padding) / 2);
     border-width: 0;
     border-style: solid;
-    border-color: var(--color-white);
+    border-color: var(--color-border);
 
     & > div, a {
       flex: 1;
@@ -112,7 +112,7 @@
 }
 
 [data-component-content] {
-  border-top: 2px solid var(--color-white);
+  border-top: 2px solid var(--color-border);
   padding: var(--padding);
 
   ul {
@@ -131,7 +131,7 @@
 }
 
 [data-component-footer] {
-  border-top: 2px solid var(--color-white);
+  border-top: 2px solid var(--color-border);
   display: flex;
   flex-direction: row;
 
@@ -143,6 +143,6 @@
   }
 
   & > [data-component-col] + [data-component-col] {
-    border-left: 2px solid var(--color-white);
+    border-left: 2px solid var(--color-border);
   }
 }

@@ -29,7 +29,7 @@
     transition: 150ms width;
     background-color: var(--color-bg);
     border-width: 2px;
-    border-color: var(--color-white);
+    border-color: var(--color-border);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -94,7 +94,7 @@
     }
 
     [data-slot="footer"] {
-      border-top: 1px solid var(--color-bravo200);
+      border-top: 1px solid var(--color-border);
       padding: var(--space-2);
       display: flex;
       gap: var(--space-4);

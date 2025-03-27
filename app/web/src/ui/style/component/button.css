@@ -12,6 +12,7 @@
   font-weight: 500;
   padding: 0 var(--space-4);
   border-width: 2px;
+  border-color: var(--color-border);
   cursor: pointer;
 
   &[data-color="primary"] {

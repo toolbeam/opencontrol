@@ -44,6 +44,7 @@
   --color-hairline-light: var(--color-gray-5);
   --color-hairline: var(--color-gray-6);
   --color-hairline-shade: var(--color-black);
+  --color-border: var(--color-white);
 
   --color-backdrop-overlay: hsla(223, 13%, 10%, 0.66);
 }

@@ -5,7 +5,7 @@
   --sidebar-width: 250px;
 
   margin: 1rem;
-  border: 2px solid var(--color-white);
+  border: 2px solid var(--color-border);
   min-height: calc(100vh - 2rem);
   display: flex;
   flex-direction: row;
@@ -29,7 +29,7 @@
 
 [data-component-sidebar] {
   width: var(--sidebar-width);
-  border-right: 2px solid var(--color-white);
+  border-right: 2px solid var(--color-border);
   display: flex;
   flex-direction: column;
   padding: calc(var(--padding) / 2);
@@ -37,7 +37,7 @@
   @media (max-width: 768px) {
     width: 100%;
     border-right: none;
-    border-bottom: 2px solid var(--color-white);
+    border-bottom: 2px solid var(--color-border);
   }
 }
 

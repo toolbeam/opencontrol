@@ -8,12 +8,12 @@
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  border: 2px solid var(--color-white);
+  border: 2px solid var(--color-border);
 }
 
 .componentCell {
   padding: 1rem;
-  border: 2px solid var(--color-white);
+  border: 2px solid var(--color-border);
   vertical-align: top;
 }
 
@@ -35,7 +35,7 @@
 
 .divider {
   height: 2px;
-  background: var(--color-white);
+  background: var(--color-border);
   margin: 3rem 0;
   width: 100%;
 }

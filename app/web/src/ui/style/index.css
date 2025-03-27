@@ -22,4 +22,7 @@ body {
 
 a {
   text-decoration: underline;
+  &:active {
+    color: var(--color-text-accent);
+  }
 }

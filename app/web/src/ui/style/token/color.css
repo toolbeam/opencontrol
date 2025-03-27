@@ -35,8 +35,8 @@
 
   --color-text: var(--color-gray-1);
   --color-text-dimmed: var(--color-gray-3);
-  --color-text-accent: var(--color-accent-high);
-  --color-text-invert: var(--color-accent-low);
+  --color-text-accent: var(--color-accent);
+  --color-text-invert: var(--color-black);
   --color-bg: var(--color-black);
   --color-bg-nav: var(--color-gray-6);
   --color-bg-sidebar: var(--color-gray-6);

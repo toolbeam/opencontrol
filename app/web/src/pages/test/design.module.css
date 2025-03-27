@@ -1,0 +1,60 @@
+.pageContainer {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.componentTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 2px solid var(--color-white);
+}
+
+.componentCell {
+  padding: 1rem;
+  border: 2px solid var(--color-white);
+  vertical-align: top;
+}
+
+.componentLabel {
+  text-transform: uppercase;
+  letter-spacing: -0.03125rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-dimmed);
+}
+
+.sectionTitle {
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: -0.03125rem;
+  font-size: 1.2rem;
+}
+
+.divider {
+  height: 2px;
+  background: var(--color-white);
+  margin: 3rem 0;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.buttonSection {
+  margin-bottom: 4rem;
+}
+
+.dialogContent {
+  padding: 2rem;
+}
+
+.dialogContentFooter {
+  margin-top: 1rem;
+}

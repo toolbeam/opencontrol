@@ -1,7 +1,7 @@
 {
   "name": "opencontrol-frontend",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "type": "module",
   "scripts": {

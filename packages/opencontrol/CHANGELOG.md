@@ -1,5 +1,11 @@
 # opencontrol
 
+## 0.1.0
+
+### Minor Changes
+
+- ffc23ba: allow passing Hono instance to create fn
+
 ## 0.0.16
 
 ### Patch Changes

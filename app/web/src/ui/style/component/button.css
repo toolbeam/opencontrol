@@ -5,11 +5,11 @@
   justify-content: center;
   gap: var(--space-2);
   font-size: var(--font-size-xs);
-  height: var(--space-8);
-  border-radius: 5px;
+  height: var(--space-12);
   outline: none;
   font-weight: 500;
   padding: 0 var(--space-3-5);
+  border-width: 2px;
 
   &:hover [data-slot="icon"] {
     color: var(--color-foreground-2);
@@ -24,20 +24,19 @@
   }
 
   &[data-color="primary"] {
-    background: var(--color-primary);
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.2) 0px 0.75px 0px 0px inset;
+    color: var(--color-accent);
+    border-color: var(--color-accent);
 
     &:hover {
-      background: oklch(from var(--color-primary) calc(l + 0.03) c h);
+      color: oklch(from var(--color-accent) calc(l + 0.03) c h);
     }
   }
 
   &[data-color="secondary"] {
-    background: var(--color-bravo200);
-    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.2) 0px 0.75px 0px 0px inset;
+    background: var(--color-blue);
 
     &:hover {
-      background: var(--color-bravo300);
+      background: oklch(from var(--color-blue) calc(l + 0.03) c h);
     }
   }
 

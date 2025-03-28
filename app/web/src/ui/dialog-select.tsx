@@ -52,10 +52,19 @@ export const DialogSelect = createDialog({
     return (
       <>
         <div data-slot="header">
-          <div data-slot="title">{ctx.input.title}</div>
+          <label
+            data-size="md"
+            data-slot="title"
+            data-component="label"
+            for={`dialog-select-${ctx.input.title}`}
+          >
+            {ctx.input.title}
+          </label>
         </div>
         <div data-slot="main">
           <input
+            data-size="lg"
+            data-component="input"
             value={filter()}
             onInput={(e) => {
               setFilter(e.target.value)
@@ -74,9 +83,10 @@ export const DialogSelect = createDialog({
               }
               list.onKeyDown(e)
             }}
+            id={`dialog-select-${ctx.input.title}`}
             ref={r => input = r} data-slot="input" placeholder={ctx.input.placeholder} />
         </div>
-        <div class={style.options}>
+        <div data-slot="options" class={style.options}>
           <For each={filtered()} fallback={<div data-slot="option">No results</div>}>
             {(option, index) => (
               <div
@@ -85,12 +95,10 @@ export const DialogSelect = createDialog({
                 data-active={list.active() === index() ? true : undefined}
                 onMouseEnter={() => list.setActive(index())}
               >
-                <div data-slot="prefix">
-                  {option.prefix}
-                </div>
-                <div data-slot="title">
-                  {option.display}
-                </div>
+                {option.prefix &&
+                  <div data-slot="prefix">{option.prefix}</div>
+                }
+                <div data-slot="title">{option.display}</div>
               </div>
             )}
           </For>

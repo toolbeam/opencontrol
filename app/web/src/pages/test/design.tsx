@@ -2,10 +2,11 @@ import { Button } from "../../ui/button";
 import { Dialog } from "../../ui/dialog";
 import { Navigate } from "@solidjs/router";
 import { createSignal, Show } from "solid-js";
-import { IconHome } from "../../ui/svg/icons";
+import { IconHome, IconPencilSquare } from "../../ui/svg/icons";
 import { useTheme } from "../../components/context-theme";
 import { useDialog } from "../../ui/context-dialog"
 import { DialogString } from "../../ui/dialog-string"
+import { DialogSelect } from "../../ui/dialog-select"
 import styles from "./design.module.css";
 
 export default function DesignSystem() {
@@ -348,19 +349,6 @@ export default function DesignSystem() {
                 </Dialog>
               </td>
               <td class={styles.componentCell}>
-                <h3 class={styles.componentLabel}>Input String</h3>
-                <Button color="secondary" onClick={() =>
-                  dialog.open(DialogString, {
-                    title: "Name",
-                    action: "Change name",
-                    placeholder: "Enter a name",
-                    onSubmit: () => { }
-                  })
-                }>
-                  Dialog String
-                </Button>
-              </td>
-              <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Small With Transition</h3>
                 <Button color="secondary" onClick={() => {
                   setDialogOpenTransition(true);
@@ -378,6 +366,85 @@ export default function DesignSystem() {
                     </div>
                   </div>
                 </Dialog>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Input String</h3>
+                <Button color="secondary" onClick={() =>
+                  dialog.open(DialogString, {
+                    title: "Name",
+                    action: "Change name",
+                    placeholder: "Enter a name",
+                    onSubmit: () => { }
+                  })
+                }>
+                  String
+                </Button>
+              </td>
+            </tr>
+            <tr>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Select Input</h3>
+                <Button color="secondary" onClick={() =>
+                  dialog.open(DialogSelect, {
+                    placeholder: "Select",
+                    title: "User Settings",
+                    options: [
+                      {
+                        display: "Change name",
+                        prefix: <IconPencilSquare />,
+                        onSelect: () => {
+                          dialog.close()
+                        }
+                      },
+                      {
+                        display: "Remove user",
+                        prefix: <IconHome />,
+                        onSelect: () => {
+                          dialog.close()
+                        }
+                      }
+                    ],
+                  })
+                }>
+                  Select
+                </Button>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Select Input</h3>
+                <Button color="secondary" onClick={() =>
+                  dialog.open(DialogSelect, {
+                    placeholder: "Select",
+                    title: "User Settings",
+                    options: [
+                      {
+                        display: "Change name",
+                        onSelect: () => {
+                          dialog.close()
+                        }
+                      },
+                      {
+                        display: "Remove user",
+                        onSelect: () => {
+                          dialog.close()
+                        }
+                      }
+                    ],
+                  })
+                }>
+                  No Prefix
+                </Button>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Select No Options</h3>
+                <Button color="secondary" onClick={() =>
+                  dialog.open(DialogSelect, {
+                    placeholder: "Select",
+                    title: "User Settings",
+                    options: [],
+                  })
+                }>
+                  No Options
+                </Button>
               </td>
             </tr>
           </tbody>

@@ -35,6 +35,105 @@ export default function DesignSystem() {
         </Button>
       </div>
 
+      <section class={styles.colorSection}>
+        <h2 class={styles.sectionTitle}>Colors</h2>
+        
+        <table class={styles.componentTable}>
+          <tbody>
+            <tr>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Orange</h3>
+                <div class={styles.colorBox} style={{ "background-color": "var(--color-orange)" }}>
+                  <span class={styles.colorCode}>hsl(41, 82%, 63%)</span>
+                </div>
+                <div class={styles.colorVariants}>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-orange-low)" }}>
+                    <span class={styles.colorVariantCode}>hsl(41, 39%, 22%)</span>
+                  </div>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-orange-high)" }}>
+                    <span class={styles.colorVariantCode}>hsl(41, 82%, 87%)</span>
+                  </div>
+                </div>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Green</h3>
+                <div class={styles.colorBox} style={{ "background-color": "var(--color-green)" }}>
+                  <span class={styles.colorCode}>hsl(101, 82%, 63%)</span>
+                </div>
+                <div class={styles.colorVariants}>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-green-low)" }}>
+                    <span class={styles.colorVariantCode}>hsl(101, 39%, 22%)</span>
+                  </div>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-green-high)" }}>
+                    <span class={styles.colorVariantCode}>hsl(101, 82%, 80%)</span>
+                  </div>
+                </div>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Blue</h3>
+                <div class={styles.colorBox} style={{ "background-color": "var(--color-blue)" }}>
+                  <span class={styles.colorCode}>hsl(234, 100%, 60%)</span>
+                </div>
+                <div class={styles.colorVariants}>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-blue-low)" }}>
+                    <span class={styles.colorVariantCode}>hsl(234, 54%, 20%)</span>
+                  </div>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-blue-high)" }}>
+                    <span class={styles.colorVariantCode}>hsl(234, 100%, 87%)</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Purple</h3>
+                <div class={styles.colorBox} style={{ "background-color": "var(--color-purple)" }}>
+                  <span class={styles.colorCode}>hsl(281, 82%, 63%)</span>
+                </div>
+                <div class={styles.colorVariants}>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-purple-low)" }}>
+                    <span class={styles.colorVariantCode}>hsl(281, 39%, 22%)</span>
+                  </div>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-purple-high)" }}>
+                    <span class={styles.colorVariantCode}>hsl(281, 82%, 89%)</span>
+                  </div>
+                </div>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Red</h3>
+                <div class={styles.colorBox} style={{ "background-color": "var(--color-red)" }}>
+                  <span class={styles.colorCode}>hsl(339, 82%, 63%)</span>
+                </div>
+                <div class={styles.colorVariants}>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-red-low)" }}>
+                    <span class={styles.colorVariantCode}>hsl(339, 39%, 22%)</span>
+                  </div>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-red-high)" }}>
+                    <span class={styles.colorVariantCode}>hsl(339, 82%, 87%)</span>
+                  </div>
+                </div>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Accent</h3>
+                <div class={styles.colorBox} style={{ "background-color": "var(--color-accent)" }}>
+                  <span class={styles.colorCode}>hsl(13, 88%, 57%)</span>
+                </div>
+                <div class={styles.colorVariants}>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-accent-low)" }}>
+                    <span class={styles.colorVariantCode}>hsl(13, 75%, 30%)</span>
+                  </div>
+                  <div class={styles.colorVariant} style={{ "background-color": "var(--color-accent-high)" }}>
+                    <span class={styles.colorVariantCode}>hsl(13, 100%, 78%)</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class={styles.divider}></div>
+
       <section class={styles.buttonSection}>
         <h2 class={styles.sectionTitle}>Buttons</h2>
 
@@ -130,7 +229,7 @@ export default function DesignSystem() {
 
       <div class={styles.divider}></div>
 
-      <section>
+      <section class={styles.dialogSection}>
         <h2 class={styles.sectionTitle}>Dialogs</h2>
 
         <table class={styles.componentTable}>
@@ -187,6 +286,7 @@ export default function DesignSystem() {
           </tbody>
         </table>
       </section>
+
     </div>
   );
 }

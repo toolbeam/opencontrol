@@ -30,5 +30,5 @@ a {
 }
 
 ::selection {
-  background-color: var(--color-accent-low);
+  background-color: var(--color-text-accent-invert);
 }

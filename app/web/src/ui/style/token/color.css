@@ -37,6 +37,7 @@
   --color-text-dimmed: var(--color-gray-3);
   --color-text-accent: var(--color-accent);
   --color-text-invert: var(--color-black);
+  --color-text-accent-invert: var(--color-accent-high);
   --color-bg: var(--color-black);
   --color-bg-nav: var(--color-gray-6);
   --color-bg-sidebar: var(--color-gray-6);
@@ -83,6 +84,7 @@
   --color-text-accent: var(--color-accent);
   --color-text-dimmed: var(--color-gray-4);
   --color-text-invert: var(--color-black);
+  --color-text-accent-invert: var(--color-accent-low);
   --color-bg-nav: var(--color-gray-7);
   --color-bg-sidebar: var(--color-bg);
   --color-bg-accent: var(--color-accent);

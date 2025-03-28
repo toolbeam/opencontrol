@@ -19,7 +19,7 @@
   }
 
   &[data-size="sm"] {
-    height: var(--space-8);
+    height: var(--space-9);
     padding: 0 var(--space-3);
     font-size: var(--font-size-xs);
   }

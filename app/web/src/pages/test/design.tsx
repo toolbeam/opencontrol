@@ -1,7 +1,7 @@
 import { Button } from "../../ui/button";
 import { Dialog } from "../../ui/dialog";
 import { createSignal, Show } from "solid-js";
-import { IconPencilSquare } from "../../ui/svg/icons";
+import { IconHome } from "../../ui/svg/icons";
 import { Navigate } from "@solidjs/router";
 import { useTheme } from "../../components/context-theme";
 import styles from "./design.module.css";
@@ -68,57 +68,57 @@ export default function DesignSystem() {
             <tr>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>With Icon</h3>
-                <Button icon={<IconPencilSquare />}>With Icon</Button>
+                <Button icon={<IconHome />}>With Icon</Button>
               </td>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Icon + Secondary</h3>
-                <Button icon={<IconPencilSquare />} color="secondary">Icon Secondary</Button>
+                <Button icon={<IconHome />} color="secondary">Icon Secondary</Button>
               </td>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Icon + Ghost</h3>
-                <Button icon={<IconPencilSquare />} color="ghost">Icon Ghost</Button>
+                <Button icon={<IconHome />} color="ghost">Icon Ghost</Button>
               </td>
             </tr>
             <tr>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Small + Icon</h3>
-                <Button size="sm" icon={<IconPencilSquare />}>Small Icon</Button>
+                <Button size="sm" icon={<IconHome />}>Small Icon</Button>
               </td>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Small + Icon + Secondary</h3>
-                <Button size="sm" icon={<IconPencilSquare />} color="secondary">Small Icon Secondary</Button>
+                <Button size="sm" icon={<IconHome />} color="secondary">Small Icon Secondary</Button>
               </td>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Small + Icon + Ghost</h3>
-                <Button size="sm" icon={<IconPencilSquare />} color="ghost">Small Icon Ghost</Button>
+                <Button size="sm" icon={<IconHome />} color="ghost">Small Icon Ghost</Button>
               </td>
             </tr>
             <tr>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Icon Only</h3>
-                <Button icon={<IconPencilSquare />}></Button>
+                <Button icon={<IconHome />}></Button>
               </td>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Icon Only + Secondary</h3>
-                <Button icon={<IconPencilSquare />} color="secondary"></Button>
+                <Button icon={<IconHome />} color="secondary"></Button>
               </td>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Icon Only + Ghost</h3>
-                <Button icon={<IconPencilSquare />} color="ghost"></Button>
+                <Button icon={<IconHome />} color="ghost"></Button>
               </td>
             </tr>
             <tr>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Small Icon Only</h3>
-                <Button size="sm" icon={<IconPencilSquare />}></Button>
+                <Button size="sm" icon={<IconHome />}></Button>
               </td>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Small Icon Only + Secondary</h3>
-                <Button size="sm" icon={<IconPencilSquare />} color="secondary"></Button>
+                <Button size="sm" icon={<IconHome />} color="secondary"></Button>
               </td>
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Small Icon Only + Ghost</h3>
-                <Button size="sm" icon={<IconPencilSquare />} color="ghost"></Button>
+                <Button size="sm" icon={<IconHome />} color="ghost"></Button>
               </td>
             </tr>
           </tbody>
@@ -137,12 +137,14 @@ export default function DesignSystem() {
                 <h3 class={styles.componentLabel}>Default Dialog</h3>
                 <Button onClick={() => setDialogOpen(true)}>Open Dialog</Button>
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
-                  <div class={styles.dialogContent}>
-                    <h2 class={styles.sectionTitle}>Default Dialog</h2>
+                  <div data-slot="header">
+                    <div data-slot="title">Dialog Title</div>
+                  </div>
+                  <div data-slot="main">
                     <p>This is the default dialog content.</p>
-                    <div class={styles.dialogContentFooter}>
-                      <Button onClick={() => setDialogOpen(false)}>Close</Button>
-                    </div>
+                  </div>
+                  <div data-slot="footer">
+                    <Button onClick={() => setDialogOpen(false)}>Close</Button>
                   </div>
                 </Dialog>
               </td>

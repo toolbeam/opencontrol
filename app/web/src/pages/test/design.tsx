@@ -1,12 +1,15 @@
 import { Button } from "../../ui/button";
 import { Dialog } from "../../ui/dialog";
+import { Navigate } from "@solidjs/router";
 import { createSignal, Show } from "solid-js";
 import { IconHome } from "../../ui/svg/icons";
-import { Navigate } from "@solidjs/router";
 import { useTheme } from "../../components/context-theme";
+import { useDialog } from "../../ui/context-dialog"
+import { DialogString } from "../../ui/dialog-string"
 import styles from "./design.module.css";
 
 export default function DesignSystem() {
+  const dialog = useDialog()
   const [dialogOpen, setDialogOpen] = createSignal(false);
   const [dialogOpenTransition, setDialogOpenTransition] = createSignal(false);
   const theme = useTheme();
@@ -134,8 +137,8 @@ export default function DesignSystem() {
           <tbody>
             <tr>
               <td class={styles.componentCell}>
-                <h3 class={styles.componentLabel}>Default Dialog</h3>
-                <Button onClick={() => setDialogOpen(true)}>Open Dialog</Button>
+                <h3 class={styles.componentLabel}>Default</h3>
+                <Button color="secondary" onClick={() => setDialogOpen(true)}>Open Dialog</Button>
                 <Dialog open={dialogOpen()} onOpenChange={setDialogOpen}>
                   <div data-slot="header">
                     <div data-slot="title">Dialog Title</div>
@@ -149,10 +152,23 @@ export default function DesignSystem() {
                 </Dialog>
               </td>
               <td class={styles.componentCell}>
-                <h3 class={styles.componentLabel}>Small Dialog</h3>
+                <h3 class={styles.componentLabel}>Input String</h3>
+                <Button color="secondary" onClick={() =>
+                  dialog.open(DialogString, {
+                    title: "Name",
+                    action: "Change name",
+                    placeholder: "Enter a name",
+                    onSubmit: () => { }
+                  })
+                }>
+                  Dialog String
+                </Button>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Small With Transition</h3>
                 <Button color="secondary" onClick={() => {
                   setDialogOpenTransition(true);
-                }}>Open Small Dialog</Button>
+                }}>Small Dialog</Button>
                 <Dialog
                   open={dialogOpenTransition()}
                   onOpenChange={setDialogOpenTransition}

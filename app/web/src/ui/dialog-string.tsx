@@ -32,20 +32,35 @@ export const DialogString = createDialog({
     return (
       <>
         <div data-slot="header">
-          <div data-slot="title">{ctx.input.title}</div>
+          <label
+            data-size="md"
+            data-slot="title"
+            data-component="label"
+            for={`dialog-string-${ctx.input.title}`}
+          >
+            {ctx.input.title}
+          </label>
         </div>
         <div data-slot="main">
-          <input onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault()
-              submit()
-            }
-          }} ref={r => input = r} data-slot="input" placeholder={ctx.input.placeholder} />
+          <input
+            data-slot="input"
+            data-size="lg"
+            data-component="input"
+            ref={r => input = r}
+            placeholder={ctx.input.placeholder}
+            id={`dialog-string-${ctx.input.title}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                submit()
+              }
+            }}
+          />
         </div>
         <div data-slot="footer">
-          <Button size="sm" color="ghost" onClick={() => ctx.control.close()}>Cancel</Button>
+          <Button size="md" color="ghost" onClick={() => ctx.control.close()}>Cancel</Button>
           <Button
-            size="sm"
+            size="md"
             color="secondary"
             onClick={submit}>{ctx.input.action}</Button>
         </div>

@@ -7,6 +7,8 @@
 @import "./token/radius.css";
 
 /* components */
+@import "./component/label.css";
+@import "./component/input.css";
 @import "./component/button.css";
 @import "./component/dialog.css";
 
@@ -25,4 +27,8 @@ a {
   &:active {
     color: var(--color-text-accent);
   }
+}
+
+::selection {
+  background-color: var(--color-accent-low);
 }

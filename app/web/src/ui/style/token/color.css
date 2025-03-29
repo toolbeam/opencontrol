@@ -39,13 +39,9 @@
   --color-text-invert: var(--color-black);
   --color-text-accent-invert: var(--color-accent-high);
   --color-bg: var(--color-black);
-  --color-bg-nav: var(--color-gray-6);
-  --color-bg-sidebar: var(--color-gray-6);
+  --color-bg-surface: var(--color-gray-5);
   --color-bg-accent: var(--color-accent-high);
-  --color-hairline-light: var(--color-gray-5);
-  --color-hairline: var(--color-gray-6);
-  --color-hairline-shade: var(--color-black);
-  --color-border: var(--color-white);
+  --color-border: var(--color-gray-2);
 
   --color-backdrop-overlay: hsla(223, 13%, 10%, 0.66);
 }
@@ -85,11 +81,8 @@
   --color-text-dimmed: var(--color-gray-4);
   --color-text-invert: var(--color-black);
   --color-text-accent-invert: var(--color-accent-low);
-  --color-bg-nav: var(--color-gray-7);
-  --color-bg-sidebar: var(--color-bg);
+  --color-bg-surface: var(--color-gray-6);
   --color-bg-accent: var(--color-accent);
-  --color-hairline-light: var(--color-gray-6);
-  --color-hairline-shade: var(--color-gray-6);
 
   --color-backdrop-overlay: hsla(225, 9%, 36%, 0.66);
 }

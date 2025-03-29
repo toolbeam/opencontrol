@@ -4,7 +4,7 @@
 @import "./token/animation.css";
 @import "./token/font.css";
 @import "./token/space.css";
-@import "./token/radius.css";
+/* @import "./token/radius.css"; */
 
 /* components */
 @import "./component/label.css";

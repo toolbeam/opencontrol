@@ -87,13 +87,15 @@ export const DialogSelect = createDialog({
             ref={r => input = r} data-slot="input" placeholder={ctx.input.placeholder} />
         </div>
         <div data-slot="options" class={style.options}>
-          <For each={filtered()} fallback={<div data-slot="option">No results</div>}>
+          <For
+            each={filtered()}
+            fallback={<div data-slot="option" data-empty>No results</div>}
+          >
             {(option, index) => (
               <div
                 onClick={() => handleSelection(index())}
                 data-slot="option"
                 data-active={list.active() === index() ? true : undefined}
-                onMouseEnter={() => list.setActive(index())}
               >
                 {option.prefix &&
                   <div data-slot="prefix">{option.prefix}</div>

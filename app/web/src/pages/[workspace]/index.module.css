@@ -131,23 +131,26 @@
   height: 0; /* This is important for flexbox to allow scrolling */
   font-family: var(--font-mono);
   color: var(--color-text);
+  row-gap: 0.5rem; /* Add consistent spacing between messages */
 }
 
 /* Removed top border from first message */
 
 [data-slot="message"] {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   line-height: 1.5;
   white-space: pre-wrap;
   align-self: flex-start;
-  border-bottom: 2px solid var(--color-border);
-  min-height: 3.5rem; /* Consistent minimum height for all messages */
+  min-height: auto; /* Allow natural height for all messages */
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
+/* User message styling */
 [data-slot="message"][data-user] {
+  padding: 0.5rem 1rem;
   color: var(--color-text);
 }
 
@@ -158,8 +161,8 @@
   color: var(--color-accent);
   font-weight: 500;
   font-size: var(--font-size-sm);
-  min-width: 2rem;
-  margin-right: 0.5rem;
+  margin-bottom: 0.35rem;
+  display: block;
 }
 
 [data-slot="message"][data-assistant] {
@@ -173,13 +176,13 @@
   color: var(--color-text-dimmed);
   font-weight: 500;
   font-size: var(--font-size-sm);
-  min-width: 2rem;
-  margin-right: 0.5rem;
+  margin-bottom: 0.35rem;
+  display: block;
 }
 
 [data-slot="message"][data-tool] {
   width: 100%;
-  padding: 0.5rem 1rem 0.5rem 3.5rem; /* Indented to align with content after AI prefix + margin */
+  padding: 0.5rem 1rem;
   margin-left: 0;
   flex-direction: column;
   opacity: 0.7;
@@ -187,36 +190,35 @@
   min-height: auto; /* Allow natural height */
 }
 
-/* Remove the bottom border from AI messages that are followed by a tool call */
+/* Space tool messages appropriately */
 [data-slot="message"][data-assistant] + [data-slot="message"][data-tool] {
-  margin-top: -0.5rem; /* Pull the tool message closer to the AI message */
+  margin-top: -0.5rem; /* Reduce gap between AI message and its tool */
 }
 
-/* Remove bottom border from AI messages followed by tool calls */
-/* Fallback for browsers that don't support :has() */
+/* Styling for messages followed by tools */
 [data-slot="message"][data-assistant][data-followed-by-tool="true"] {
-  border-bottom: none;
+  /* No special styling needed */
 }
 
 /* Modern browsers that support :has() */
 [data-slot="message"][data-assistant]:has(+ [data-slot="message"][data-tool]) {
-  border-bottom: none;
+  /* No special styling needed */
 }
 
-/* Remove bottom border from tool calls followed by another tool call */
+/* Styling for tool calls followed by another tool call */
 /* Fallback selector - will be set via JavaScript */
 [data-slot="message"][data-tool][data-followed-by-tool="true"] {
-  border-bottom: none;
+  /* No special styling needed */
 }
 
 /* Modern selector with :has() */
 [data-slot="message"][data-tool]:has(+ [data-slot="message"][data-tool]) {
-  border-bottom: none;
+  /* No special styling needed */
 }
 
-/* Remove bottom border from last message */
+/* Last message styling */
 [data-component="messages"] > [data-slot="message"]:last-of-type {
-  border-bottom: none;
+  /* No special styling needed */
 }
 
 [data-slot="tool-header"] {
@@ -270,7 +272,6 @@
 
 [data-slot="spacer"] {
   padding: 0.5rem 0; /* Spacer between last message and footer */
-  border-bottom: none !important;
 }
 
 [data-tool-expanded="true"] [data-slot="tool-expand"] {
@@ -295,8 +296,9 @@
   font-size: 0.875rem;
   font-family: var(--font-mono);
   justify-content: flex-start;
-  border-bottom: none;
-  padding-left: 3.5rem; /* Align with message content after prefix */
+  padding-left: 1rem;
+  align-items: flex-start; /* Left-align the clear text */
+  text-align: left;
 }
 
 [data-slot="message"][data-clear]:hover {

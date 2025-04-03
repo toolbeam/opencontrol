@@ -21,10 +21,6 @@
 
     &[data-active] {
       background-color: var(--color-bg-surface);
-
-      & svg {
-        color: var(--color-foreground-3);
-      }
     }
 
     [data-slot="title"] {

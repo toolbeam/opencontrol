@@ -1,12 +1,12 @@
 .root {
-  --padding: 3rem;
-  --vertical-padding: 2rem;
-  --heading-font-size: 2rem;
+  --padding: var(--space-12);
+  --vertical-padding: var(--space-8);
+  --heading-font-size: var(--font-size-4xl);
   --sidebar-width: 200px;
 
-  margin: 1rem;
+  margin: var(--space-4);
   border: 2px solid var(--color-border);
-  height: calc(100vh - 2rem);
+  height: calc(100vh - var(--space-8));
   display: flex;
   flex-direction: row;
   overflow: hidden; /* Prevent overall scrolling */
@@ -27,7 +27,7 @@
     margin-bottom: var(--vertical-padding);
     color: var(--color-white);
     & svg {
-      height: 36px;
+      height: calc(var(--space-8) + var(--space-1));
       width: auto;
     }
   }
@@ -49,7 +49,7 @@
 
     a {
       display: block;
-      padding: 0.5rem 0;
+      padding: var(--space-2) 0;
     }
   }
 
@@ -79,7 +79,7 @@
     height: 0; /* This is important for flexbox to allow scrolling */
     font-family: var(--font-mono);
     color: var(--color-text);
-    row-gap: 1rem; /* Add consistent spacing between messages */
+    row-gap: var(--space-4); /* Add consistent spacing between messages */
 
     /* Remove top border for first user message */
     & > [data-component="message"][data-user]:first-child::before {
@@ -90,8 +90,8 @@
 
 [data-component="message"] {
   width: 100%;
-  padding: 0.5rem 1rem;
-  line-height: 1.5;
+  padding: var(--space-2) var(--space-4);
+  line-height: var(--font-line-height);
   white-space: pre-wrap;
   align-self: flex-start;
   min-height: auto; /* Allow natural height for all messages */
@@ -112,9 +112,9 @@
   &[data-user]::after {
     content: "";
     position: absolute;
-    left: 1rem;
-    right: 1rem;
-    height: 1px;
+    left: var(--space-4);
+    right: var(--space-4);
+    height: var(--space-px);
     background-color: var(--color-border);
     z-index: 1; /* Ensure borders appear above other content */
   }
@@ -135,18 +135,18 @@
 [data-component="tool"] {
   display: flex;
   width: 100%;
-  padding: 0 1rem;
+  padding: 0 var(--space-4);
   margin-left: 0;
   flex-direction: column;
   opacity: 0.7;
-  gap: 0.5rem;
+  gap: var(--space-2);
   align-items: flex-start;
   color: var(--color-text-dimmed);
   min-height: auto; /* Allow natural height */
 
   [data-slot="header"] {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-2);
     cursor: pointer;
     user-select: none;
     -webkit-user-select: none;
@@ -162,20 +162,20 @@
   }
 
   [data-slot="expand"] {
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
   }
 
   [data-slot="content"] {
     padding: 0;
-    line-height: 1.5;
-    font-size: 0.875rem;
+    line-height: var(--font-line-height);
+    font-size: var(--font-size-sm);
     white-space: pre-wrap;
     display: none;
     width: 100%;
   }
 
   [data-slot="output"] {
-    margin-top: 0.25rem;
+    margin-top: var(--space-1);
   }
 
   &[data-expanded="true"] [data-slot="content"] {
@@ -194,7 +194,7 @@
   display: flex;
   align-items: center;
   font-size: var(--font-size-sm);
-  letter-spacing: 0.25rem;
+  letter-spacing: var(--space-1);
   color: var(--color-text);
 
   & span {
@@ -223,10 +223,10 @@
   &::before {
     content: "";
     position: absolute;
-    left: 1rem;
-    right: 1rem;
+    left: var(--space-4);
+    right: var(--space-4);
     top: 0;
-    height: 1px;
+    height: var(--space-px);
     background-color: var(--color-border);
     z-index: 1;
   }

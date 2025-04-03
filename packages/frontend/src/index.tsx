@@ -15,29 +15,27 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   )
 }
 
+// Use a secure key for localStorage to avoid exposing the purpose
+const STORAGE_KEY = "oc:auth"
+
 render(() => {
   const [ready, setReady] = createSignal(false)
   onMount(async () => {
-    setPassword(localStorage.getItem("opencontrol:password"))
+    // Get password from localStorage
+    setPassword(localStorage.getItem(STORAGE_KEY))
     while (true) {
       if (!password()) {
         const result = prompt("Enter password")
         if (!result) return
-        localStorage.setItem("opencontrol:password", result)
+        localStorage.setItem(STORAGE_KEY, result)
         setPassword(result)
       }
-      const result = await client.auth.$get({
-        json: {
-          jsonrpc: "2.0",
-          method: "initialize",
-          id: "1",
-        },
-      })
+      const result = await client.auth.$get()
 
       if (!result.ok) {
-        localStorage.removeItem("opencontrol:password")
+        localStorage.removeItem(STORAGE_KEY)
         setPassword(undefined)
-        alert("bad password")
+        alert("Authentication failed")
         continue
       }
       setReady(true)

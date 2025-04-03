@@ -13,10 +13,13 @@ import {
 import { z } from "zod"
 import { HTTPException } from "hono/http-exception"
 import { bearerAuth } from "hono/bearer-auth"
+import { hashPassword, verifyPassword } from "./utils/crypto.js"
 
 export interface OpenControlOptions {
   tools: Tool[]
   password?: string
+  hashedPassword?: string
+  salt?: string
   model?: LanguageModelV1
   app?: Hono
 }
@@ -25,12 +28,33 @@ export type App = ReturnType<typeof create>
 
 export function create(input: OpenControlOptions) {
   const mcp = createMcp({ tools: input.tools })
-  const token =
-    input.password ||
-    process.env.OPENCONTROL_PASSWORD ||
-    process.env.OPENCONTROL_KEY ||
-    "password"
+  
+  // Use hashedPassword if provided, otherwise hash the password
+  const salt = input.salt || process.env.OPENCONTROL_SALT || ""
+  const hashedPassword = input.hashedPassword || 
+    (input.password ? hashPassword(input.password, salt) : 
+    (process.env.OPENCONTROL_HASHED_PASSWORD || 
+    (process.env.OPENCONTROL_PASSWORD ? hashPassword(process.env.OPENCONTROL_PASSWORD, salt) : 
+    (process.env.OPENCONTROL_KEY ? hashPassword(process.env.OPENCONTROL_KEY, salt) : 
+    hashPassword("password", salt)))))
+  
   const app = input.app ?? new Hono()
+  
+  // Custom auth middleware that verifies hashed passwords
+  const authMiddleware = async (c: any, next: () => Promise<any>) => {
+    const authHeader = c.req.header("authorization")
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      throw new HTTPException(401, { message: "Unauthorized" })
+    }
+    
+    const token = authHeader.substring(7)
+    if (!verifyPassword(token, hashedPassword, salt)) {
+      throw new HTTPException(401, { message: "Unauthorized" })
+    }
+    
+    return next()
+  }
+  
   return app
     .use(
       cors({
@@ -43,16 +67,12 @@ export function create(input: OpenControlOptions) {
     .get("/", (c) => {
       return c.html(HTML)
     })
-    .use(
-      bearerAuth({
-        token,
-      }),
-    )
-    .get("/auth", (c) => {
+    .get("/auth", authMiddleware, (c) => {
       return c.json({})
     })
     .post(
       "/generate",
+      authMiddleware,
       zValidator("json", z.custom<LanguageModelV1CallOptions>()),
       async (c) => {
         if (!input.model)
@@ -62,17 +82,16 @@ export function create(input: OpenControlOptions) {
           const result = await input.model.doGenerate(body)
           return c.json(result)
         } catch (error) {
-          console.error(error)
           if (error instanceof APICallError) {
             throw new HTTPException(error.statusCode || (500 as any), {
-              message: "error",
+              message: "API call error"
             })
           }
-          throw new HTTPException(500, { message: "error" })
+          throw new HTTPException(500, { message: "Internal server error" })
         }
       },
     )
-    .post("/mcp", async (c) => {
+    .post("/mcp", authMiddleware, async (c) => {
       const body = await c.req.json()
       const result = await mcp.process(body)
       return c.json(result)

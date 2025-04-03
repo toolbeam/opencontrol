@@ -6,9 +6,11 @@
   "type": "module",
   "dependencies": {
     "@ai-sdk/anthropic": "1.2.1",
+    "@hono/zod-validator": "0.4.3",
     "@openauthjs/openauth": "0.0.0-20250322224806",
     "@opencontrol/core": "workspace:*",
     "@rocicorp/zero": "0.17.2025031904",
+    "ai": "4.2.11",
     "drizzle-orm": "0.41.0",
     "hono": "4.7.5",
     "opencontrol": "0.1.0"

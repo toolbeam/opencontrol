@@ -6,6 +6,14 @@ import { Hono } from "hono"
 import { handle } from "hono/aws-lambda"
 import { HTTPException } from "hono/http-exception"
 import { Resource } from "sst"
+import { createAnthropic } from "@ai-sdk/anthropic"
+import { zValidator } from "@hono/zod-validator"
+import { z } from "zod"
+import { APICallError } from "ai"
+
+const model = createAnthropic({
+  apiKey: Resource.AnthropicApiKey.value,
+})("claude-3-7-sonnet-20250219")
 
 const client = createClient({
   clientID: "api",
@@ -52,6 +60,23 @@ const app = new Hono()
       email: account.properties.email,
       workspaces,
     })
+  })
+  .post("/ai_generate", zValidator("json", z.custom<any>()), async (c) => {
+    const body = c.req.valid("json")
+    try {
+      const result = await model.doGenerate(body)
+      return c.json(result)
+    } catch (error) {
+      if (error instanceof APICallError) {
+        return c.json(
+          {
+            err: "unknown",
+            message: error.message,
+          },
+          (error.statusCode || 500) as any,
+        )
+      }
+    }
   })
 
 export const handler = handle(app)

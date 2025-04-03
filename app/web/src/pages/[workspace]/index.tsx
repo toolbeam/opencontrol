@@ -177,6 +177,9 @@ export default function Index() {
           </div>
 
           <div data-component="message" data-assistant="">2 users in the zinq workspace.</div>
+          <div data-component="loading">
+            <span>■</span><span>■</span><span>■</span>
+          </div>
           <div data-component="clear">
             <Button size="sm" color="ghost">Clear chat</Button>
           </div>

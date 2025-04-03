@@ -225,6 +225,35 @@
   }
 }
 
+[data-component="loading"] {
+  padding: 0 var(--space-4) var(--space-2);
+  height: 1.5rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.25rem;
+  color: var(--color-text);
+
+  & span {
+    opacity: 0;
+    animation: loading-dots 1.4s linear infinite;
+  }
+
+  & span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  & span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes loading-dots {
+  0%, 100% { opacity: 0; }
+  40%, 60% { opacity: 1; }
+}
+
 [data-component="clear"] {
   position: relative;
   padding: var(--space-4) var(--space-4);

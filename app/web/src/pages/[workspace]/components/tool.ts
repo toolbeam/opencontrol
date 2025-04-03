@@ -49,6 +49,9 @@ export function createToolCaller<T extends ToolCallerProps>(props: T) {
     get state() {
       return store.state
     },
+    clear() {
+      setStore("prompt", [])
+    },
     async chat(input: string) {
       if (store.state.type !== "idle") return
 

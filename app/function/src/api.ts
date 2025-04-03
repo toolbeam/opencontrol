@@ -79,4 +79,5 @@ const app = new Hono()
     }
   })
 
+export type ApiType = typeof app
 export const handler = handle(app)

@@ -30,7 +30,6 @@ export function create(input: OpenControlOptions) {
     process.env.OPENCONTROL_PASSWORD ||
     process.env.OPENCONTROL_KEY ||
     "password"
-  console.log("opencontrol password:", token)
   const app = input.app ?? new Hono()
   return app
     .use(

@@ -188,10 +188,17 @@ export default function Index() {
               autofocus
               placeholder="How can I help?"
               onInput={(e) => {
-                const sendButton = document.querySelector('[data-component="send-button"]');
+                const sendButton = e.currentTarget.nextElementSibling as HTMLButtonElement;
+                // const sendButton = document.querySelector('[data-component="send-button"]');
                 if (sendButton) {
                   sendButton.disabled = !e.target.value.trim();
                 }
+
+                // Auto-grow functionality
+                e.target.style.height = "3.6875rem"; // Reset height
+                const scrollHeight = e.target.scrollHeight;
+                // Set new height with cap of 5 lines (handled by CSS max-height)
+                e.target.style.height = `${scrollHeight}px`;
               }}></textarea>
             <Button
               disabled

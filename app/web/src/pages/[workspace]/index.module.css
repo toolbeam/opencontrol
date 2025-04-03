@@ -248,7 +248,7 @@
 [data-slot="footer"] {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0;
   border-top: 2px solid var(--color-border);
   position: sticky;
   bottom: 0;
@@ -259,21 +259,30 @@
 
 [data-component="chat"] {
   display: flex;
+  padding: var(--space-0-5) 0;
   align-items: center;
+  width: 100%;
+  height: 100%;
 
   textarea {
+    --padding-y: var(--space-4);
+    --line-height: 1.5;
+    --text-height: calc(var(--line-height) * var(--font-size-lg));
+    --height: calc(var(--text-height) + var(--padding-y) * 2);
+
     width: 100%;
     resize: none;
-    min-height: 2rem;
-    max-height: 10rem;
-    padding: 0.5rem;
+    line-height: var(--line-height);
+    height: var(--height);
+    min-height: var(--height);
+    max-height: calc(5 * var(--text-height) + var(--padding-y) * 2);
+    padding: var(--padding-y) var(--space-4);
     border-radius: 0;
     background-color: transparent;
     color: var(--color-text);
     border: none;
     outline: none;
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
+    font-size: var(--font-size-lg);
   }
 
   textarea::placeholder {
@@ -283,5 +292,9 @@
 
   textarea:focus {
     outline: 0;
+  }
+
+  & [data-component="button"] {
+    height: 100%;
   }
 }

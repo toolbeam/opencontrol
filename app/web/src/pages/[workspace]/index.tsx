@@ -3,7 +3,7 @@ import { useQuery } from "@rocicorp/zero/solid"
 import { useZero } from "../components/context-zero"
 import { useDialog } from "../../ui/context-dialog"
 import { Button } from "../../ui/button"
-import { IconLogo } from "../../ui/svg"
+import { IconLogomark } from "../../ui/svg"
 import { IconArrowRight } from "../../ui/svg/icons"
 import { useAccount } from "../../components/context-account"
 import { useOpenAuth } from "@openauthjs/solid"
@@ -60,11 +60,10 @@ export default function Index() {
 
   return (
     <div class={style.root}>
-      {/* Sidebar */}
       <div data-component="sidebar">
         <div data-slot="logo">
           <a href="/">
-            <IconLogo />
+            <IconLogomark />
           </a>
         </div>
 
@@ -79,11 +78,14 @@ export default function Index() {
           </ul>
         </nav>
 
-        <div data-component="user">
-          <div data-slot="info">
-            <div data-slot="email">{currentUser?.email || ""}</div>
-          </div>
-          <Button color="secondary" onClick={() => auth.logout()}>Logout</Button>
+        <div data-slot="user">
+          <Button
+            color="ghost"
+            onClick={() => auth.logout()}
+            title={currentUser?.email || ""}
+          >
+            Logout
+          </Button>
         </div>
       </div>
 

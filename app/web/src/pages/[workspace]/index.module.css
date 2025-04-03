@@ -131,10 +131,9 @@
   height: 0; /* This is important for flexbox to allow scrolling */
   font-family: var(--font-mono);
   color: var(--color-text);
-  row-gap: 0.5rem; /* Add consistent spacing between messages */
+  row-gap: 1rem; /* Add consistent spacing between messages */
 }
 
-/* Removed top border from first message */
 
 [data-slot="message"] {
   width: 100%;
@@ -150,39 +149,43 @@
 
 /* User message styling */
 [data-slot="message"][data-user] {
-  padding: 0.5rem 1rem;
+  padding: var(--space-6) var(--space-4);
+  position: relative;
+  font-weight: 600;
   color: var(--color-text);
+  /* margin: 0.5rem 0; */
+}
+
+[data-slot="message"][data-user]::before,
+[data-slot="message"][data-user]::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  height: 1px;
+  background-color: var(--color-border);
+  z-index: 1; /* Ensure borders appear above other content */
 }
 
 [data-slot="message"][data-user]::before {
-  content: "YOU";
-  letter-spacing: -0.03125rem;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  font-weight: 500;
-  font-size: var(--font-size-sm);
-  margin-bottom: 0.35rem;
-  display: block;
+  top: 0;
+}
+
+[data-slot="message"][data-user]::after {
+  bottom: 0;
+}
+
+/* Remove top border for first user message */
+[data-component="messages"] > [data-slot="message"][data-user]:first-child::before {
+  display: none;
 }
 
 [data-slot="message"][data-assistant] {
   color: var(--color-text);
 }
-
-[data-slot="message"][data-assistant]::before {
-  content: "AI";
-  letter-spacing: -0.03125rem;
-  text-transform: uppercase;
-  color: var(--color-text-dimmed);
-  font-weight: 500;
-  font-size: var(--font-size-sm);
-  margin-bottom: 0.35rem;
-  display: block;
-}
-
 [data-slot="message"][data-tool] {
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   margin-left: 0;
   flex-direction: column;
   opacity: 0.7;
@@ -191,35 +194,10 @@
 }
 
 /* Space tool messages appropriately */
-[data-slot="message"][data-assistant] + [data-slot="message"][data-tool] {
-  margin-top: -0.5rem; /* Reduce gap between AI message and its tool */
-}
+/* [data-slot="message"][data-assistant] + [data-slot="message"][data-tool] { */
+  /*margin-top: -0.5rem; */ /* Reduce gap between AI message and its tool */
+/* } */
 
-/* Styling for messages followed by tools */
-[data-slot="message"][data-assistant][data-followed-by-tool="true"] {
-  /* No special styling needed */
-}
-
-/* Modern browsers that support :has() */
-[data-slot="message"][data-assistant]:has(+ [data-slot="message"][data-tool]) {
-  /* No special styling needed */
-}
-
-/* Styling for tool calls followed by another tool call */
-/* Fallback selector - will be set via JavaScript */
-[data-slot="message"][data-tool][data-followed-by-tool="true"] {
-  /* No special styling needed */
-}
-
-/* Modern selector with :has() */
-[data-slot="message"][data-tool]:has(+ [data-slot="message"][data-tool]) {
-  /* No special styling needed */
-}
-
-/* Last message styling */
-[data-component="messages"] > [data-slot="message"]:last-of-type {
-  /* No special styling needed */
-}
 
 [data-slot="tool-header"] {
   display: flex;
@@ -291,14 +269,31 @@
 }
 
 [data-slot="message"][data-clear] {
-  color: var(--color-gray-3);
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-family: var(--font-mono);
-  justify-content: flex-start;
-  padding-left: 1rem;
-  align-items: flex-start; /* Left-align the clear text */
-  text-align: left;
+  /* color: var(--color-gray-3); */
+  /* cursor: pointer; */
+  /* font-size: 0.875rem; */
+  /* font-family: var(--font-mono); */
+  /* justify-content: flex-start; */
+  /* padding-left: 1rem; */
+  /* align-items: flex-start; */ /* Left-align the clear text */
+  /* text-align: left; */
+  position: relative;
+  padding: var(--space-4) var(--space-4);
+
+  & button {
+    padding-left: 0;
+  }
+}
+
+[data-slot="message"][data-clear]::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  top: 0;
+  height: 1px;
+  background-color: var(--color-border);
+  z-index: 1;
 }
 
 [data-slot="message"][data-clear]:hover {
@@ -309,7 +304,6 @@
 [data-slot="chat"] {
   display: flex;
   align-items: center;
-  border: 2px solid var(--color-border);
 }
 
 [data-component="input"] {

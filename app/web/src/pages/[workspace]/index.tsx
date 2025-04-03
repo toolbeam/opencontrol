@@ -20,7 +20,7 @@ export default function Index() {
 
   // Current user from account
   const currentUser = account.current
-  
+
   // Call markMessagesBeforeTools on mount
   onMount(() => {
     markMessagesBeforeTools();
@@ -47,12 +47,12 @@ export default function Index() {
     for (let i = 0; i < messages.length - 1; i++) {
       const current = messages[i];
       const next = messages[i + 1];
-      
+
       // Mark AI messages followed by tool calls
       if (current.hasAttribute('data-assistant') && next.hasAttribute('data-tool')) {
         current.setAttribute('data-followed-by-tool', 'true');
       }
-      
+
       // Mark tool messages followed by another tool call
       if (current.hasAttribute('data-tool') && next.hasAttribute('data-tool')) {
         current.setAttribute('data-followed-by-tool', 'true');
@@ -103,7 +103,7 @@ export default function Index() {
             </div>
             <div data-slot="tool-content">
               <div data-slot="tool-output">SELECT * FROM users WHERE workspace_id = 'zinq';
-No results found.</div>
+                No results found.</div>
             </div>
           </div>
 
@@ -117,7 +117,7 @@ No results found.</div>
             </div>
             <div data-slot="tool-content">
               <div data-slot="tool-output">SHOW TABLES;
-Tables: users, workspaces, user_workspace</div>
+                Tables: users, workspaces, user_workspace</div>
             </div>
           </div>
 
@@ -131,7 +131,7 @@ Tables: users, workspaces, user_workspace</div>
             </div>
             <div data-slot="tool-content">
               <div data-slot="tool-output">SELECT * FROM user_workspace WHERE workspace_name = 'zinq';
-Error: column 'workspace_name' does not exist</div>
+                Error: column 'workspace_name' does not exist</div>
             </div>
           </div>
 
@@ -145,10 +145,10 @@ Error: column 'workspace_name' does not exist</div>
             </div>
             <div data-slot="tool-content">
               <div data-slot="tool-output">DESCRIBE workspaces;
-id: uuid
-slug: varchar
-created_at: timestamp
-updated_at: timestamp</div>
+                id: uuid
+                slug: varchar
+                created_at: timestamp
+                updated_at: timestamp</div>
             </div>
           </div>
 
@@ -160,10 +160,10 @@ updated_at: timestamp</div>
             </div>
             <div data-slot="tool-content">
               <div data-slot="tool-output">DESCRIBE user_workspace;
-user_id: uuid
-workspace_id: uuid
-role: varchar
-joined_at: timestamp</div>
+                user_id: uuid
+                workspace_id: uuid
+                role: varchar
+                joined_at: timestamp</div>
             </div>
           </div>
 
@@ -177,23 +177,25 @@ joined_at: timestamp</div>
             </div>
             <div data-slot="tool-content">
               <div data-slot="tool-output">SELECT COUNT(*) FROM user_workspace
-JOIN workspaces ON user_workspace.workspace_id = workspaces.id
-WHERE workspaces.slug = 'zinq';
+                JOIN workspaces ON user_workspace.workspace_id = workspaces.id
+                WHERE workspaces.slug = 'zinq';
 
-Count: 2</div>
+                Count: 2</div>
             </div>
           </div>
 
           <div data-slot="message" data-assistant="">2 users in the zinq workspace.</div>
-          <div data-slot="message" data-clear="">Clear chat</div>
+          <div data-slot="message" data-clear="">
+            <Button size="sm" color="ghost">Clear chat</Button>
+          </div>
           <div data-slot="spacer" style="border-bottom: none;"></div>
         </div>
 
         <div data-component="footer">
           <div data-slot="chat">
-            <textarea 
-              autofocus 
-              data-component="input" 
+            <textarea
+              autofocus
+              data-component="input"
               placeholder="Type your command here"
               onInput={(e) => {
                 const sendButton = document.querySelector('[data-component="send-button"]');
@@ -201,8 +203,8 @@ Count: 2</div>
                   sendButton.disabled = !e.target.value.trim();
                 }
               }}></textarea>
-            <button 
-              data-component="send-button" 
+            <button
+              data-component="send-button"
               disabled={true}
               onClick={() => {
                 const input = document.querySelector('[data-component="input"]');

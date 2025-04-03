@@ -15,6 +15,11 @@
   border-color: var(--color-border);
   cursor: pointer;
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
   &[data-color="primary"] {
     background-color: var(--color-text);
     border-color: var(--color-text);

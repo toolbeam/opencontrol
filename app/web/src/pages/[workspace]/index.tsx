@@ -188,32 +188,22 @@ export default function Index() {
               autofocus
               placeholder="How can I help?"
               onInput={(e) => {
-                const sendButton = e.currentTarget.nextElementSibling as HTMLButtonElement;
-                // const sendButton = document.querySelector('[data-component="send-button"]');
+                const input = e.currentTarget;
+                const sendButton = input.nextElementSibling as HTMLButtonElement;
                 if (sendButton) {
                   sendButton.disabled = !e.target.value.trim();
                 }
 
-                // Auto-grow functionality
-                e.target.style.height = "3.6875rem"; // Reset height
-                const scrollHeight = e.target.scrollHeight;
-                // Set new height with cap of 5 lines (handled by CSS max-height)
+                // Auto-grow
+                e.target.style.height = "3.6875rem";
+                const scrollHeight = input.scrollHeight;
                 e.target.style.height = `${scrollHeight}px`;
-              }}></textarea>
+              }} />
             <Button
               disabled
               color="ghost"
               icon={<IconArrowRight />}
-              onClick={() => {
-                const input = document.querySelector('[data-component="input"]');
-                if (input && input.value.trim()) {
-                  // Process input here
-                  console.log('Send message:', input.value);
-                  input.value = '';
-                  document.querySelector('[data-component="send-button"]').disabled = true;
-                }
-              }}>
-            </Button>
+            />
           </div>
         </div>
       </div>

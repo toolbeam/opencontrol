@@ -156,6 +156,20 @@ export default function DesignSystem() {
             </tr>
             <tr>
               <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Primary Disabled</h3>
+                <Button disabled>Primary Button</Button>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Secondary Disabled</h3>
+                <Button color="secondary" disabled>Secondary Button</Button>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Ghost Disabled</h3>
+                <Button color="ghost" disabled>Ghost Button</Button>
+              </td>
+            </tr>
+            <tr>
+              <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Small</h3>
                 <Button size="sm">Small Button</Button>
               </td>
@@ -208,6 +222,20 @@ export default function DesignSystem() {
               <td class={styles.componentCell}>
                 <h3 class={styles.componentLabel}>Icon Only + Ghost</h3>
                 <Button icon={<IconHome />} color="ghost"></Button>
+              </td>
+            </tr>
+            <tr>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Icon Only Disabled</h3>
+                <Button icon={<IconHome />} disabled></Button>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Icon Only + Secondary Disabled</h3>
+                <Button icon={<IconHome />} color="secondary" disabled></Button>
+              </td>
+              <td class={styles.componentCell}>
+                <h3 class={styles.componentLabel}>Icon Only + Ghost Disabled</h3>
+                <Button icon={<IconHome />} color="ghost" disabled></Button>
               </td>
             </tr>
             <tr>

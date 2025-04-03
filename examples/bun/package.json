@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.9",
   "dependencies": {
-    "@ai-sdk/google": "1.1.25",
+    "@ai-sdk/google": "1.2.3",
     "@ai-sdk/openai": "1.2.5",
     "aws-sdk": "2.1692.0",
     "opencontrol": "workspace:*",

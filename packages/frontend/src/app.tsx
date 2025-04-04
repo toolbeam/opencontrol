@@ -69,7 +69,6 @@ export function App() {
 
   createEffect(() => {
     const messages = store.prompt
-    console.log("scrolling to bottom")
     root?.scrollTo(0, root?.scrollHeight)
     return messages.length
   }, 0)
@@ -106,7 +105,6 @@ export function App() {
 
     while (true) {
       if (!store.isProcessing) {
-        console.log("Processing cancelled by user")
         break
       }
 
@@ -135,7 +133,6 @@ export function App() {
         if (response.status === 400) {
           setStore("prompt", (val) => {
             val.splice(2, 1)
-            console.log(val)
             return [...val]
           })
         }
@@ -169,7 +166,6 @@ export function App() {
 
       if (result.finishReason === "tool-calls") {
         for (const item of result.toolCalls!) {
-          console.log("calling tool", item.toolName, item.args)
           setStore("prompt", store.prompt.length, {
             role: "assistant",
             content: [

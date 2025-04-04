@@ -50,6 +50,17 @@
     a {
       display: block;
       padding: var(--space-2) 0;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    a[data-active="true"] {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+    
+    a:not([data-active="true"]):hover {
+      text-decoration: underline;
     }
   }
 

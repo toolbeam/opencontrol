@@ -27,7 +27,7 @@
     margin-bottom: var(--vertical-padding);
     color: var(--color-white);
     & svg {
-      height: calc(var(--space-8) + var(--space-1));
+      height: 32px;
       width: auto;
     }
   }

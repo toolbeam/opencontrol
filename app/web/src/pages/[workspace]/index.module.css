@@ -16,6 +16,10 @@
   & > [data-component="message"][data-user]:first-child::before {
     display: none;
   }
+
+  &:has([data-component="loading"]) [data-component="clear"] {
+    display: none;
+  }
 }
 
 [data-component="message"] {
@@ -118,7 +122,7 @@
 }
 
 [data-component="loading"] {
-  padding: 0 var(--space-4) var(--space-2);
+  padding: var(--space-4) var(--space-4) var(--space-8);
   height: 1.5rem;
   position: relative;
   display: flex;

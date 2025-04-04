@@ -1,10 +1,9 @@
-import Layout from "./components/layout"
+import Layout from "./components/Layout"
 
 export default function Billing() {
   return (
     <Layout>
       <h1>Billing</h1>
-      <p>Manage your billing information here.</p>
     </Layout>
   )
 }

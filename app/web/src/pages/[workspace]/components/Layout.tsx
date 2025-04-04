@@ -1,4 +1,4 @@
-import style from "../index.module.css"
+import style from "./layout.module.css"
 import { useOpenAuth } from "@openauthjs/solid"
 import { useAccount } from "../../../components/context-account"
 import { Button } from "../../../ui/button"
@@ -13,13 +13,6 @@ export default function Layout(props: ParentProps) {
 
   const workspaceId = createMemo(() => account.current?.workspaces[0].id)
 
-  const currentPath = createMemo(() => {
-    // Extract the last part of the path
-    const path = location.pathname
-    const segments = path.split('/')
-    return segments[segments.length - 1] || ''
-  })
-
   return (
     <div class={style.root}>
       <div data-component="sidebar">
@@ -30,15 +23,18 @@ export default function Layout(props: ParentProps) {
         <nav data-slot="nav">
           <ul>
             <li>
-              <A href={`/${workspaceId()}`} activeClass="active">Dashboard</A>
-            </li>
-            <li>
-              <A href={`/${workspaceId()}/integrations`} activeClass="active">
+              <A
+                activeClass={style.navActiveLink}
+                href={`/${workspaceId()}/integrations`}
+              >
                 Integrations
               </A>
             </li>
             <li>
-              <A href={`/${workspaceId()}/billing`} activeClass="active">
+              <A
+                activeClass={style.navActiveLink}
+                href={`/${workspaceId()}/billing`}
+              >
                 Billing
               </A>
             </li>
@@ -57,7 +53,7 @@ export default function Layout(props: ParentProps) {
       </div>
 
       {/* Main Content */}
-      <div data-component="main-content">
+      <div data-slot="main-content">
         {props.children}
       </div>
     </div>

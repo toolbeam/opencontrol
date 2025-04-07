@@ -3,19 +3,41 @@ import { useOpenAuth } from "@openauthjs/solid"
 import { useAccount } from "../../../components/context-account"
 import { Button } from "../../../ui/button"
 import { IconLogomark } from "../../../ui/svg"
-import { ParentProps, createMemo } from "solid-js"
-import { A, useLocation } from "@solidjs/router"
+import { IconBars3BottomLeft } from "../../../ui/svg/icons"
+import { ParentProps, createMemo, createSignal } from "solid-js"
+import { A } from "@solidjs/router"
 
 export default function Layout(props: ParentProps) {
   const auth = useOpenAuth()
   const account = useAccount()
-  const location = useLocation()
+  const [sidebarOpen, setSidebarOpen] = createSignal(false)
 
   const workspaceId = createMemo(() => account.current?.workspaces[0].id)
 
   return (
     <div class={style.root}>
-      <div data-component="sidebar">
+      {/* Mobile top bar */}
+      <div data-component="mobile-top-bar">
+        <button
+          data-slot="toggle"
+          onClick={() => setSidebarOpen(!sidebarOpen())}
+        >
+          <IconBars3BottomLeft />
+        </button>
+
+        <div data-slot="mobile-logo">
+          <A href="/">
+            <IconLogomark />
+          </A>
+        </div>
+      </div>
+
+      {/* Backdrop for mobile sidebar - closes sidebar when clicked */}
+      {sidebarOpen() && (
+        <div data-component="backdrop" onClick={() => setSidebarOpen(false)}></div>
+      )}
+
+      <div data-component="sidebar" data-opened={sidebarOpen() ? "true" : "false"}>
         <div data-slot="logo">
           <A href="/"><IconLogomark /></A>
         </div>
@@ -27,6 +49,7 @@ export default function Layout(props: ParentProps) {
                 end
                 activeClass={style.navActiveLink}
                 href={`/${workspaceId()}`}
+                onClick={() => setSidebarOpen(false)}
               >
                 Home
               </A>
@@ -35,6 +58,7 @@ export default function Layout(props: ParentProps) {
               <A
                 activeClass={style.navActiveLink}
                 href={`/${workspaceId()}/integrations`}
+                onClick={() => setSidebarOpen(false)}
               >
                 Integrations
               </A>
@@ -43,6 +67,7 @@ export default function Layout(props: ParentProps) {
               <A
                 activeClass={style.navActiveLink}
                 href={`/${workspaceId()}/billing`}
+                onClick={() => setSidebarOpen(false)}
               >
                 Billing
               </A>

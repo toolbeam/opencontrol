@@ -64,7 +64,7 @@
 
 .navActiveLink {
   cursor: default;
-  font-weight: 600;
+  text-decoration: none;
 }
 
 [data-slot="main-content"] {

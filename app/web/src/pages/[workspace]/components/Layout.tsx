@@ -24,6 +24,15 @@ export default function Layout(props: ParentProps) {
           <ul>
             <li>
               <A
+                end
+                activeClass={style.navActiveLink}
+                href={`/${workspaceId()}`}
+              >
+                Home
+              </A>
+            </li>
+            <li>
+              <A
                 activeClass={style.navActiveLink}
                 href={`/${workspaceId()}/integrations`}
               >

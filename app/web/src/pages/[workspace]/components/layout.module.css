@@ -74,4 +74,5 @@
   height: 100%; /* Full height */
   overflow: hidden; /* Prevent overflow */
   position: relative; /* For positioning footer */
+  width: 100%; /* Full width */
 }

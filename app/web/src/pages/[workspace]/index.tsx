@@ -66,7 +66,7 @@ export default function Index() {
   return (
     <Layout>
       <div class={style.root}>
-        <div data-slot="messages">
+        <div data-slot="messages" data-max-width>
           <For each={toolCaller.prompt}>
             {(item) => {
               return <>
@@ -101,7 +101,7 @@ export default function Index() {
           }
         </div>
 
-        <div data-slot="footer">
+        <div data-slot="footer" data-max-width>
           <div data-component="chat">
             <textarea
               autofocus

@@ -32,3 +32,15 @@ a {
 ::selection {
   background-color: var(--color-text-accent-invert);
 }
+
+/* Responsive utilities */
+[data-max-width] {
+  width: 100%;
+}
+
+[data-max-width] > * {
+  max-width: 90rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}

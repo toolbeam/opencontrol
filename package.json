@@ -22,7 +22,7 @@
     "@types/aws-lambda": "8.10.147",
     "@types/node": "^22.13.9",
     "prettier": "^3.5.3",
-    "sst": "3.10.6",
+    "sst": "3.13.7",
     "typescript": "5.8.2"
   },
   "engines": {

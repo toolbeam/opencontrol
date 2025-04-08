@@ -35,8 +35,18 @@ const user = table("user")
   })
   .primaryKey("workspace_id", "id")
 
+const aws_account = table("aws_account")
+  .columns({
+    id: string(),
+    workspace_id: string(),
+    account_id: string(),
+    region: string(),
+    ...timestamps,
+  })
+  .primaryKey("workspace_id", "id")
+
 export const schema = createSchema({
-  tables: [workspace, user],
+  tables: [workspace, user, aws_account],
   relationships: [
     relationships(user, (r) => ({
       workspace: r.one({
@@ -55,6 +65,18 @@ export const schema = createSchema({
         sourceField: ["id"],
         destSchema: user,
         destField: ["workspace_id"],
+      }),
+    })),
+    relationships(aws_account, (r) => ({
+      users: r.many({
+        sourceField: ["id"],
+        destSchema: user,
+        destField: ["workspace_id"],
+      }),
+      workspace: r.one({
+        sourceField: ["workspace_id"],
+        destSchema: workspace,
+        destField: ["id"],
       }),
     })),
   ],
@@ -89,6 +111,13 @@ export const permissions = definePermissions<Auth, Schema>(schema, () => {
       },
     },
     workspace: {
+      row: {
+        select: [
+          (auth, q) => q.exists("users", (u) => u.where("email", auth.sub)),
+        ],
+      },
+    },
+    aws_account: {
       row: {
         select: [
           (auth, q) => q.exists("users", (u) => u.where("email", auth.sub)),

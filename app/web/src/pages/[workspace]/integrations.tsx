@@ -1,9 +1,18 @@
+import { useQuery } from "@rocicorp/zero/solid"
+import { useZero } from "../components/context-zero"
 import { useAccount } from "../../components/context-account"
+import { useWorkspace } from "../components/context-workspace"
 import { Button } from "../../ui/button"
 import Layout from "./components/Layout"
+import { For } from "solid-js"
 
 export default function Integrations() {
   const account = useAccount()
+  const workspace = useWorkspace()
+  const zero = useZero()
+  const [awsAccounts] = useQuery(() => {
+    return zero.query.aws_account.where("workspace_id", workspace.id)
+  })
   return (
     <Layout>
       <div data-component="title-bar">
@@ -12,6 +21,15 @@ export default function Integrations() {
         </div>
       </div>
       <div data-max-width>
+        <h1>Integrations</h1>
+        <For each={awsAccounts()}>
+          {(awsAccount) => (
+            <div>
+              <h2>{awsAccount.account_id}</h2>
+              <p>{awsAccount.region}</p>
+            </div>
+          )}
+        </For>
         <Button
           onClick={() =>
             window.open(

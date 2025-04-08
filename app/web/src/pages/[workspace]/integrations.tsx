@@ -4,7 +4,7 @@ import { useAccount } from "../../components/context-account"
 import { useWorkspace } from "../components/context-workspace"
 import { Button } from "../../ui/button"
 import Layout from "./components/Layout"
-import { For, createSignal } from "solid-js"
+import { For } from "solid-js"
 import style from "./integrations.module.css"
 
 export default function Integrations() {
@@ -15,15 +15,11 @@ export default function Integrations() {
     return zero.query.aws_account.where("workspace_id", workspace.id)
   })
 
-  // Dummy data for demonstration
-  const [dummyAccounts, setDummyAccounts] = createSignal([
-    { id: "1", account_number: "123456789012", region: "us-east-1" },
-    { id: "2", account_number: "098765432109", region: "us-west-2" },
-  ])
-
-  const handleRemoveAccount = (id: string) => {
+  const handleRemoveAccount = async (id: string) => {
     console.log(`Removing account ${id}`)
-    setDummyAccounts(prev => prev.filter(acc => acc.id !== id))
+    // In a real implementation, this would call a mutation to set time_deleted
+    // For now, just log the action
+    // await zero.mutate.aws_account.update(workspace.id, id, { time_deleted: Date.now() })
   }
 
   const handleConnectAWS = () => {
@@ -31,6 +27,9 @@ export default function Integrations() {
       `https://console.aws.amazon.com/cloudformation/home#/stacks/quickcreate?param_workspaceID=${account.current!.workspaces[0].id}&stackName=OpenControl-${account.current!.workspaces[0].id.replace(/_/g, "-")}&templateURL=${import.meta.env.VITE_TEMPLATE_URL}`,
     )
   }
+
+  // Filter out soft-deleted accounts
+  const activeAccounts = () => awsAccounts()?.filter(account => !account.time_deleted) || []
 
   return (
     <Layout>
@@ -47,7 +46,7 @@ export default function Integrations() {
             <p>Connect your AWS accounts.</p>
           </div>
 
-          {dummyAccounts().length === 0 ? (
+          {activeAccounts().length === 0 ? (
             <div data-slot="empty-state">
               <p>Connect your AWS account to get started.</p>
               <Button color="primary" onClick={handleConnectAWS}>
@@ -56,7 +55,7 @@ export default function Integrations() {
             </div>
           ) : (
             <div data-slot="list">
-              <For each={dummyAccounts()}>
+              <For each={activeAccounts()}>
                 {(account) => (
                   <div data-slot="item">
                     <div data-slot="account">

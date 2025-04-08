@@ -28,13 +28,19 @@
   align-items: center;
   padding: 0 var(--space-4) 0 0;
 
-  [data-slot="mobile-logo"] {
+  [data-slot="logo"] {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     
-    & svg {
+    div {
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: -0.03125rem;
+    }
+
+    svg {
       height: 28px;
       width: auto;
       color: var(--color-white);

@@ -5,14 +5,21 @@ import { Button } from "../../../ui/button"
 import { IconLogomark } from "../../../ui/svg"
 import { IconBars3BottomLeft } from "../../../ui/svg/icons"
 import { ParentProps, createMemo, createSignal } from "solid-js"
-import { A } from "@solidjs/router"
+import { A, useLocation } from "@solidjs/router"
 
 export default function Layout(props: ParentProps) {
   const auth = useOpenAuth()
   const account = useAccount()
   const [sidebarOpen, setSidebarOpen] = createSignal(false)
+  const location = useLocation()
 
   const workspaceId = createMemo(() => account.current?.workspaces[0].id)
+  const pageTitle = createMemo(() => {
+    const path = location.pathname
+    if (path.endsWith("/billing")) return "Billing"
+    if (path.endsWith("/integrations")) return "Integrations"
+    return null
+  })
 
   return (
     <div class={style.root}>
@@ -25,10 +32,14 @@ export default function Layout(props: ParentProps) {
           <IconBars3BottomLeft />
         </button>
 
-        <div data-slot="mobile-logo">
-          <A href="/">
-            <IconLogomark />
-          </A>
+        <div data-slot="logo">
+          {pageTitle() ? (
+            <div>{pageTitle()}</div>
+          ) : (
+            <A href="/">
+              <IconLogomark />
+            </A>
+          )}
         </div>
       </div>
 

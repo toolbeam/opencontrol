@@ -24,3 +24,9 @@
   }
   
 }
+
+@media (max-width: 40rem) {
+  [data-component="title-bar"] {
+    display: none;
+  }
+}

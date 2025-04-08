@@ -24,6 +24,9 @@ export const auth = new sst.Linkable("Auth", {
 })
 
 export const storage = new sst.aws.Bucket("Storage")
+export const storagePublic = new sst.aws.Bucket("StoragePublic", {
+  access: "public",
+})
 
 export const cluster = new sst.aws.Cluster("Cluster", {
   vpc,

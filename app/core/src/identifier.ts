@@ -5,6 +5,7 @@ export namespace Identifier {
   const prefixes = {
     workspace: "wrk",
     user: "usr",
+    awsAccount: "aws",
   } as const
 
   export function create(

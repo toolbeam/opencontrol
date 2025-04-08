@@ -41,6 +41,10 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Bucket"
     }
+    "StoragePublic": {
+      "name": string
+      "type": "sst.aws.Bucket"
+    }
     "Vpc": {
       "bastion": string
       "type": "sst.aws.Vpc"

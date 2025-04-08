@@ -69,7 +69,7 @@ export const schema = createSchema({
     })),
     relationships(aws_account, (r) => ({
       users: r.many({
-        sourceField: ["id"],
+        sourceField: ["workspace_id"],
         destSchema: user,
         destField: ["workspace_id"],
       }),

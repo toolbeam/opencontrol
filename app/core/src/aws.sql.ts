@@ -7,11 +7,11 @@ export const AwsAccountTable = pgTable(
   {
     ...workspaceColumns,
     ...timestamps,
-    accountID: varchar("account_id", { length: 12 }).notNull(),
+    accountNumber: varchar("account_number", { length: 12 }).notNull(),
     region: varchar("region", { length: 32 }).notNull(),
   },
   (table) => [
     ...workspaceIndexes(table),
-    uniqueIndex("account_id").on(table.workspaceID, table.accountID),
+    uniqueIndex("account_number").on(table.workspaceID, table.accountNumber),
   ],
 )

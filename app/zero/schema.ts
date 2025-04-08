@@ -39,7 +39,7 @@ const aws_account = table("aws_account")
   .columns({
     id: string(),
     workspace_id: string(),
-    account_id: string(),
+    account_number: string(),
     region: string(),
     ...timestamps,
   })

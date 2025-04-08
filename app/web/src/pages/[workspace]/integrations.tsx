@@ -21,11 +21,10 @@ export default function Integrations() {
         </div>
       </div>
       <div data-max-width>
-        <h1>Integrations</h1>
         <For each={awsAccounts()}>
           {(awsAccount) => (
             <div>
-              <h2>{awsAccount.account_id}</h2>
+              <h2>{awsAccount.account_number}</h2>
               <p>{awsAccount.region}</p>
             </div>
           )}

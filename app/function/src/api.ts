@@ -119,20 +119,24 @@ const app = new Hono()
         }),
       )
 
-      const accountID = role.split(":")[4]
+      const accountNumber = role.split(":")[4]
       await Database.use((tx) =>
         tx
           .insert(AwsAccountTable)
           .values({
             id: Identifier.create("awsAccount"),
             workspaceID,
-            accountID,
+            accountNumber,
             region,
           })
           .onConflictDoUpdate({
-            target: [AwsAccountTable.workspaceID, AwsAccountTable.accountID],
+            target: [
+              AwsAccountTable.workspaceID,
+              AwsAccountTable.accountNumber,
+            ],
             set: {
               region,
+              timeDeleted: null,
             },
           }),
       )

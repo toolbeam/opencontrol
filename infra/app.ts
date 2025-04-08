@@ -46,3 +46,11 @@ new sst.aws.StaticSite("Web", {
   },
   path: "app/web",
 })
+
+new sst.aws.Astro("Docs", {
+  route: {
+    router,
+    path: "/docs",
+  },
+  path: "www",
+})

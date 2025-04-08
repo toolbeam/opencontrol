@@ -15,6 +15,7 @@
     "@astrojs/starlight": "^0.32.0",
     "@fontsource/ibm-plex-mono": "^5.1.0",
     "astro": "^5.1.5",
+    "astro-sst": "3.1.2",
     "rehype-autolink-headings": "^7.1.0",
     "sharp": "^0.33.4",
     "toolbeam-docs-theme": "^0.0.4"

@@ -131,7 +131,12 @@ export const zero = new sst.aws.Service("Zero", {
     startPeriod: "300 seconds",
   },
   loadBalancer: {
-    domain: "zero." + domain,
+    domain: {
+      name: "zero." + domain,
+      dns: sst.cloudflare.dns({
+        zone: "2eeb3aac61ad26f10be95c5365bd8b89",
+      }),
+    },
     rules: [
       { listen: "443/https", forward: "4848/http" },
       { listen: "80/http", forward: "4848/http" },

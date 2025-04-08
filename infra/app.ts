@@ -22,12 +22,18 @@ export const api = new sst.aws.Function("Api", {
   handler: "app/function/src/api.handler",
   link: [auth, postgres, ...AllSecrets],
   permissions: [{ actions: ["sts:*"], resources: ["*"] }],
-  url: true,
+  url: {
+    route: {
+      router,
+      domain: `api-${domain}`,
+    },
+  },
 })
-router.route("api-" + domain, api.url)
 
-const site = new sst.aws.StaticSite("Web", {
-  cdn: false,
+new sst.aws.StaticSite("Web", {
+  route: {
+    router,
+  },
   build: {
     command: "bun run build",
     output: "dist/client",
@@ -40,4 +46,3 @@ const site = new sst.aws.StaticSite("Web", {
   },
   path: "app/web",
 })
-router.routeSite(domain, site)

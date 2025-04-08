@@ -51,6 +51,7 @@ declare module "sst" {
     }
     "Web": {
       "type": "sst.aws.StaticSite"
+      "url": string
     }
     "Zero": {
       "service": string

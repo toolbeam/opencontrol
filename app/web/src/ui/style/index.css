@@ -36,11 +36,15 @@ a {
 /* Responsive utilities */
 [data-max-width] {
   width: 100%;
-}
 
-[data-max-width] > * {
-  max-width: 90rem;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+  & > * {
+    max-width: 90rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  &[data-max-width-64] > * {
+    max-width: 64rem;
+  }
 }

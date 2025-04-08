@@ -3,7 +3,7 @@ import { useZero } from "../components/context-zero"
 import { useAccount } from "../../components/context-account"
 import { useWorkspace } from "../components/context-workspace"
 import { Button } from "../../ui/button"
-import Layout from "./components/Layout"
+import Layout from "./components/layout"
 import { For } from "solid-js"
 import style from "./integrations.module.css"
 

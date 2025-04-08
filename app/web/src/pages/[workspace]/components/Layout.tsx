@@ -21,6 +21,11 @@ export default function Layout(props: ParentProps) {
     return null
   })
 
+  function handleLogout() {
+    auth.logout(auth.subject?.id!)
+    window.location.assign("/")
+  }
+
   return (
     <div class={style.root}>
       {/* Mobile top bar */}
@@ -89,7 +94,7 @@ export default function Layout(props: ParentProps) {
         <div data-slot="user">
           <Button
             color="ghost"
-            onClick={() => auth.logout(auth.subject?.id!)}
+            onClick={handleLogout}
             title={account.current?.email || ""}
           >
             Logout

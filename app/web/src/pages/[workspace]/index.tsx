@@ -9,7 +9,7 @@ import { createSignal, For, onMount } from "solid-js"
 import { createToolCaller } from "./components/tool"
 import { useApi } from "../components/context-api"
 import style from "./index.module.css"
-import Layout from "./components/Layout"
+import Layout from "./components/layout"
 
 export default function Index() {
   const auth = useOpenAuth()

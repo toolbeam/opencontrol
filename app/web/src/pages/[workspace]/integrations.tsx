@@ -6,8 +6,12 @@ export default function Integrations() {
   const account = useAccount()
   return (
     <Layout>
+      <div data-component="title-bar">
+        <div data-slot="left">
+          <h1>Integrations</h1>
+        </div>
+      </div>
       <div data-max-width>
-        <h1>Integrations</h1>
         <Button
           onClick={() =>
             window.open(

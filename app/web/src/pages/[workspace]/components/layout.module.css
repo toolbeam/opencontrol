@@ -1,5 +1,5 @@
 .root {
-  --padding: var(--space-12);
+  --padding: var(--space-10);
   --vertical-padding: var(--space-8);
   --heading-font-size: var(--font-size-4xl);
   --sidebar-width: 200px;
@@ -72,7 +72,8 @@
   z-index: 10;
 
   [data-slot="logo"] {
-    margin-bottom: var(--vertical-padding);
+    margin-top: 2px;
+    margin-bottom: var(--space-7);
     color: var(--color-white);
     & svg {
       height: 32px;

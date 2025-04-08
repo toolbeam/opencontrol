@@ -57,19 +57,19 @@ export default function Layout(props: ParentProps) {
             <li>
               <A
                 activeClass={style.navActiveLink}
-                href={`/${workspaceId()}/integrations`}
+                href={`/${workspaceId()}/billing`}
                 onClick={() => setSidebarOpen(false)}
               >
-                Integrations
+                Billing
               </A>
             </li>
             <li>
               <A
                 activeClass={style.navActiveLink}
-                href={`/${workspaceId()}/billing`}
+                href={`/${workspaceId()}/integrations`}
                 onClick={() => setSidebarOpen(false)}
               >
-                Billing
+                Integrations
               </A>
             </li>
           </ul>

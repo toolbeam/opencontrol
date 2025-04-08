@@ -4,13 +4,13 @@
 @import "./token/animation.css";
 @import "./token/font.css";
 @import "./token/space.css";
-/* @import "./token/radius.css"; */
 
 /* components */
 @import "./component/label.css";
 @import "./component/input.css";
 @import "./component/button.css";
 @import "./component/dialog.css";
+@import "./component/title-bar.css";
 
 body {
   font-family: var(--font-mono);

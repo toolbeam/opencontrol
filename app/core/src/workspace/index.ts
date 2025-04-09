@@ -18,6 +18,7 @@ export namespace Workspace {
         workspaceID,
         id: Identifier.create("user"),
         email: account.properties.email,
+        name: "",
       })
     })
     return workspaceID

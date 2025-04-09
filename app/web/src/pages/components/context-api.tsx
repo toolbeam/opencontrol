@@ -13,7 +13,7 @@ export function useApi() {
       const request = input instanceof Request ? input : new Request(input, init);
       const headers = new Headers(request.headers);
       headers.set("authorization", `Bearer ${await auth.access()}`);
-      headers.set("x-radiant-workspace", workspace.id);
+      headers.set("x-opencontrol-workspace", workspace.id);
       return fetch(new Request(request, {
         ...init,
         headers

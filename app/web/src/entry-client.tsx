@@ -8,5 +8,8 @@ if (import.meta.env.DEV) {
 }
 
 if (!import.meta.env.DEV) {
-  hydrate(() => <App />, document.getElementById('root')!);
+  if (globalThis.$HY)
+    hydrate(() => <App />, document.getElementById('root')!);
+  else
+    render(() => <App />, document.getElementById('root')!);
 }

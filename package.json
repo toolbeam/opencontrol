@@ -14,7 +14,8 @@
   "workspaces": [
     "packages/*",
     "app/*",
-    "examples/*"
+    "examples/*",
+    "www"
   ],
   "devDependencies": {
     "@changesets/cli": "2.28.1",
@@ -38,7 +39,9 @@
     "semi": false
   },
   "dependencies": {
-    "@rocicorp/zero": "0.17.2025031904",
+    "@rocicorp/zero": "0.17.2025031904"
+  },
+  "overrides": {
     "zod": "3.24.2"
   },
   "trustedDependencies": [

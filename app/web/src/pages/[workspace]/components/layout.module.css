@@ -11,7 +11,8 @@
   height: calc(100vh - var(--space-8));
   display: flex;
   flex-direction: row;
-  overflow: hidden; /* Prevent overall scrolling */
+  overflow: hidden;
+  /* Prevent overall scrolling */
   position: relative;
 }
 
@@ -33,7 +34,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    
+
     div {
       text-transform: uppercase;
       font-weight: 600;
@@ -55,7 +56,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     & svg {
       width: 24px;
       height: 24px;
@@ -70,7 +71,8 @@
   display: flex;
   flex-direction: column;
   padding: calc(var(--padding) / 2);
-  overflow-y: auto; /* Allow scrolling if needed */
+  overflow-y: auto;
+  /* Allow scrolling if needed */
   position: sticky;
   top: 0;
   height: 100%;
@@ -81,6 +83,7 @@
     margin-top: 2px;
     margin-bottom: var(--space-7);
     color: var(--color-white);
+
     & svg {
       height: 32px;
       width: auto;
@@ -125,10 +128,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%; /* Full height */
-  overflow: hidden; /* Prevent overflow */
-  position: relative; /* For positioning footer */
-  width: 100%; /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: hidden;
+  /* Prevent overflow */
+  position: relative;
+  /* For positioning footer */
+  width: 100%;
+  /* Full width */
 }
 
 /* Backdrop for mobile */
@@ -151,7 +158,7 @@
     border: none;
     height: 100vh;
   }
-  
+
   [data-component="mobile-top-bar"] {
     display: flex;
   }
@@ -180,10 +187,11 @@
   }
 
   [data-slot="main-content"] {
-    padding-top: var(--topbar-height); /* Add space for the top bar */
+    padding-top: var(--topbar-height);
+    /* Add space for the top bar */
     overflow-y: auto;
   }
-  
+
   /* Hide the logo in the sidebar on mobile since it's in the top bar */
   [data-component="sidebar"] [data-slot="logo"] {
     display: none;

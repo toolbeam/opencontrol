@@ -22,6 +22,10 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Function"
     }
+    "Docs": {
+      "type": "sst.aws.Astro"
+      "url": string
+    }
     "Postgres": {
       "clusterArn": string
       "database": string
@@ -54,6 +58,11 @@ declare module "sst" {
       "url": string
     }
     "Zero": {
+      "service": string
+      "type": "sst.aws.Service"
+      "url": string
+    }
+    "ZeroReplication": {
       "service": string
       "type": "sst.aws.Service"
       "url": string

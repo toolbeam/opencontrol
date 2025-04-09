@@ -6,13 +6,15 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    height: 0; /* This is important for flexbox to allow scrolling */
+    height: 0;
+    /* This is important for flexbox to allow scrolling */
     font-family: var(--font-mono);
     color: var(--color-text);
-    row-gap: var(--space-4); /* Add consistent spacing between messages */
+    row-gap: var(--space-4);
+    /* Add consistent spacing between messages */
 
     /* Remove top border for first user message */
-    & > [data-component="message"][data-user]:first-child::before {
+    &>[data-component="message"][data-user]:first-child::before {
       display: none;
     }
 
@@ -27,7 +29,8 @@
     line-height: var(--font-line-height);
     white-space: pre-wrap;
     align-self: flex-start;
-    min-height: auto; /* Allow natural height for all messages */
+    min-height: auto;
+    /* Allow natural height for all messages */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -49,7 +52,8 @@
       right: var(--space-4);
       height: var(--space-px);
       background-color: var(--color-border);
-      z-index: 1; /* Ensure borders appear above other content */
+      z-index: 1;
+      /* Ensure borders appear above other content */
     }
 
     &[data-user]::before {
@@ -75,7 +79,8 @@
     gap: var(--space-2);
     align-items: flex-start;
     color: var(--color-text-dimmed);
-    min-height: auto; /* Allow natural height */
+    min-height: auto;
+    /* Allow natural height */
 
     [data-slot="header"] {
       display: flex;
@@ -145,8 +150,16 @@
   }
 
   @keyframes loading-dots {
-    0%, 100% { opacity: 0; }
-    40%, 60% { opacity: 1; }
+
+    0%,
+    100% {
+      opacity: 0;
+    }
+
+    40%,
+    60% {
+      opacity: 1;
+    }
   }
 
   [data-component="clear"] {
@@ -176,8 +189,10 @@
     border-top: 2px solid var(--color-border);
     position: sticky;
     bottom: 0;
-    z-index: 10; /* Ensure it's above other content */
-    margin-top: auto; /* Push to bottom if content is short */
+    z-index: 10;
+    /* Ensure it's above other content */
+    margin-top: auto;
+    /* Push to bottom if content is short */
     width: 100%;
   }
 

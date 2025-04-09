@@ -17,7 +17,7 @@ export function App(props: { url?: string }) {
       <DialogProvider>
         <DialogString />
         <DialogSelect />
-        <OpenAuthProvider clientID="web" issuer={import.meta.env.VITE_AUTH_URL}>
+        <OpenAuthProvider clientID="web" issuer={import.meta.env.VITE_AUTH_URL || "http://dummy"}>
           <AccountProvider>
             <MetaProvider>
               <Router

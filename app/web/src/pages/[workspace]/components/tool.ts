@@ -1,5 +1,6 @@
 import { createResource } from "solid-js"
 import { createStore, produce } from "solid-js/store"
+import SYSTEM_PROMPT from "./system.txt?raw"
 import type {
   LanguageModelV1Prompt,
   LanguageModelV1CallOptions,
@@ -27,13 +28,24 @@ interface ToolCallerProps {
   onPromptUpdated?: (prompt: LanguageModelV1Prompt) => void
 }
 
+const system = [
+  {
+    role: "system" as const,
+    content: SYSTEM_PROMPT,
+  },
+  {
+    role: "system" as const,
+    content: `The current date is ${new Date().toDateString()}. Always use this current date when responding to relative date queries.`,
+  },
+]
+
 export function createToolCaller<T extends ToolCallerProps>(props: T) {
   const [tools] = createResource(() => props.tool.list())
   const [store, setStore] = createStore<{
     prompt: LanguageModelV1Prompt
     state: { type: "idle" } | { type: "loading"; limited?: boolean }
   }>({
-    prompt: [],
+    prompt: [...system],
     state: { type: "idle" },
   })
 
@@ -50,7 +62,7 @@ export function createToolCaller<T extends ToolCallerProps>(props: T) {
       return store.state
     },
     clear() {
-      setStore("prompt", [])
+      setStore("prompt", [...system])
     },
     async chat(input: string) {
       if (store.state.type !== "idle") return

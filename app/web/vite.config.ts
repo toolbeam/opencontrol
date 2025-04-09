@@ -29,7 +29,7 @@ export default defineConfig({
           )
           fs.writeFileSync(path.join(dist, "client/fallback.html"), template)
 
-          const routes = ["/", "/foo"]
+          const routes = ["/"]
           for (const route of routes) {
             const { app } = serverEntry.render({ url: route })
             const html = template

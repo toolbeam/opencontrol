@@ -1,6 +1,3 @@
-import { useQuery } from "@rocicorp/zero/solid"
-import { useZero } from "../components/context-zero"
-import { useDialog } from "../../ui/context-dialog"
 import { Button } from "../../ui/button"
 import { IconArrowRight } from "../../ui/svg/icons"
 import { useAccount } from "../../components/context-account"
@@ -18,40 +15,24 @@ export default function Index() {
   const toolCaller = createToolCaller({
     tool: {
       async list() {
-        return [
-          {
-            name: "run_js",
-            description:
-              "run any javascript code on the current page. Will be passed to `eval`",
-            inputSchema: {
-              type: "object",
-              properties: {
-                code: {
-                  type: "string",
-                },
-              },
-            },
+        const response = await api.mcp.$post({
+          json: {
+            method: "tools/list",
+            params: {},
           },
-          {
-            name: "query_db",
-            description: "query the database",
-            inputSchema: {
-              type: "object",
-              properties: {
-                query: {
-                  type: "string",
-                },
-              },
-            },
-          },
-        ]
+        }).then(r => r.json() as any)
+        return response.tools
       },
       async call(input) {
-        return `
-        dax@sst.dev dax
-        jay@sst.dev jay
-        frank@sst.dev frank
-        `
+        return await api.mcp.$post({
+          json: {
+            method: "tools/call",
+            params: {
+              name: input.name,
+              arguments: input.arguments,
+            },
+          },
+        }).then(r => r.json() as any)
       },
     },
     generate: async (prompt) => {
@@ -61,7 +42,7 @@ export default function Index() {
         })
         .then((r) => r.json() as any)
     },
-    onPromptUpdated: () => {},
+    onPromptUpdated: () => { },
   })
 
   return (
@@ -114,7 +95,7 @@ export default function Index() {
               <span>■</span>
             </div>
           )}
-          {toolCaller.prompt.length > 0 && (
+          {toolCaller.prompt.filter((item) => item.role !== "system").length > 0 && (
             <div data-component="clear">
               <Button size="sm" color="ghost" onClick={toolCaller.clear}>
                 Clear chat

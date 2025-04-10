@@ -54,10 +54,12 @@
       text-transform: uppercase;
       cursor: pointer;
       text-decoration: underline;
+      letter-spacing: -0.03125rem;
 
       &[data-slot="col-2"] {
-        background-color: var(--color-white);
+        background-color: var(--color-border);
         color: var(--color-text-invert);
+        font-weight: 600;
       }
 
       & > * {
@@ -127,19 +129,25 @@
     border-top: 2px solid var(--color-border);
     padding: var(--padding);
 
-    ul {
-      padding-left: 1rem;
-      list-style-type: disc;
+    & > p {
       line-height: var(--font-line-height);
     }
 
-    ul li + li {
+    ol {
       margin-top: calc(var(--vertical-padding) / 2);
+      padding-left: 2.5rem;
+      list-style-type: decimal;
+      line-height: var(--font-line-height);
+
+      & > li + li {
+        margin-top: calc(var(--vertical-padding) / 2);
+      }
+
+      & > li b {
+        text-transform: uppercase;
+      }
     }
 
-    ul li b {
-      text-transform: uppercase;
-    }
   }
 
   [data-slot="footer"] {

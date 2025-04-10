@@ -55,12 +55,10 @@ export function create(input: OpenControlOptions) {
     })
     .post(
       "/generate",
-      // @ts-ignore
       zValidator("json", z.custom<LanguageModelV1CallOptions>()),
       async (c) => {
         if (!input.model)
           throw new HTTPException(400, { message: "No model configured" })
-        // @ts-ignore
         const body = c.req.valid("json")
         try {
           const result = await input.model.doGenerate(body)

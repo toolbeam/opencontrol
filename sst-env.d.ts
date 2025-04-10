@@ -49,6 +49,14 @@ declare module "sst" {
       "name": string
       "type": "sst.aws.Bucket"
     }
+    "StripeSecretKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "StripeWebhookSecret": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "Vpc": {
       "bastion": string
       "type": "sst.aws.Vpc"

@@ -5,6 +5,8 @@ import { Database, eq } from "../drizzle"
 import { Identifier } from "../identifier"
 import { WorkspaceTable } from "./workspace.sql"
 import { UserTable } from "../user/user.sql"
+import { BillingTable } from "../billing.sql"
+import { Billing } from "../billing"
 
 export namespace Workspace {
   export const create = fn(z.void(), async () => {
@@ -19,6 +21,11 @@ export namespace Workspace {
         id: Identifier.create("user"),
         email: account.properties.email,
         name: "",
+      })
+      await tx.insert(BillingTable).values({
+        workspaceID,
+        id: Identifier.create("billing"),
+        balance: 100,
       })
     })
     return workspaceID

@@ -7,6 +7,7 @@ import {
   relationships,
   ExpressionBuilder,
   ANYONE_CAN,
+  boolean,
 } from "@rocicorp/zero"
 
 const timestamps = {
@@ -45,8 +46,32 @@ const aws_account = table("aws_account")
   })
   .primaryKey("workspace_id", "id")
 
+const billing = table("billing")
+  .columns({
+    id: string(),
+    workspace_id: string(),
+    customer_id: string().optional(),
+    balance: number(),
+    reload: boolean().optional(),
+    ...timestamps,
+  })
+  .primaryKey("workspace_id", "id")
+
+const usage = table("usage")
+  .columns({
+    id: string(),
+    workspace_id: string(),
+    request_id: string().optional(),
+    model: string(),
+    input_tokens: number(),
+    output_tokens: number(),
+    cost: number(),
+    ...timestamps,
+  })
+  .primaryKey("workspace_id", "id")
+
 export const schema = createSchema({
-  tables: [workspace, user, aws_account],
+  tables: [workspace, user, aws_account, billing, usage],
   relationships: [
     relationships(user, (r) => ({
       workspace: r.one({
@@ -68,6 +93,30 @@ export const schema = createSchema({
       }),
     })),
     relationships(aws_account, (r) => ({
+      users: r.many({
+        sourceField: ["workspace_id"],
+        destSchema: user,
+        destField: ["workspace_id"],
+      }),
+      workspace: r.one({
+        sourceField: ["workspace_id"],
+        destSchema: workspace,
+        destField: ["id"],
+      }),
+    })),
+    relationships(billing, (r) => ({
+      users: r.many({
+        sourceField: ["workspace_id"],
+        destSchema: user,
+        destField: ["workspace_id"],
+      }),
+      workspace: r.one({
+        sourceField: ["workspace_id"],
+        destSchema: workspace,
+        destField: ["id"],
+      }),
+    })),
+    relationships(usage, (r) => ({
       users: r.many({
         sourceField: ["workspace_id"],
         destSchema: user,
@@ -118,6 +167,20 @@ export const permissions = definePermissions<Auth, Schema>(schema, () => {
       },
     },
     aws_account: {
+      row: {
+        select: [
+          (auth, q) => q.exists("users", (u) => u.where("email", auth.sub)),
+        ],
+      },
+    },
+    billing: {
+      row: {
+        select: [
+          (auth, q) => q.exists("users", (u) => u.where("email", auth.sub)),
+        ],
+      },
+    },
+    usage: {
       row: {
         select: [
           (auth, q) => q.exists("users", (u) => u.where("email", auth.sub)),

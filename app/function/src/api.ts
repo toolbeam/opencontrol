@@ -3,7 +3,7 @@ import { createClient } from "@openauthjs/openauth/client"
 import { Actor } from "@opencontrol/core/actor.js"
 import { Log } from "@opencontrol/core/util/log.js"
 import { Workspace } from "@opencontrol/core/workspace/index.js"
-import { Database, eq, and } from "@opencontrol/core/drizzle/index.js"
+import { Database, eq, and, sql } from "@opencontrol/core/drizzle/index.js"
 import { Hono, MiddlewareHandler } from "hono"
 import { handle } from "hono/aws-lambda"
 import { HTTPException } from "hono/http-exception"
@@ -23,6 +23,8 @@ import {
   CallToolResult,
 } from "@modelcontextprotocol/sdk/types.js"
 import { UserTable } from "@opencontrol/core/user/user.sql.js"
+import { Billing } from "@opencontrol/core/billing.js"
+import { BillingTable, PaymentTable } from "@opencontrol/core/billing.sql.js"
 
 const model = createAnthropic({
   apiKey: Resource.AnthropicApiKey.value,
@@ -64,6 +66,7 @@ export const AuthMiddleware: MiddlewareHandler = async (c, next) => {
           .select({
             id: UserTable.id,
             workspaceID: UserTable.workspaceID,
+            email: UserTable.email,
           })
           .from(UserTable)
           .where(
@@ -83,6 +86,7 @@ export const AuthMiddleware: MiddlewareHandler = async (c, next) => {
         properties: {
           userID: user.id,
           workspaceID: workspaceID,
+          email: user.email,
         },
       }
     }
@@ -103,6 +107,62 @@ const app = new Hono()
       id: account.properties.accountID,
       email: account.properties.email,
       workspaces,
+    })
+  })
+  .post("/billing/checkout", async (c) => {
+    const account = Actor.assert("user")
+
+    const body = await c.req.json()
+
+    const customer = await Billing.get()
+    const session = await Billing.stripe.checkout.sessions.create({
+      mode: "payment",
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "OpenControl credits",
+            },
+            unit_amount: 2000, // $20 minimum
+          },
+          quantity: 1,
+        },
+      ],
+      payment_intent_data: {
+        setup_future_usage: "on_session",
+      },
+      customer: customer.customerID ?? undefined,
+      customer_email: account.properties.email,
+      customer_creation: "always",
+      metadata: {
+        workspaceID: Actor.workspace(),
+      },
+      currency: "usd",
+      payment_method_types: ["card"],
+      success_url: body.return_url,
+      cancel_url: body.return_url,
+    })
+
+    return c.json({
+      url: session.url,
+    })
+  })
+  .post("/billing/portal", async (c) => {
+    const body = await c.req.json()
+
+    const customer = await Billing.get()
+    if (!customer?.customerID) {
+      throw new Error("No stripe customer ID")
+    }
+
+    const session = await Billing.stripe.billingPortal.sessions.create({
+      customer: customer.customerID,
+      return_url: body.return_url,
+    })
+
+    return c.json({
+      url: session.url,
     })
   })
   .post("/ai_generate", zValidator("json", z.custom<any>()), async (c) => {
@@ -308,6 +368,63 @@ const app = new Hono()
       }
     },
   )
+  .post("/stripe/webhook", async (c) => {
+    // validate signature
+    const body = Billing.stripe.webhooks.constructEvent(
+      await c.req.text(),
+      c.req.header("stripe-signature")!,
+      Resource.StripeWebhookSecret.value,
+    )
+
+    console.log(body.type, JSON.stringify(body, null, 2))
+    if (body.type === "checkout.session.completed") {
+      const workspaceID = body.data.object.metadata?.workspaceID
+      const customerID = body.data.object.customer as string
+      const paymentID = body.data.object.payment_intent as string
+      const amount = body.data.object.amount_total
+
+      if (!workspaceID) throw new Error("Workspace ID not found")
+      if (!customerID) throw new Error("Customer ID not found")
+      if (!amount) throw new Error("Amount not found")
+      if (!paymentID) throw new Error("Payment ID not found")
+
+      await Actor.provide("system", { workspaceID }, async () => {
+        const customer = await Billing.get()
+        if (customer?.customerID && customer.customerID !== customerID)
+          throw new Error("Customer ID mismatch")
+
+        // set customer metadata
+        if (!customer?.customerID) {
+          await Billing.stripe.customers.update(customerID, {
+            metadata: {
+              workspaceID,
+            },
+          })
+        }
+
+        await Database.transaction(async (tx) => {
+          await tx
+            .update(BillingTable)
+            .set({
+              balance: sql`${BillingTable.balance} + ${amount}`,
+              customerID,
+            })
+            .where(eq(BillingTable.workspaceID, workspaceID))
+          await tx.insert(PaymentTable).values({
+            workspaceID,
+            id: Identifier.create("payment"),
+            amount,
+            paymentID,
+            customerID,
+          })
+        })
+      })
+    }
+
+    console.log("finished handling")
+
+    return c.json("ok", 200)
+  })
 
 export type ApiType = typeof app
 export const handler = handle(app)

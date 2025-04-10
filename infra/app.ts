@@ -6,6 +6,8 @@ import { zero } from "./zero"
 
 export const secret = {
   AnthropicApiKey: new sst.Secret("AnthropicApiKey"),
+  StripeSecretKey: new sst.Secret("StripeSecretKey"),
+  StripeWebhookSecret: new sst.Secret("StripeWebhookSecret"),
 }
 const AllSecrets = Object.values(secret)
 

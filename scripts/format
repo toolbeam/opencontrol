@@ -2,7 +2,8 @@
 
 set -e
 
-CI= bun x sherif --fix
+unset CI
+bun x sherif --fix
 bun x prettier --write "**/*.{mjs,js,jsx,ts,tsx,json,md,yaml,yml}"
 
 # Check for changes

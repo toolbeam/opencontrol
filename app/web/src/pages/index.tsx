@@ -29,7 +29,7 @@ export default function Index() {
                 <a href="/docs/how-it-works/">Learn more</a>
               </div>
               <div data-slot="col-2">
-                <span onClick={() => auth.authorize()}>Get started</span>
+                <span onClick={() => auth.authorize({ provider: "google" })}>Get started</span>
               </div>
               <div data-slot="col-3">
                 <a

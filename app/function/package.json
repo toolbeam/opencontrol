@@ -15,7 +15,7 @@
     "aws-sdk": "2.1692.0",
     "drizzle-orm": "0.41.0",
     "hono": "4.7.5",
-    "opencontrol": "0.1.0"
+    "opencontrol": "npm:opencontrol@0.1.0"
   },
   "devDependencies": {
     "drizzle-kit": "0.30.5"

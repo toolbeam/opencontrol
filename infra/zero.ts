@@ -132,7 +132,7 @@ export const zero = new sst.aws.Service("Zero", {
   },
   loadBalancer: {
     domain: {
-      name: "zero." + domain,
+      name: subdomain("zero"),
       dns: sst.cloudflare.dns({
         zone: "2eeb3aac61ad26f10be95c5365bd8b89",
       }),

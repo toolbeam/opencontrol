@@ -5,3 +5,8 @@ export const domain = (() => {
   if ($app.stage === "dev") return "dev.opencontrol.ai"
   return `${$app.stage}.dev.opencontrol.ai`
 })()
+
+export function subdomain(name: string) {
+  if (isPermanentStage) return name + "." + domain
+  return name + "-" + domain
+}

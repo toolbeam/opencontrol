@@ -1,7 +1,7 @@
 import { templateUrl } from "./connect"
 import { postgres } from "./postgres"
 import { auth, router } from "./shared"
-import { domain } from "./stage"
+import { domain, subdomain } from "./stage"
 import { zero } from "./zero"
 
 export const secret = {
@@ -25,7 +25,7 @@ export const api = new sst.aws.Function("Api", {
   url: {
     route: {
       router,
-      domain: `api-${domain}`,
+      domain: subdomain("api"),
     },
   },
 })

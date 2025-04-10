@@ -49,9 +49,9 @@ const migrator = new sst.aws.Function("DatabaseMigrator", {
   ],
 })
 
-if (!$dev) {
-  new aws.lambda.Invocation("DatabaseMigratorInvocation", {
-    input: Date.now().toString(),
-    functionName: migrator.name,
-  })
-}
+export const migration = $dev
+  ? new aws.lambda.Invocation("DatabaseMigratorInvocation", {
+      input: Date.now().toString(),
+      functionName: migrator.name,
+    })
+  : undefined

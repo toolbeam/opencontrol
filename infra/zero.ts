@@ -1,7 +1,7 @@
 import { readFileSync } from "fs"
 import { auth, cluster, storage } from "./shared"
 import { subdomain } from "./stage"
-import { postgres } from "./postgres"
+import { postgres, migration } from "./postgres"
 
 const conn = $interpolate`postgresql://${postgres.username}:${postgres.password}@${postgres.host}/${postgres.database}`
 
@@ -95,7 +95,7 @@ if (replication)
       triggers: [Date.now()],
     },
     {
-      dependsOn: [replication],
+      dependsOn: [replication, migration],
     },
   )
 

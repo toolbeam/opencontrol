@@ -74,12 +74,8 @@
           "name": "aws_account_workspace_id_workspace_id_fk",
           "tableFrom": "aws_account",
           "tableTo": "workspace",
-          "columnsFrom": [
-            "workspace_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["workspace_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -87,10 +83,7 @@
       "compositePrimaryKeys": {
         "aws_account_workspace_id_id_pk": {
           "name": "aws_account_workspace_id_id_pk",
-          "columns": [
-            "workspace_id",
-            "id"
-          ]
+          "columns": ["workspace_id", "id"]
         }
       },
       "uniqueConstraints": {},
@@ -180,12 +173,8 @@
           "name": "user_workspace_id_workspace_id_fk",
           "tableFrom": "user",
           "tableTo": "workspace",
-          "columnsFrom": [
-            "workspace_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["workspace_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -193,10 +182,7 @@
       "compositePrimaryKeys": {
         "user_workspace_id_id_pk": {
           "name": "user_workspace_id_id_pk",
-          "columns": [
-            "workspace_id",
-            "id"
-          ]
+          "columns": ["workspace_id", "id"]
         }
       },
       "uniqueConstraints": {},

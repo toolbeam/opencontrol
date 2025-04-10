@@ -1,8 +1,7 @@
-import { z } from "zod";
-import { onMount } from "solid-js";
-import { createDialog } from "./context-dialog";
-import { Button } from "./button";
-
+import { z } from "zod"
+import { onMount } from "solid-js"
+import { createDialog } from "./context-dialog"
+import { Button } from "./button"
 
 export const DialogString = createDialog({
   size: "sm",
@@ -13,7 +12,7 @@ export const DialogString = createDialog({
     onSubmit: z.function().args(z.string()).returns(z.void()),
   }),
   render: (ctx) => {
-    let input: HTMLInputElement;
+    let input: HTMLInputElement
     onMount(() => {
       setTimeout(() => {
         input.focus()
@@ -46,7 +45,7 @@ export const DialogString = createDialog({
             data-slot="input"
             data-size="lg"
             data-component="input"
-            ref={r => input = r}
+            ref={(r) => (input = r)}
             placeholder={ctx.input.placeholder}
             id={`dialog-string-${ctx.input.title}`}
             onKeyDown={(e) => {
@@ -58,15 +57,14 @@ export const DialogString = createDialog({
           />
         </div>
         <div data-slot="footer">
-          <Button size="md" color="ghost" onClick={() => ctx.control.close()}>Cancel</Button>
-          <Button
-            size="md"
-            color="secondary"
-            onClick={submit}>{ctx.input.action}</Button>
+          <Button size="md" color="ghost" onClick={() => ctx.control.close()}>
+            Cancel
+          </Button>
+          <Button size="md" color="secondary" onClick={submit}>
+            {ctx.input.action}
+          </Button>
         </div>
       </>
     )
-  }
+  },
 })
-
-

@@ -29,7 +29,8 @@ export default function Integrations() {
   }
 
   // Filter out soft-deleted accounts
-  const activeAccounts = () => awsAccounts()?.filter(account => !account.time_deleted) || []
+  const activeAccounts = () =>
+    awsAccounts()?.filter((account) => !account.time_deleted) || []
 
   return (
     <Layout>
@@ -73,11 +74,7 @@ export default function Integrations() {
               </For>
               <div data-slot="item" data-connect>
                 <span>Add another account</span>
-                <Button
-                  size="sm"
-                  color="secondary"
-                  onClick={handleConnectAWS}
-                >
+                <Button size="sm" color="secondary" onClick={handleConnectAWS}>
                   Connect
                 </Button>
               </div>

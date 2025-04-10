@@ -8,8 +8,7 @@ export default function Billing() {
           <h1>Billing</h1>
         </div>
       </div>
-      <div data-max-width>
-      </div>
+      <div data-max-width></div>
     </Layout>
   )
 }

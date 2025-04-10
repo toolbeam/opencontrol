@@ -50,12 +50,20 @@ export default function Layout(props: ParentProps) {
 
       {/* Backdrop for mobile sidebar - closes sidebar when clicked */}
       {sidebarOpen() && (
-        <div data-component="backdrop" onClick={() => setSidebarOpen(false)}></div>
+        <div
+          data-component="backdrop"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
       )}
 
-      <div data-component="sidebar" data-opened={sidebarOpen() ? "true" : "false"}>
+      <div
+        data-component="sidebar"
+        data-opened={sidebarOpen() ? "true" : "false"}
+      >
         <div data-slot="logo">
-          <A href="/"><IconLogomark /></A>
+          <A href="/">
+            <IconLogomark />
+          </A>
         </div>
 
         <nav data-slot="nav">
@@ -103,9 +111,7 @@ export default function Layout(props: ParentProps) {
       </div>
 
       {/* Main Content */}
-      <div data-slot="main-content">
-        {props.children}
-      </div>
+      <div data-slot="main-content">{props.children}</div>
     </div>
   )
 }

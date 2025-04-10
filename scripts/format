@@ -3,7 +3,7 @@
 set -e
 
 bun x sherif --fix
-CI=false bun x prettier --write "**/*.{mjs,js,jsx,ts,tsx,json,md,yaml,yml}"
+CI= bun x prettier --write "**/*.{mjs,js,jsx,ts,tsx,json,md,yaml,yml}"
 
 # Check for changes
 if ! git diff --quiet HEAD; then

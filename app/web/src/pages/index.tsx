@@ -1,6 +1,6 @@
-import { Match, Switch } from "solid-js";
-import { useAccount } from "../components/context-account";
-import { Navigate } from "@solidjs/router";
+import { Match, Switch } from "solid-js"
+import { useAccount } from "../components/context-account"
+import { Navigate } from "@solidjs/router"
 import { useOpenAuth } from "@openauthjs/solid"
 import { IconLogo, ImageArchitecture } from "../ui/svg"
 import screenshot from "../assets/screenshot.png"
@@ -32,7 +32,12 @@ export default function Index() {
                 <span onClick={() => auth.authorize()}>Get started</span>
               </div>
               <div data-slot="col-3">
-                <a target="_blank" href="https://github.com/toolbeam/opencontrol">Star on GitHub</a>
+                <a
+                  target="_blank"
+                  href="https://github.com/toolbeam/opencontrol"
+                >
+                  Star on GitHub
+                </a>
               </div>
             </section>
 
@@ -53,10 +58,24 @@ export default function Index() {
 
             <section data-slot="content">
               <ul>
-                <li><b>Self-hosted</b>: Runs in your infrastructure with access to internal resources and functions from your codebase; deploys to AWS Lambda, Cloudflare Workers, or containers.</li>
-                <li><b>Unified gateway</b>: Generates a single HTTP endpoint that you can chat with or register with your AI client and it exposes all your tools.</li>
-                <li><b>Universal</b>: Works with any model that supports tool calling. Like the models from Anthropic, OpenAI, or Google.</li>
-                <li><b>Secure</b>: Supports authentication through any OAuth provider.</li>
+                <li>
+                  <b>Self-hosted</b>: Runs in your infrastructure with access to
+                  internal resources and functions from your codebase; deploys
+                  to AWS Lambda, Cloudflare Workers, or containers.
+                </li>
+                <li>
+                  <b>Unified gateway</b>: Generates a single HTTP endpoint that
+                  you can chat with or register with your AI client and it
+                  exposes all your tools.
+                </li>
+                <li>
+                  <b>Universal</b>: Works with any model that supports tool
+                  calling. Like the models from Anthropic, OpenAI, or Google.
+                </li>
+                <li>
+                  <b>Secure</b>: Supports authentication through any OAuth
+                  provider.
+                </li>
               </ul>
             </section>
 
@@ -65,7 +84,9 @@ export default function Index() {
                 <span>Version: Beta</span>
               </div>
               <div data-slot="col-2">
-                <span>Author: <a href="https://sst.dev">SST</a></span>
+                <span>
+                  Author: <a href="https://sst.dev">SST</a>
+                </span>
               </div>
             </section>
           </div>

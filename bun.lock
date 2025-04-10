@@ -3,9 +3,6 @@
   "workspaces": {
     "": {
       "name": "mcp",
-      "dependencies": {
-        "@rocicorp/zero": "0.17.2025031904",
-      },
       "devDependencies": {
         "@changesets/cli": "2.28.1",
         "@tsconfig/node22": "22.0.0",

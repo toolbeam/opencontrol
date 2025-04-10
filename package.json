@@ -38,9 +38,6 @@
   "prettier": {
     "semi": false
   },
-  "dependencies": {
-    "@rocicorp/zero": "0.17.2025031904"
-  },
   "overrides": {
     "zod": "3.24.2"
   },

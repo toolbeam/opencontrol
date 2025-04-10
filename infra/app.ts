@@ -1,6 +1,6 @@
 import { templateUrl } from "./connect"
 import { postgres } from "./postgres"
-import { auth, router } from "./shared"
+import { auth, router, vpc } from "./shared"
 import { domain, subdomain } from "./stage"
 import { zero } from "./zero"
 
@@ -21,6 +21,7 @@ router.route("opencontrol-" + domain, opencontrol.url)
 */
 
 export const api = new sst.aws.Function("Api", {
+  vpc,
   handler: "app/function/src/api.handler",
   link: [auth, postgres, ...AllSecrets],
   permissions: [{ actions: ["sts:*"], resources: ["*"] }],

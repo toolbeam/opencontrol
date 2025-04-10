@@ -9,6 +9,7 @@ export const secret = {
 }
 const AllSecrets = Object.values(secret)
 
+/*
 const opencontrol = new sst.aws.OpenControl("OpenControl", {
   server: {
     handler: "app/function/src/opencontrol.handler",
@@ -17,6 +18,7 @@ const opencontrol = new sst.aws.OpenControl("OpenControl", {
   },
 })
 router.route("opencontrol-" + domain, opencontrol.url)
+*/
 
 export const api = new sst.aws.Function("Api", {
   handler: "app/function/src/api.handler",

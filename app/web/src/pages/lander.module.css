@@ -18,7 +18,7 @@
   [data-slot="hero"] {
     border: 2px solid var(--color-border);
 
-    max-width: 90rem;
+    max-width: 64rem;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -54,7 +54,18 @@
       text-transform: uppercase;
       cursor: pointer;
       text-decoration: underline;
-      padding: calc(var(--padding) / 2) 0.5rem;
+
+      &[data-slot="col-2"] {
+        background-color: var(--color-white);
+        color: var(--color-text-invert);
+      }
+
+      & > * {
+        display: block;
+        width: 100%;
+        height: 100%;
+        padding: calc(var(--padding) / 2) 0.5rem;
+      }
     }
 
     @media (max-width: 30rem) {

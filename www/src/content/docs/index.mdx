@@ -1,12 +1,157 @@
 ---
-title: OpenControl
-description: Control your infrastructure with AI.
-template: splash
-hero:
-  title: Control your infrastructure with AI
-  tagline: Control your infrastructure with AI.
-  image:
-    dark: ../../assets/logo-dark.svg
-    light: ../../assets/logo-light.svg
-    alt: OpenControl logo
+title: Get Started
+description: How to get started with OpenControl.
+template: doc
 ---
+
+OpenControl lets you control your infrastructure with AI. It is meant to live in your codebase and be deployed as a part of your infrastructure.
+
+:::note
+Here's a [video demo](https://youtu.be/y-VFQ2UkDSM?si=fkuhgDSCOcYK6PVg) of OpenControl on YouTube.
+:::
+
+Let's get started.
+
+1. **Install dependencies**
+
+   ```bash
+   npm install opencontrol hono @ai-sdk/anthropic
+   ```
+ 
+   Here we use Anthropic's Claude.
+
+   :::tip
+   We've found Claude 3.7 to be the best model for OpenControl.
+   :::
+
+2. **Create the server**
+
+   ```bash
+   touch src/opencontrol.ts
+   ```
+
+   ```ts title=src/opencontrol.ts
+   import { create } from "opencontrol"
+   import { handle } from "hono/aws-lambda"
+ 
+   const app = create({
+     // model: ...,
+     // tools: [ ]
+   })
+ 
+   export const handler = handle(app)
+   ```
+
+3. **Pick the model**
+
+   ```diff lang=ts title=src/opencontrol.ts
+   + import { Resource } from "sst"
+   + import { createAnthropic } from "@ai-sdk/anthropic"
+ 
+   const app = create({
+   +  model: createAnthropic({
+   +    apiKey: Resource.AnthropicKey.value,
+   +  })("claude-3-7-sonnet-20250219")
+   })
+   ```
+
+4. **Define your tools**
+
+   ```diff lang=ts title=src/opencontrol.ts
+   + import { tool } from "opencontrol/tool"
+   + import { Inventory } from "@acme/core/inventory/index"
+ 
+   + const inventory = tool({
+   +   name: "inventory_record",
+   +   description: "Record new inventory event to track in or out amounts",
+   +   args: Inventory.record.schema,
+   +   async run(input) {
+   +     return Inventory.record(input)
+   +   }
+   + })
+ 
+   const app = create({
+     tools: [
+   +    inventory
+     ]
+   })
+   ```
+
+   We've got some more [examples of tools](/docs/tools/) you can use.
+
+5. **Infrastructure**
+
+   We are using [`OpenControl`](https://sst.dev/docs/component/aws/opencontrol/) SST component here. But since **OpenControl is just a Hono app, you can deploy it however you want**.
+ 
+   ```ts title="sst.config.ts" {1,6}
+   const anthropicKey = new sst.Secret("AnthropicKey")
+   
+   const server = new sst.aws.OpenControl("MyServer", {
+     server: {
+       handler: "src/opencontrol.handler",
+       link: [anthropicKey]
+     }
+   })
+   ```
+ 
+   We are defining a secret for the Anthropic API key and linking it to our OpenControl server.
+
+6. **Link any resources**
+
+   ```ts title="sst.config.ts" {6}
+   const bucket = new sst.aws.Bucket("MyBucket")
+ 
+   const server = new sst.aws.OpenControl("MyServer", {
+     server: {
+       handler: "src/opencontrol.handler",
+       link: [bucket]
+     }
+   })
+   ```
+ 
+   If your tools need to access to your resources, you can link them as well.
+
+7. **Grant permissions**
+
+   If you are using the AWS tool, you'll need to give your OpenControl server permissions to access your AWS account.
+ 
+   ```ts title="sst.config.ts" {4-6}
+   const server = new sst.aws.OpenControl("MyServer", {
+     server: {
+       handler: "src/opencontrol.handler",
+       policies: $dev
+         ? ["arn:aws:iam::aws:policy/AdministratorAccess"]
+         : ["arn:aws:iam::aws:policy/ReadOnlyAccess"]
+     }
+   })
+   ```
+ 
+   Here we are giving it admin access in dev but read-only access in prod.
+
+8. **Deploy**
+
+   Currently, OpenControl uses basic auth but we'll be adding support for OAuth soon.
+
+   ```ts title="sst.config.ts"
+   return {
+     OpenControlUrl: server.url,
+     OpenControlPassword: server.password
+   }
+   ```
+
+   You can print out the URL of your server and it's password and deploy.
+
+   ```bash
+   sst deploy
+   ```
+
+Now head over to the URL, login with the password, and you can use AI to talk to your infrastructure.
+
+---
+
+## Examples
+
+Check out how [Terminal](https://www.terminal.shop/) uses OpenControl.
+
+- [Server](https://github.com/terminaldotshop/terminal/blob/dev/packages/functions/src/opencontrol.ts)
+- [Infrastructure](https://github.com/terminaldotshop/terminal/blob/dev/infra/opencontrol.ts)

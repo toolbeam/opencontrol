@@ -79,15 +79,12 @@ export default defineConfig({
       editLink: {
         baseUrl: `${config.github}/edit/master/www/`,
       },
-      components: {
-        Hero: "./src/components/Hero.astro",
-      },
-      customCss: ["./src/custom.css", "./src/styles/lander.css"],
+      customCss: ["./src/custom.css"],
       sidebar: [
-        { label: "Intro", slug: "docs" },
-        "docs/tools",
-        "docs/usage",
-        "docs/how-it-works",
+        { label: "Intro", slug: "index" },
+        "tools",
+        "usage",
+        "how-it-works",
       ],
     }),
   ],

@@ -10,7 +10,7 @@
 <p align="center">
   <a href="https://sst.dev/discord"><img alt="Discord" src="https://img.shields.io/discord/983865673656705025?style=flat-square&label=Discord" /></a>
   <a href="https://www.npmjs.com/package/opencontrol"><img alt="npm" src="https://img.shields.io/npm/v/opencontrol?style=flat-square" /></a>
-  <a href="https://github.com/toolbeam/opencontrol/actions/workflows/release.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/toolbeam/opencontrol/release.yml?style=flat-square&branch=master" /></a>
+  <a href="https://github.com/sst/opencontrol/actions/workflows/release.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/sst/opencontrol/release.yml?style=flat-square&branch=master" /></a>
 </p>
 
 ---

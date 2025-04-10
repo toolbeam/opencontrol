@@ -3,7 +3,6 @@ import { useAccount } from "../components/context-account"
 import { Navigate } from "@solidjs/router"
 import { useOpenAuth } from "@openauthjs/solid"
 import { IconLogo, ImageArchitecture } from "../ui/svg"
-import screenshot from "../assets/screenshot.png"
 import styles from "./lander.module.css"
 
 export default function Index() {
@@ -26,31 +25,24 @@ export default function Index() {
 
             <section data-slot="cta">
               <div data-slot="col-1">
-                <a href="/docs/how-it-works/">Learn more</a>
+                <a href={`${import.meta.env.VITE_DOCS_URL}/docs/`}>
+                  Docs
+                </a>
               </div>
               <div data-slot="col-2">
-                <span onClick={() => auth.authorize()}>Get started</span>
+                <span onClick={() => auth.authorize()}>Try it</span>
               </div>
               <div data-slot="col-3">
-                <a
-                  target="_blank"
-                  href="https://github.com/toolbeam/opencontrol"
-                >
-                  Star on GitHub
+                <a target="_blank" href="https://github.com/sst/opencontrol">
+                  GitHub
                 </a>
               </div>
             </section>
 
             <section data-slot="images">
               <div>
-                <p>Client</p>
-                <a href="/docs/usage/">
-                  <img src={screenshot} alt="OpenControl screenshot" />
-                </a>
-              </div>
-              <div>
                 <p>Architecture</p>
-                <a href="/docs/how-it-works/">
+                <a href={`${import.meta.env.VITE_DOCS_URL}/docs/how-it-works/`}>
                   <ImageArchitecture width="100%" />
                 </a>
               </div>

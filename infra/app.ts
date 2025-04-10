@@ -30,6 +30,17 @@ export const api = new sst.aws.Function("Api", {
   },
 })
 
+const docs = new sst.aws.Astro("Docs", {
+  route: {
+    router,
+    path: "/docs",
+  },
+  path: "www",
+  dev: {
+    url: "http://localhost:4321",
+  },
+})
+
 new sst.aws.StaticSite("Web", {
   route: {
     router,
@@ -39,18 +50,11 @@ new sst.aws.StaticSite("Web", {
     output: "dist/client",
   },
   environment: {
+    VITE_DOCS_URL: docs.url,
     VITE_API_URL: `https://api-` + domain,
     VITE_AUTH_URL: auth.properties.url,
     VITE_ZERO_URL: zero.url,
     VITE_TEMPLATE_URL: templateUrl,
   },
   path: "app/web",
-})
-
-new sst.aws.Astro("Docs", {
-  route: {
-    router,
-    path: "/docs",
-  },
-  path: "www",
 })

@@ -28,7 +28,7 @@ export default function Index() {
                 <a href={`${import.meta.env.VITE_DOCS_URL}/docs/`}>Docs</a>
               </div>
               <div data-slot="col-2">
-                <span onClick={() => auth.authorize()}>Try it</span>
+                <span onClick={() => auth.authorize({ provider: "google" })}>Try it</span>
               </div>
               <div data-slot="col-3">
                 <a target="_blank" href="https://github.com/sst/opencontrol">

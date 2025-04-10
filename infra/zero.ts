@@ -1,6 +1,6 @@
 import { readFileSync } from "fs"
 import { auth, cluster, storage } from "./shared"
-import { domain } from "./stage"
+import { subdomain } from "./stage"
 import { postgres } from "./postgres"
 
 const conn = $interpolate`postgresql://${postgres.username}:${postgres.password}@${postgres.host}/${postgres.database}`

@@ -3,9 +3,12 @@ import { z } from "zod"
 
 export namespace Identifier {
   const prefixes = {
-    workspace: "wrk",
-    user: "usr",
     awsAccount: "aws",
+    billing: "bil",
+    payment: "pay",
+    usage: "usg",
+    user: "usr",
+    workspace: "wrk",
   } as const
 
   export function create(

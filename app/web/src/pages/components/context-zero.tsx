@@ -28,6 +28,12 @@ export const { use: useZero, provider: ZeroProvider } =
     zero.query.aws_account.where("workspace_id", workspace.id).preload({
       ttl: "forever",
     })
+    zero.query.billing.where("workspace_id", workspace.id).preload({
+      ttl: "forever",
+    })
+    zero.query.usage.where("workspace_id", workspace.id).preload({
+      ttl: "forever",
+    })
 
     return {
       mutate: zero.mutate,

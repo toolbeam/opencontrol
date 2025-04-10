@@ -20,6 +20,7 @@ export namespace Actor {
     properties: {
       userID: string
       workspaceID: string
+      email: string
     }
   }
 

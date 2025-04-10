@@ -13,7 +13,7 @@ export default defineConfig({
   site: url,
   adapter: aws(),
   base: "/docs",
-  // trailingSlash: "always",
+  trailingSlash: "always",
   devToolbar: {
     enabled: false,
   },

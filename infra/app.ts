@@ -53,7 +53,7 @@ new sst.aws.StaticSite("Web", {
   },
   environment: {
     VITE_DOCS_URL: docs.url,
-    VITE_API_URL: `https://api-` + domain,
+    VITE_API_URL: api.url,
     VITE_AUTH_URL: auth.properties.url,
     VITE_ZERO_URL: zero.url,
     VITE_TEMPLATE_URL: templateUrl,

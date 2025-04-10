@@ -25,9 +25,7 @@ export default function Index() {
 
             <section data-slot="cta">
               <div data-slot="col-1">
-                <a href={`${import.meta.env.VITE_DOCS_URL}/docs/`}>
-                  Docs
-                </a>
+                <a href={`${import.meta.env.VITE_DOCS_URL}/docs/`}>Docs</a>
               </div>
               <div data-slot="col-2">
                 <span onClick={() => auth.authorize()}>Try it</span>

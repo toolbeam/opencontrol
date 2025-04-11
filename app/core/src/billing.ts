@@ -18,6 +18,7 @@ export namespace Billing {
       tx
         .select({
           customerID: BillingTable.customerID,
+          paymentMethodID: BillingTable.paymentMethodID,
           balance: BillingTable.balance,
           reload: BillingTable.reload,
         })
@@ -26,33 +27,6 @@ export namespace Billing {
         .then((r) => r[0]),
     )
   }
-
-  export const addFunds = fn(
-    z.object({
-      amountInCents: z.number(),
-      paymentID: z.string(),
-      customerID: z.string(),
-    }),
-    async (input) => {
-      const workspaceID = Actor.workspace()
-      await Database.transaction(async (tx) => {
-        await tx
-          .update(BillingTable)
-          .set({
-            balance: sql`${BillingTable.balance} + ${centsToMicroCents(input.amountInCents)}`,
-            customerID: input.customerID,
-          })
-          .where(eq(BillingTable.workspaceID, workspaceID))
-        await tx.insert(PaymentTable).values({
-          workspaceID,
-          id: Identifier.create("payment"),
-          amount: centsToMicroCents(input.amountInCents),
-          paymentID: input.paymentID,
-          customerID: input.customerID,
-        })
-      })
-    },
-  )
 
   export const consume = fn(
     z.object({

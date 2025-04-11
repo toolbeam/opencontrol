@@ -50,6 +50,20 @@
       "when": 1744394396408,
       "tag": "0006_sad_supernaut",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1744404722433,
+      "tag": "0007_loud_random",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1744406131671,
+      "tag": "0008_parched_vanisher",
+      "breakpoints": true
     }
   ]
 }

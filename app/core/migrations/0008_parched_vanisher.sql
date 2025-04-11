@@ -1,0 +1,1 @@
+ALTER TABLE "billing" ALTER COLUMN "payment_method_last4" SET DATA TYPE varchar(4);

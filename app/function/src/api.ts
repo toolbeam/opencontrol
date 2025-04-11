@@ -25,6 +25,7 @@ import {
 import { UserTable } from "@opencontrol/core/user/user.sql.js"
 import { Billing } from "@opencontrol/core/billing.js"
 import { centsToMicroCents } from "@opencontrol/core/util/price.js"
+import { BillingTable, PaymentTable } from "@opencontrol/core/billing.sql.js"
 
 const models = {
   "claude-3-7-sonnet-20250219": {
@@ -141,8 +142,9 @@ const app = new Hono()
       payment_intent_data: {
         setup_future_usage: "on_session",
       },
-      customer: customer.customerID ?? undefined,
-      customer_email: account.properties.email,
+      ...(customer.customerID
+        ? { customer: customer.customerID }
+        : { customer_email: account.properties.email }),
       customer_creation: "always",
       metadata: {
         workspaceID: Actor.workspace(),
@@ -179,16 +181,6 @@ const app = new Hono()
 
     // Check balance
     const customer = await Billing.get()
-    if (customer.balance < 0) {
-      return c.json(
-        {
-          err: "unknown",
-          message: "Insufficient balance",
-        },
-        500,
-      )
-    }
-
     try {
       const result = await model.doGenerate(body)
 
@@ -211,26 +203,33 @@ const app = new Hono()
         costInCents: cost,
       })
 
-      if (
-        customer.reload &&
-        customer.customerID &&
-        newBalance < centsToMicroCents(500)
-      ) {
+      if (customer.customerID && newBalance < centsToMicroCents(500)) {
         const amount = 2000 // $20
         const ret = await Billing.stripe.paymentIntents.create({
           amount,
           currency: "usd",
           payment_method_types: ["card"],
-          customer: customer.customerID,
+          customer: customer.customerID!,
+          payment_method: customer.paymentMethodID!,
           metadata: {
             workspaceID: Actor.workspace(),
           },
           confirm: true,
         })
-        await Billing.addFunds({
-          amountInCents: amount,
-          paymentID: ret.id,
-          customerID: customer.customerID,
+        await Database.transaction(async (tx) => {
+          await tx
+            .update(BillingTable)
+            .set({
+              balance: sql`${BillingTable.balance} + ${centsToMicroCents(amount)}`,
+            })
+            .where(eq(BillingTable.workspaceID, Actor.workspace()))
+          await tx.insert(PaymentTable).values({
+            workspaceID: Actor.workspace(),
+            id: Identifier.create("payment"),
+            amount: centsToMicroCents(amount),
+            paymentID: ret.id,
+            customerID: customer.customerID,
+          })
         })
       }
 
@@ -468,10 +467,34 @@ const app = new Hono()
           })
         }
 
-        await Billing.addFunds({
-          amountInCents: amount,
+        // get payment method for the payment intent
+        const paymentIntent = await Billing.stripe.paymentIntents.retrieve(
           paymentID,
-          customerID,
+          {
+            expand: ["payment_method"],
+          },
+        )
+        const paymentMethod = paymentIntent.payment_method
+        if (!paymentMethod || typeof paymentMethod === "string")
+          throw new Error("Payment method not expanded")
+
+        await Database.transaction(async (tx) => {
+          await tx
+            .update(BillingTable)
+            .set({
+              balance: sql`${BillingTable.balance} + ${centsToMicroCents(amount)}`,
+              customerID,
+              paymentMethodID: paymentMethod.id,
+              paymentMethodLast4: paymentMethod.card!.last4,
+            })
+            .where(eq(BillingTable.workspaceID, workspaceID))
+          await tx.insert(PaymentTable).values({
+            workspaceID,
+            id: Identifier.create("payment"),
+            amount: centsToMicroCents(amount),
+            paymentID,
+            customerID,
+          })
         })
       })
     }

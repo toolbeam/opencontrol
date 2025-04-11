@@ -49,7 +49,12 @@ export default function Billing() {
 
           <div data-slot="balance">
             <p data-slot="amount">
-              ${((billingData()?.[0]?.balance ?? 0) / 100000000).toFixed(2)}
+              {(() => {
+                const balanceStr = (
+                  (billingData()?.[0]?.balance ?? 0) / 100000000
+                ).toFixed(2)
+                return `$${balanceStr === "-0.00" ? "0.00" : balanceStr}`
+              })()}
             </p>
             <Button
               color="primary"

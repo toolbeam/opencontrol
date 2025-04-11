@@ -8,6 +8,8 @@ export const BillingTable = pgTable(
     ...workspaceColumns,
     ...timestamps,
     customerID: varchar("customer_id", { length: 255 }),
+    paymentMethodID: varchar("payment_method_id", { length: 255 }),
+    paymentMethodLast4: varchar("payment_method_last4", { length: 4 }),
     balance: bigint("balance", { mode: "number" }).notNull(),
     reload: boolean("reload"),
   },

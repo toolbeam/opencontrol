@@ -7,6 +7,7 @@ import { WorkspaceTable } from "./workspace.sql"
 import { UserTable } from "../user/user.sql"
 import { BillingTable } from "../billing.sql"
 import { Billing } from "../billing"
+import { centsToMicroCents } from "../util/price"
 
 export namespace Workspace {
   export const create = fn(z.void(), async () => {
@@ -25,7 +26,7 @@ export namespace Workspace {
       await tx.insert(BillingTable).values({
         workspaceID,
         id: Identifier.create("billing"),
-        balance: 100,
+        balance: centsToMicroCents(100),
       })
     })
     return workspaceID

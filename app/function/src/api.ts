@@ -24,7 +24,16 @@ import {
 } from "@modelcontextprotocol/sdk/types.js"
 import { UserTable } from "@opencontrol/core/user/user.sql.js"
 import { Billing } from "@opencontrol/core/billing.js"
-import { BillingTable, PaymentTable } from "@opencontrol/core/billing.sql.js"
+import { centsToMicroCents } from "@opencontrol/core/util/price.js"
+
+const models = {
+  "claude-3-7-sonnet-20250219": {
+    cost: {
+      input: 4 / 1000000,
+      output: 20 / 1000000,
+    },
+  },
+}
 
 const model = createAnthropic({
   apiKey: Resource.AnthropicApiKey.value,
@@ -167,10 +176,67 @@ const app = new Hono()
   })
   .post("/ai_generate", zValidator("json", z.custom<any>()), async (c) => {
     const body = c.req.valid("json")
+
+    // Check balance
+    const customer = await Billing.get()
+    if (customer.balance < 0) {
+      return c.json(
+        {
+          err: "unknown",
+          message: "Insufficient balance",
+        },
+        500,
+      )
+    }
+
     try {
       const result = await model.doGenerate(body)
+
+      const modelId = result.response?.modelId
+      if (modelId !== "claude-3-7-sonnet-20250219")
+        throw new Error("Unsupported model")
+
+      const inputTokens = result.usage.promptTokens
+      const outputTokens = result.usage.completionTokens
+      const cost =
+        (inputTokens * models[modelId].cost.input +
+          outputTokens * models[modelId].cost.output) *
+        100
+
+      const newBalance = await Billing.consume({
+        requestID: result.response?.id,
+        model: modelId,
+        inputTokens,
+        outputTokens,
+        costInCents: cost,
+      })
+
+      if (
+        customer.reload &&
+        customer.customerID &&
+        newBalance < centsToMicroCents(500)
+      ) {
+        const amount = 2000 // $20
+        const ret = await Billing.stripe.paymentIntents.create({
+          amount,
+          currency: "usd",
+          payment_method_types: ["card"],
+          customer: customer.customerID,
+          metadata: {
+            workspaceID: Actor.workspace(),
+          },
+          confirm: true,
+        })
+        await Billing.addFunds({
+          amountInCents: amount,
+          paymentID: ret.id,
+          customerID: customer.customerID,
+        })
+      }
+
       return c.json(result)
     } catch (error) {
+      console.log(error)
       if (error instanceof APICallError) {
         return c.json(
           {
@@ -402,21 +468,10 @@ const app = new Hono()
           })
         }
 
-        await Database.transaction(async (tx) => {
-          await tx
-            .update(BillingTable)
-            .set({
-              balance: sql`${BillingTable.balance} + ${amount}`,
-              customerID,
-            })
-            .where(eq(BillingTable.workspaceID, workspaceID))
-          await tx.insert(PaymentTable).values({
-            workspaceID,
-            id: Identifier.create("payment"),
-            amount,
-            paymentID,
-            customerID,
-          })
+        await Billing.addFunds({
+          amountInCents: amount,
+          paymentID,
+          customerID,
         })
       })
     }

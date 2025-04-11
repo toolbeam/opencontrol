@@ -1,11 +1,12 @@
 import { Resource } from "sst"
 import { Stripe } from "stripe"
 import { Database, eq, sql } from "./drizzle"
-import { BillingTable, UsageTable } from "./billing.sql"
+import { BillingTable, PaymentTable, UsageTable } from "./billing.sql"
 import { Actor } from "./actor"
 import { fn } from "./util/fn"
 import { z } from "zod"
 import { Identifier } from "./identifier"
+import { centsToMicroCents } from "./util/price"
 
 export namespace Billing {
   export const stripe = new Stripe(Resource.StripeSecretKey.value, {
@@ -26,18 +27,46 @@ export namespace Billing {
     )
   }
 
+  export const addFunds = fn(
+    z.object({
+      amountInCents: z.number(),
+      paymentID: z.string(),
+      customerID: z.string(),
+    }),
+    async (input) => {
+      const workspaceID = Actor.workspace()
+      await Database.transaction(async (tx) => {
+        await tx
+          .update(BillingTable)
+          .set({
+            balance: sql`${BillingTable.balance} + ${centsToMicroCents(input.amountInCents)}`,
+            customerID: input.customerID,
+          })
+          .where(eq(BillingTable.workspaceID, workspaceID))
+        await tx.insert(PaymentTable).values({
+          workspaceID,
+          id: Identifier.create("payment"),
+          amount: centsToMicroCents(input.amountInCents),
+          paymentID: input.paymentID,
+          customerID: input.customerID,
+        })
+      })
+    },
+  )
+
   export const consume = fn(
     z.object({
       requestID: z.string().optional(),
       model: z.string(),
       inputTokens: z.number(),
       outputTokens: z.number(),
-      cost: z.number(),
+      costInCents: z.number(),
     }),
     async (input) => {
       const workspaceID = Actor.workspace()
+      const cost = centsToMicroCents(input.costInCents)
 
-      await Database.transaction(async (tx) => {
+      return await Database.transaction(async (tx) => {
         await tx.insert(UsageTable).values({
           workspaceID,
           id: Identifier.create("usage"),
@@ -45,14 +74,16 @@ export namespace Billing {
           model: input.model,
           inputTokens: input.inputTokens,
           outputTokens: input.outputTokens,
-          cost: input.cost,
+          cost,
         })
-        await tx
+        const [updated] = await tx
           .update(BillingTable)
           .set({
-            balance: sql`${BillingTable.balance} - ${input.cost}`,
+            balance: sql`${BillingTable.balance} - ${cost}`,
           })
           .where(eq(BillingTable.workspaceID, workspaceID))
+          .returning()
+        return updated.balance
       })
     },
   )

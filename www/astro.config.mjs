@@ -21,7 +21,12 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      plugins: [theme()],
+      plugins: [theme({
+        headerLinks: [
+          { name: "Home", url: "/" },
+          { name: "Docs", url: "/docs" },
+        ],
+      })],
       title: "OpenControl",
       description: "Control your infrastructure with AI.",
       head: [

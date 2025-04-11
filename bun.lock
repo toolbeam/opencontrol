@@ -131,7 +131,7 @@
         "astro-sst": "3.1.2",
         "rehype-autolink-headings": "^7.1.0",
         "sharp": "^0.33.4",
-        "toolbeam-docs-theme": "^0.0.4",
+        "toolbeam-docs-theme": "0.1.1",
       },
       "devDependencies": {
         "typedoc": "^0.27.5",
@@ -2009,7 +2009,7 @@
 
     "toidentifier": ["toidentifier@1.0.1", "", {}, "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA=="],
 
-    "toolbeam-docs-theme": ["toolbeam-docs-theme@0.0.4", "", { "dependencies": { "@astrojs/starlight": "^0.32.0" }, "peerDependencies": { "astro": "^5.0.0" } }, "sha512-pz/TxkPksuHyRwgl+rproWOZAvHnqcFcY5B8q8iy3bSmD3tiDakDERB3hGrYtD+GDsC25yqkDoj9ch29tzSytA=="],
+    "toolbeam-docs-theme": ["toolbeam-docs-theme@0.1.1", "", { "dependencies": { "@astrojs/starlight": "^0.32.0" }, "peerDependencies": { "astro": "^5.0.0" } }, "sha512-JQfMx8baeNsALvt8pTBmvnW0/NIxxGkIA6hisnTrKrmXbEvszEePiergtmC3ruzGV6dHl2s0c0MqaaUkzIUU5g=="],
 
     "trim-lines": ["trim-lines@3.0.1", "", {}, "sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg=="],
 

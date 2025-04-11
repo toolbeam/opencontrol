@@ -42,7 +42,7 @@ const docs = new sst.aws.Astro("Docs", {
   },
   path: "www",
   dev: {
-    url: "http://localhost:4321",
+    url: "http://localhost:4321/docs",
   },
 })
 

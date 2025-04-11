@@ -25,7 +25,12 @@ export default function Index() {
 
             <section data-slot="cta">
               <div data-slot="col-1">
-                <a href={import.meta.env.VITE_DOCS_URL}>Self-host</a>
+                <a
+                  target="_self"
+                  href={import.meta.env.VITE_DOCS_URL}
+                >
+                  Self-host
+                </a>
               </div>
               <div data-slot="col-2">
                 <span onClick={() => auth.authorize({ provider: "google" })}>
@@ -59,7 +64,10 @@ export default function Index() {
             <section data-slot="images">
               <div>
                 <p>Self-hosted Architecture</p>
-                <a href={`${import.meta.env.VITE_DOCS_URL}/how-it-works`}>
+                <a
+                  target="_self"
+                  href={`${import.meta.env.VITE_DOCS_URL}/how-it-works`}
+                >
                   <ImageArchitecture width="100%" />
                 </a>
               </div>

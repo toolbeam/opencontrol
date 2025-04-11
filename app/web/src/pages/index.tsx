@@ -1,9 +1,9 @@
 import { Match, Switch } from "solid-js"
 import { useAccount } from "../components/context-account"
 import { Navigate } from "@solidjs/router"
-import { useOpenAuth } from "@openauthjs/solid"
 import { IconLogo, ImageArchitecture } from "../ui/svg"
 import styles from "./lander.module.css"
+import { useOpenAuth } from "../components/context-openauth"
 
 export default function Index() {
   const auth = useOpenAuth()

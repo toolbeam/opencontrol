@@ -1,11 +1,11 @@
 import style from "./layout.module.css"
-import { useOpenAuth } from "@openauthjs/solid"
 import { useAccount } from "../../components/context-account"
 import { Button } from "../../ui/button"
 import { IconLogomark } from "../../ui/svg"
 import { IconBars3BottomLeft } from "../../ui/svg/icons"
 import { ParentProps, createMemo, createSignal } from "solid-js"
 import { A, useLocation } from "@solidjs/router"
+import { useOpenAuth } from "../../components/context-openauth"
 
 export default function Layout(props: ParentProps) {
   const auth = useOpenAuth()
@@ -23,7 +23,6 @@ export default function Layout(props: ParentProps) {
 
   function handleLogout() {
     auth.logout(auth.subject?.id!)
-    window.location.assign("/")
   }
 
   return (

@@ -1,7 +1,7 @@
 import { hc } from "hono/client"
 import { ApiType } from "@opencontrol/function/src/api"
-import { useOpenAuth } from "@openauthjs/solid"
 import { useWorkspace } from "./context-workspace"
+import { useOpenAuth } from "../../components/context-openauth"
 
 export function useApi() {
   const workspace = useWorkspace()

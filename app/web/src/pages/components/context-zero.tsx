@@ -2,9 +2,9 @@ import { Zero } from "@rocicorp/zero"
 import { useParams } from "@solidjs/router"
 import { schema } from "@opencontrol/zero/schema"
 import { createInitializedContext } from "../../util/context"
-import { useOpenAuth } from "@openauthjs/solid"
 import { useAccount } from "../../components/context-account"
 import { useWorkspace } from "./context-workspace"
+import { useOpenAuth } from "../../components/context-openauth"
 
 export const { use: useZero, provider: ZeroProvider } =
   createInitializedContext("ZeroContext", () => {

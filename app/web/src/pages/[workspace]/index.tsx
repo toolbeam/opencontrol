@@ -1,11 +1,12 @@
 import { Button } from "../../ui/button"
 import { IconArrowRight } from "../../ui/svg/icons"
 import { useAccount } from "../../components/context-account"
-import { useOpenAuth } from "@openauthjs/solid"
 import { createSignal, For, onMount } from "solid-js"
 import { createToolCaller } from "./components/tool"
 import { useApi } from "../components/context-api"
 import style from "./index.module.css"
+import Layout from "./components/layout"
+import { useOpenAuth } from "../../components/context-openauth"
 
 export default function Index() {
   const auth = useOpenAuth()
@@ -83,29 +84,33 @@ export default function Index() {
                         <div data-slot="content">
                           {JSON.stringify(item.content[0].result)}
                         </div>
-                      </div>
+                      </div >
                     )
                   })()}
               </>
             )
           }}
-        </For>
-        {toolCaller.state.type === "loading" && (
-          <div data-component="loading">
-            <span>■</span>
-            <span>■</span>
-            <span>■</span>
-          </div>
-        )}
-        {toolCaller.prompt.filter((item) => item.role !== "system").length >
+        </For >
+        {
+          toolCaller.state.type === "loading" && (
+            <div data-component="loading">
+              <span>■</span>
+              <span>■</span>
+              <span>■</span>
+            </div>
+          )
+        }
+        {
+          toolCaller.prompt.filter((item) => item.role !== "system").length >
           0 && (
             <div data-component="clear">
               <Button size="sm" color="ghost" onClick={toolCaller.clear}>
                 Clear chat
               </Button>
             </div>
-          )}
-      </div>
+          )
+        }
+      </div >
 
       <div data-slot="footer" data-max-width>
         <div data-component="chat">
@@ -136,6 +141,6 @@ export default function Index() {
           <Button disabled color="ghost" icon={<IconArrowRight />} />
         </div>
       </div>
-    </div>
+    </div >
   )
 }

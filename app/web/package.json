@@ -23,6 +23,7 @@
     "@kobalte/core": "0.13.9",
     "@openauthjs/solid": "0.0.0-20250322224806",
     "@rocicorp/zero": "0.17.2025031904",
+    "@solid-primitives/storage": "4.3.1",
     "@solidjs/meta": "0.29.4",
     "@solidjs/router": "0.15.3",
     "solid-js": "1.9.5",

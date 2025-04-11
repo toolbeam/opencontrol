@@ -54,6 +54,7 @@
         "@kobalte/core": "0.13.9",
         "@openauthjs/solid": "0.0.0-20250322224806",
         "@rocicorp/zero": "0.17.2025031904",
+        "@solid-primitives/storage": "4.3.1",
         "@solidjs/meta": "0.29.4",
         "@solidjs/router": "0.15.3",
         "solid-js": "1.9.5",
@@ -104,7 +105,7 @@
       "name": "opencontrol",
       "version": "0.1.0",
       "bin": {
-        "opencontrol": "./bin/index.mjs"
+        "opencontrol": "./bin/index.mjs",
       },
       "dependencies": {
         "@hono/zod-validator": "0.4.3",

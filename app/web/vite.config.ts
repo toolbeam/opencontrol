@@ -31,7 +31,7 @@ export default defineConfig({
 
           const routes = ["/"]
           for (const route of routes) {
-            const { app } = serverEntry.render({ url: route })
+            const { app } = await serverEntry.render({ url: route })
             const html = template
               .replace("<!--ssr-outlet-->", app)
               .replace("<!--ssr-head-->", generateHydrationScript())

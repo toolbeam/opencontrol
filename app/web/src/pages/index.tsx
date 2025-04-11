@@ -25,10 +25,12 @@ export default function Index() {
 
             <section data-slot="cta">
               <div data-slot="col-1">
-                <a href={`${import.meta.env.VITE_DOCS_URL}/docs/`}>Self-host</a>
+                <a href={import.meta.env.VITE_DOCS_URL}>Self-host</a>
               </div>
               <div data-slot="col-2">
-                <span onClick={() => auth.authorize({ provider: "google" })}>Sign in</span>
+                <span onClick={() => auth.authorize({ provider: "google" })}>
+                  Sign in
+                </span>
               </div>
               <div data-slot="col-3">
                 <a target="_blank" href="https://github.com/sst/opencontrol">
@@ -39,13 +41,13 @@ export default function Index() {
 
             <section data-slot="content">
               <p>
-                OpenControl lets you control your infrastructure with AI. You can use
-                it via:
+                OpenControl lets you control your infrastructure with AI. You
+                can use it via:
               </p>
               <ol>
                 <li>
-                  <b>OpenControl.ai</b>: Hosted on our side using our LLMs. You can
-                  connect your AWS account and other services.
+                  <b>OpenControl.ai</b>: Hosted on our side using our LLMs. You
+                  can connect your AWS account and other services.
                 </li>
                 <li>
                   <b>Self-host</b>: Runs in your infrastructure with access to
@@ -57,7 +59,7 @@ export default function Index() {
             <section data-slot="images">
               <div>
                 <p>Self-hosted Architecture</p>
-                <a href={`${import.meta.env.VITE_DOCS_URL}/docs/how-it-works/`}>
+                <a href={`${import.meta.env.VITE_DOCS_URL}/how-it-works`}>
                   <ImageArchitecture width="100%" />
                 </a>
               </div>

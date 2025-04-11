@@ -70,6 +70,11 @@ declare module "sst" {
       "type": "sst.aws.Service"
       "url": string
     }
+    "ZeroReplication": {
+      "service": string
+      "type": "sst.aws.Service"
+      "url": string
+    }
   }
 }
 /// <reference path="sst-env.d.ts" />

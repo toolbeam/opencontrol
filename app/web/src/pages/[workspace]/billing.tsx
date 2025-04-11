@@ -10,7 +10,6 @@ export default function Billing() {
   const zero = useZero()
   const workspace = useWorkspace()
   const [isLoading, setIsLoading] = createSignal(false)
-  const [autoReload, setAutoReload] = createSignal(false)
   const [billingData] = useQuery(() => {
     return zero.query.billing.where("workspace_id", workspace.id)
   })
@@ -52,19 +51,6 @@ export default function Billing() {
           <Button onClick={handleBuyCredits} disabled={isLoading()}>
             {isLoading() ? "Loading..." : "Buy Credits"}
           </Button>
-
-          {billingData()?.[0]?.customer_id && (
-            <div style="margin-top: 1rem;">
-              <p style="font-size: 0.9rem; color: var(--color-gray-400);">
-                Auto When enabled, your account will automatically reload $20
-                when your balance drops below $5.
-              </p>
-
-              <Button onClick={() => setAutoReload(!autoReload())}>
-                {autoReload() ? "Disable Auto Reload" : "Enable Auto Reload"}
-              </Button>
-            </div>
-          )}
         </div>
       </div>
     </>

@@ -52,9 +52,9 @@ export const { use: useAccount, provider: AccountProvider } =
       return Object.keys(auth.all)
     }, [] as string[])
 
-    return {
+    const result = {
       get all() {
-        return store.accounts
+        return Object.keys(auth.all).map((id) => store.accounts[id]).filter(Boolean)
       },
       get current() {
         if (!auth.subject) return undefined
@@ -63,8 +63,10 @@ export const { use: useAccount, provider: AccountProvider } =
       refresh,
       get ready() {
         return (
-          Object.keys(auth.all).length === Object.keys(store.accounts).length
+          Object.keys(auth.all).length === result.all.length
         )
       },
     }
+
+    return result
   })

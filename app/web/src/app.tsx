@@ -27,7 +27,6 @@ export function App(props: { url?: string }) {
                 children={routes}
                 url={props.url}
                 root={(props) => {
-                  console.log(props)
                   return <>{props.children}</>
                 }}
               />

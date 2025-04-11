@@ -1,9 +1,9 @@
 import style from "./layout.module.css"
 import { useOpenAuth } from "@openauthjs/solid"
-import { useAccount } from "../../../components/context-account"
-import { Button } from "../../../ui/button"
-import { IconLogomark } from "../../../ui/svg"
-import { IconBars3BottomLeft } from "../../../ui/svg/icons"
+import { useAccount } from "../../components/context-account"
+import { Button } from "../../ui/button"
+import { IconLogomark } from "../../ui/svg"
+import { IconBars3BottomLeft } from "../../ui/svg/icons"
 import { ParentProps, createMemo, createSignal } from "solid-js"
 import { A, useLocation } from "@solidjs/router"
 

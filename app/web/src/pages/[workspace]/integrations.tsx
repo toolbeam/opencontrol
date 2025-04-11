@@ -3,7 +3,6 @@ import { useZero } from "../components/context-zero"
 import { useAccount } from "../../components/context-account"
 import { useWorkspace } from "../components/context-workspace"
 import { Button } from "../../ui/button"
-import Layout from "./components/layout"
 import { For } from "solid-js"
 import style from "./integrations.module.css"
 
@@ -33,7 +32,7 @@ export default function Integrations() {
     awsAccounts()?.filter((account) => !account.time_deleted) || []
 
   return (
-    <Layout>
+    <>
       <div data-component="title-bar">
         <div data-slot="left">
           <h1>Integrations</h1>
@@ -82,6 +81,6 @@ export default function Integrations() {
           )}
         </div>
       </div>
-    </Layout>
+    </>
   )
 }

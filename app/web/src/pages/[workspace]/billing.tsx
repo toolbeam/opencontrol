@@ -1,4 +1,3 @@
-import Layout from "./components/layout"
 import { Button } from "../../ui/button"
 import { useApi } from "../components/context-api"
 import { createSignal } from "solid-js"
@@ -34,7 +33,7 @@ export default function Billing() {
   }
 
   return (
-    <Layout>
+    <>
       <div data-component="title-bar">
         <div data-slot="left">
           <h1>Billing</h1>
@@ -54,6 +53,6 @@ export default function Billing() {
           </Button>
         </div>
       </div>
-    </Layout>
+    </>
   )
 }

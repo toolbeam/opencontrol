@@ -4,6 +4,7 @@ import { createSignal } from "solid-js"
 import { useZero } from "../components/context-zero"
 import { useWorkspace } from "../components/context-workspace"
 import { useQuery } from "@rocicorp/zero/solid"
+import style from "./billing.module.css"
 
 export default function Billing() {
   const api = useApi()
@@ -39,18 +40,25 @@ export default function Billing() {
           <h1>Billing</h1>
         </div>
       </div>
-      <div data-max-width>
-        <div style="margin: 2rem 0;">
-          <div style="margin-bottom: 1rem;">
-            <h2>Current Balance</h2>
-            <p style="font-size: 2rem; font-weight: bold; margin: 1rem 0;">
-              ${((billingData()?.[0]?.balance ?? 0) / 100000000).toFixed(2)}
-            </p>
+      <div class={style.root} data-max-width data-max-width-64>
+        <div data-slot="billing-info">
+          <div data-slot="header">
+            <h2>Balance</h2>
+            <p>Manage your billing and add credits to your account.</p>
           </div>
 
-          <Button onClick={handleBuyCredits} disabled={isLoading()}>
-            {isLoading() ? "Loading..." : "Buy Credits"}
-          </Button>
+          <div data-slot="balance">
+            <p data-slot="amount">
+              ${((billingData()?.[0]?.balance ?? 0) / 100000000).toFixed(2)}
+            </p>
+            <Button
+              color="primary"
+              disabled={isLoading()}
+              onClick={handleBuyCredits}
+            >
+              {isLoading() ? "Loading..." : "Buy Credits"}
+            </Button>
+          </div>
         </div>
       </div>
     </>

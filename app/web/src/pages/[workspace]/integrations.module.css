@@ -17,6 +17,7 @@
   gap: var(--space-1-5);
 
   h2 {
+    text-transform: uppercase;
     font-weight: 600;
     letter-spacing: -0.03125rem;
     font-size: var(--font-size-lg);
